@@ -4,27 +4,28 @@ using UnityEngine;
 
 public class windMove : MonoBehaviour {
 	public float moveAmount;
-    public Vector3 origPos;
 	private Transform position;
 	Bed bed;
 	public float timer;
 	public float multiplier;
-	ParticleSystem particleMove;
+    public Vector3 dirMultiplier;
+    ParticleSystem particleMove;
     public int timesMoved;
+    public Vector3 originalPos;
 
 	AudioHelm.AudioHelmClock clock;
 
 	// Use this for initialization
 	void Start () {
-
-        origPos = transform.position;
 		position = transform;
+        originalPos = transform.position;
 		bed = GameObject.FindGameObjectWithTag("Bed").GetComponent<Bed> ();
 		clock = GameObject.Find ("clock").GetComponent<AudioHelm.AudioHelmClock> ();
 		timer = 4;
 		multiplier = 1;
 		particleMove = GetComponent<ParticleSystem>();
         timesMoved = 0;
+        dirMultiplier = Vector3.left;
 	}
 	
 	// Update is called once per frame
@@ -34,18 +35,18 @@ public class windMove : MonoBehaviour {
 		timer -= multiplier * Time.deltaTime;
 		if (timer <= 0) {
 			moveWind ();
-            timesMoved++;
 			timer = 2;
 		}
-        if (timesMoved > 7)
+        if(timesMoved > 7)
         {
-            transform.position = origPos;
+            transform.position = originalPos;
             timesMoved = 0;
         }
 	}
 	void moveWind(){
-		position.position += 2 * Vector3.left;
+		position.position += 2 * dirMultiplier;
 		particleMove.Play();
+        timesMoved++;
 
 
 	}
