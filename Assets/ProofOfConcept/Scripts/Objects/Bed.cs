@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class Bed : Interactable
 {
     public bool dayPassed;
-
+    private Transform windZone;
     bool setDayPassed;
     float sleepCounter;
     public float sleepLength;
@@ -39,6 +39,7 @@ public class Bed : Interactable
     public override void Start()
 	{
 		clock = GameObject.Find ("clock").GetComponent<AudioHelm.AudioHelmClock> ();
+        windZone = GameObject.Find ("WindZone").GetComponent<Transform>();
         base.Start();
         fpc = _player.GetComponent<FirstPersonController>();
         cml = Camera.main.GetComponent<camMouseLook>();
@@ -115,7 +116,8 @@ public class Bed : Interactable
             switch (windDir) {
 			case 0: //left to right
 				wond.transform.eulerAngles = new Vector3 (-90, 0, -90);
-				windBlast.transform.eulerAngles = new Vector3(-90, 0, -90);
+                    windZone.transform.localEulerAngles = new Vector3(0, -90, 0);
+                    windBlast.transform.eulerAngles = new Vector3(-90, 0, -90);
                     windBlast.transform.position = new Vector3(20, 0, 5);
                     windBlast.GetComponent<windMove>().originalPos = windBlast.transform.position;
                     windBlast.GetComponent<windMove>().dirMultiplier = Vector3.left;
@@ -127,7 +129,9 @@ public class Bed : Interactable
 
 			case 1: //bottom to top
 				wond.transform.eulerAngles = new Vector3(-90, 0, 180);
-				windBlast.transform.eulerAngles = new Vector3(-90, 0, 180);
+                    windZone.transform.localEulerAngles = new Vector3(0, 0, 0);
+
+                    windBlast.transform.eulerAngles = new Vector3(-90, 0, 180);
                     windBlast.transform.position = new Vector3(10, 0, -5);
                     windBlast.GetComponent<windMove>().originalPos = windBlast.transform.position;
                     windBlast.GetComponent<windMove>().dirMultiplier = Vector3.forward;
@@ -135,7 +139,8 @@ public class Bed : Interactable
 
 			case 2: //top to bottom
 				wond.transform.eulerAngles = new Vector3(-90, 0, 0);
-				windBlast.transform.eulerAngles = new Vector3(-90, 0, 0);
+                    windZone.transform.localEulerAngles = new Vector3(0, 180, 0);
+                    windBlast.transform.eulerAngles = new Vector3(-90, 0, 0);
                     windBlast.transform.position = new Vector3(10, 0, 10);
                     windBlast.GetComponent<windMove>().originalPos = windBlast.transform.position;
                     windBlast.GetComponent<windMove>().dirMultiplier = Vector3.back;
@@ -143,7 +148,8 @@ public class Bed : Interactable
 
 			case 3: //right to left
 				wond.transform.eulerAngles = new Vector3(-90, 0, 90);
-				windBlast.transform.eulerAngles = new Vector3(-90, 0, 90);
+                    windZone.transform.localEulerAngles = new Vector3(0, 90, 0);
+                    windBlast.transform.eulerAngles = new Vector3(-90, 0, 90);
                     windBlast.transform.position = new Vector3(0, 0, 5);
                     windBlast.GetComponent<windMove>().originalPos = windBlast.transform.position;
                     windBlast.GetComponent<windMove>().dirMultiplier = Vector3.right;
