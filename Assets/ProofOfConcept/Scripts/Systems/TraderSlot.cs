@@ -17,7 +17,7 @@ public class TraderSlot : Interactable
     public override void handleClickSuccess()
     {
         base.handleClickSuccess();
-        if (!empty)
+        if (!empty && interactable)
             clickedOn = true;
 
     }
@@ -25,6 +25,9 @@ public class TraderSlot : Interactable
     // Update is called once per frame
     void Update()
     {
-
+        if (empty)
+        {
+            interactable = false;
+        }
     }
 }

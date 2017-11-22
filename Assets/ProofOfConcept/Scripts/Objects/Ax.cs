@@ -34,6 +34,9 @@ public class Ax : MonoBehaviour
     bool cursorChange, changeBack;
     int frameCounter;
 
+    //public float lerpSpeed;
+    //public Transform lerpTransform;
+
     void Start()
     {
         frameCounter = 10;
@@ -69,6 +72,7 @@ public class Ax : MonoBehaviour
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
 
+                //transform.rotation = Quaternion.Lerp(transform.rotation, lerpTransform.rotation, Time.time * lerpSpeed);
                 //start particle system
                 //sphere cast
 

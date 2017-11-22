@@ -77,12 +77,12 @@ public class Trader : Interactable
             table.SetActive(true);
 
         }
-        else if(tradingActive)
-        {
-            tradingActive = false;
-            table.SetActive(false);
-            walkingAway = true;
-        }
+        //else if(tradingActive)
+        //{
+        //    tradingActive = false;
+        //    table.SetActive(false);
+        //    walkingAway = true;
+        //}
     }
     
     void Update()
@@ -115,9 +115,7 @@ public class Trader : Interactable
             {
 
                 isWaiting = false;
-                s1Seed.GetComponent<inventoryMan>().interactable = false;
-                s2Seed.GetComponent<inventoryMan>().interactable = false;
-                s3Seed.GetComponent<inventoryMan>().interactable = false;
+                
                 if (s1Interactable.clickedOn)
                 {
                     if (cropCurrency.cropCounter >= s1Price)
