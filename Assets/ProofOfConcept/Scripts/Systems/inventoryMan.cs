@@ -90,6 +90,7 @@ public class inventoryMan : Interactable
         transform.SetParent(rightArmObj.transform);
 
         transform.localPosition = Vector3.zero;
+        transform.localEulerAngles = Vector3.zero;
         transform.localScale = transform.localScale * 2;
         gameObject.layer = originalLayer;
         // Can show this with tiny animation and Arm movement
@@ -102,11 +103,14 @@ public class inventoryMan : Interactable
         {
 
             invent.saveToInventory(this.transform, isSingle);
+            if (underPlayerControl)
+            {
+                invent.somethingEquipped = false;
+            }
 
-            inInventory = true;
             underPlayerControl = false;
+            inInventory = true;
             interactable = true;
-            invent.somethingEquipped = false;
         }
         else
             Debug.Log("inventory full");
@@ -127,7 +131,7 @@ public class inventoryMan : Interactable
         inInventory = false;
         invent.currentObject = slotNum;
         //underPlayerControl = true;//delay this for a frame
-
+        invent.somethingEquipped = true;
 
         interactable = false;
         FindPlayerArm();
@@ -143,6 +147,7 @@ public class inventoryMan : Interactable
         this.transform.parent = null;
         interactable = true;
         underPlayerControl = false;
+        invent.somethingEquipped = false;
 
     }
 

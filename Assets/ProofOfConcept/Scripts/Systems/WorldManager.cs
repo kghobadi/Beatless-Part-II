@@ -33,7 +33,7 @@ public class WorldManager : MonoBehaviour {
 
         dayCounter = bedScript.dayCounter;
         Random.InitState(System.DateTime.Now.Millisecond);
-        if (dayCounter % traderFrequency == 0 && bedScript.dayPassed)
+        if (dayCounter % traderFrequency == 0 && dayCounter != 2 && bedScript.dayPassed)
         {
             tradeDayCounter++;
             seedSpawnAmount = Random.Range(3 + tradeDayCounter, 6 + tradeDayCounter);
