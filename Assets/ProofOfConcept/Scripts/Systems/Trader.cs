@@ -36,6 +36,8 @@ public class Trader : Interactable
 
     Animator animater;
 
+    Bed bedScript;
+
     //click to buy instantiation needs to work
     //make it so that it can't have duplicate seed types, only selects 3 from total possible pool
 
@@ -45,6 +47,8 @@ public class Trader : Interactable
         interactable = true;
         animater = GetComponentInChildren<Animator>();
         animater.SetBool("walking", true);
+
+        bedScript = GameObject.FindGameObjectWithTag("Bed").GetComponent<Bed>();
 
         worldMan = GameObject.FindGameObjectWithTag("WorldManager").GetComponent<WorldManager>();
 
@@ -204,7 +208,10 @@ public class Trader : Interactable
         }
 
 
-
+        if (bedScript.dayPassed)
+        {
+            walkingAway = true;
+        }
 
     }
 
