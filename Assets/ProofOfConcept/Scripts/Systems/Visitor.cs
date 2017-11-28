@@ -19,14 +19,25 @@ public class Visitor : MonoBehaviour {
     WorldManager worldMan;
     public bool enteringGarden, listening, leaving;
 
+    GardenCheck gardenChecker;
     Animator animater;
+
+    public enum LookingForPlant
+    {
+        CIRCLE, SQUARE, TRIANGLE
+    }
+    public LookingForPlant targetPlants;
+    public int desiredPlantAmount;
 
 	void Start () {
         worldMan = GameObject.FindGameObjectWithTag("WorldManager").GetComponent<WorldManager>();
         sunScript = GameObject.FindGameObjectWithTag("Sun").GetComponent<Sun>();
         bedScript = GameObject.FindGameObjectWithTag("Bed").GetComponent<Bed>();
+        gardenChecker = GameObject.FindGameObjectWithTag("GardenChecker").GetComponent<GardenCheck>();
+
         animater = GetComponent<Animator>();
         
+
         chosenPosition = worldMan.gardenViewingPositions[decider].position;
 
         transform.LookAt(worldMan.gardenCenter.position);
@@ -70,6 +81,51 @@ public class Visitor : MonoBehaviour {
             //play listening animation
             animater.SetBool("walking", false);
             animater.SetBool("bowing", true);
+            gardenChecker.CheckGarden();
+            //look at target plants 
+            if (gardenChecker.hasChecked)
+            {
+                if (targetPlants == LookingForPlant.CIRCLE)
+                {
+                    if (gardenChecker.circleCounter >= desiredPlantAmount)
+                    {
+                        Debug.Log("I HAVE FOUND THE MEANING");
+                        //animation change, person 'recovers'
+                    }
+                    else
+                    {
+                        Debug.Log("WHERE ARE MY PLANTS?");
+                    }
+                }
+                if (targetPlants == LookingForPlant.TRIANGLE)
+                {
+                    if (gardenChecker.triangleCounter >= desiredPlantAmount)
+                    {
+                        Debug.Log("I HAVE FOUND THE MEANING");
+                        //animation change, person 'recovers'
+                    }
+                    else
+                    {
+                        Debug.Log("WHERE ARE MY PLANTS?");
+                    }
+                }
+                if (targetPlants == LookingForPlant.SQUARE)
+                {
+                    if (gardenChecker.squareCounter >= desiredPlantAmount)
+                    {
+                        Debug.Log("I HAVE FOUND THE MEANING");
+                        //animation change, person 'recovers'
+                    }
+                    else
+                    {
+                        Debug.Log("WHERE ARE MY PLANTS?");
+                    }
+                }
+                gardenChecker.hasChecked = false;
+            }
+            
+
+
             if (sunScript.isNight || waitDayCounter >= waitingDays)
             {
                 listening = false;
