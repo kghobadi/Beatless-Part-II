@@ -75,37 +75,34 @@ public class Water : MonoBehaviour
         if (inventMan.underPlayerControl)
         {
             //Sends out raycast
-            if (Input.GetMouseButtonDown(0))
-            {
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
+			if (Input.GetMouseButtonDown (0)) {
+				Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
+				RaycastHit hit;
 
-                waterEffect.Emit(particleAmount);
+				waterEffect.Emit (particleAmount);
+				//cameraSource.Play ();
 
-                //Checks if raycast hits
-                if (Physics.Raycast(ray, out hit))
-                {
-                    //Checks if the hit is a ground tile and within Distance for hoeing
-                    if (hit.transform.gameObject.tag == "sequencer" && Vector3.Distance(_player.transform.position, hit.point) <= waterDistance)
-                    {
-                        //Can add cursor sprite change here
-                        cursorChange = true;
-                        currentPlant = hit.transform.gameObject.GetComponent<NewPlantLife>();
-                        if (!currentPlant.hasBeenWateredToday)
-                        {
-                            currentPlant.hasBeenWateredToday = true;
-                            currentPlant.hasBeenWatered = true;
-                            cameraSource.PlayOneShot(wateringSound);
+				//Checks if raycast hits
+				if (Physics.Raycast (ray, out hit)) {
+					//Checks if the hit is a ground tile and within Distance for hoeing
+					if (hit.transform.gameObject.tag == "sequencer" && Vector3.Distance (_player.transform.position, hit.point) <= waterDistance) {
+						//Can add cursor sprite change here
+						cursorChange = true;
+						currentPlant = hit.transform.gameObject.GetComponent<NewPlantLife> ();
+						if (!currentPlant.hasBeenWateredToday) {
+							currentPlant.hasBeenWateredToday = true;
+							currentPlant.hasBeenWatered = true;
+							cameraSource.PlayOneShot(wateringSound);
 
-                            //to change ground texture to water texture
-                            Cell tree = tgs.CellGetAtPosition(hit.transform.position, true);
-                            int index = currentPlant.cellIndex;
-                            tgs.CellToggleRegionSurface(index, true, wateredTexture);
+							//to change ground texture to water texture
+							Cell tree = tgs.CellGetAtPosition (hit.transform.position, true);
+							int index = currentPlant.cellIndex;
+							tgs.CellToggleRegionSurface (index, true, wateredTexture);
 
-                        }
-                    }
-                }
-            }
+						}
+					}
+				}
+			} 
         }
         if (cursorChange)
         {
