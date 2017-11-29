@@ -66,7 +66,7 @@ public class Inventory : MonoBehaviour
     void Update()
     {
 
-        Debug.Log(unEquip);
+  //      Debug.Log(unEquip);
 
 
         isFull = checkFull();

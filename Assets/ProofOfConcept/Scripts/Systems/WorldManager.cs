@@ -14,12 +14,15 @@ public class WorldManager : MonoBehaviour
 
     public GameObject traderPrefab;
     GameObject traderClone;
+    public GameObject cropCoin;
+    GameObject cropCoinClone;
 
     public int seedSpawnAmount;
 
     public Transform roadSpawnWest, roadSpawnEast, gatePosition, gardenCenter;
     public Transform[] visitorSpawns;
     public Transform[] gardenViewingPositions;
+    public Transform[] coinSpawns;
 
     public GameObject[] visitors;
 
@@ -46,6 +49,10 @@ public class WorldManager : MonoBehaviour
         {
             visitorDayCounter++;
             SpawnVisitors();
+        }
+        if(bedScript.dayPassed)
+        {
+            SpawnCropCoins();
         }
     }
 
@@ -89,5 +96,17 @@ public class WorldManager : MonoBehaviour
             visitorClone.GetComponent<Visitor>().decider = randomPosition;
         }
 
+    }
+
+    void SpawnCropCoins()
+    {
+        for(int i =0; i < coinSpawns.Length; i++)
+        {
+            int randomSpawn = Random.Range(0, 100);
+            if(randomSpawn < 50)
+            {
+                cropCoinClone = Instantiate(cropCoin, coinSpawns[i].position, Quaternion.identity);
+            }
+        }
     }
 }
