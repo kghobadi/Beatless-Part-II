@@ -14,7 +14,7 @@ public class treeJointSystem : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		swayAmount = GetComponentInParent<beatVisualizer>().progress;
+		
 		currentTransform = transform;
 
 		while (hasChild) {
@@ -38,9 +38,10 @@ public class treeJointSystem : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		swayAmount = GetComponentInParent<beatVisualizer>().progress;
 		
 		for (int i = 0; i < treeJoints.Count; i++) {
-			treeJoints [i].localEulerAngles = new Vector3 (origAng[i].x + Mathf.Sin(Time.time/swayAmount), origAng[i].y - Mathf.Sin(Time.time/swayAmount), origAng[i].z + Mathf.Sin(Time.time/swayAmount));
+			treeJoints [i].localEulerAngles = new Vector3 (origAng[i].x + Mathf.Sin(Time.time*swayAmount), origAng[i].y - Mathf.Sin(Time.time*swayAmount), origAng[i].z + Mathf.Sin(Time.time*swayAmount));
 		}
 
 
