@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 namespace AudioHelm{
 public class beatVisualizer : MonoBehaviour {
 	public float progress = 0f;
