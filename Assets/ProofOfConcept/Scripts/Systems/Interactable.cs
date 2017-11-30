@@ -24,7 +24,7 @@ public abstract class Interactable : MonoBehaviour
 
     public bool interactable;
 
-    protected FirstPersonController playerControl;
+    protected FirstPersonController fpc;
 
     public virtual void Start()
     {
@@ -41,7 +41,7 @@ public abstract class Interactable : MonoBehaviour
 
         soundBoard = cammy.GetComponent<AudioSource>(); //assigns audio source
 
-        playerControl = _player.GetComponent<FirstPersonController>();
+        fpc = _player.GetComponent<FirstPersonController>();
         //startScale = transform.localScale;
     }
 

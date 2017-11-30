@@ -11,6 +11,8 @@ public class GardenCheck : MonoBehaviour
 
     public bool checkNow;
 
+    int plantLayerMask = 1 << 12;
+
     private void Update()
     {
         if (checkNow)
@@ -22,12 +24,15 @@ public class GardenCheck : MonoBehaviour
 
     public void CheckGarden()
     {
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, gardenSize, 12);
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, gardenSize * 5, plantLayerMask);
+
 
         Debug.Log(hitColliders.Length);
 
         for (int i = 0; i < hitColliders.Length; i++)
         {
+            print(hitColliders[i].name);
+
             if (hitColliders[i].GetComponent<NewPlantLife>().thisPlant == NewPlantLife.PlantType.CIRCLE)
             {
                 circleCounter++;
@@ -42,5 +47,6 @@ public class GardenCheck : MonoBehaviour
             }
         }
         hasChecked = true;
+
     }
 }
