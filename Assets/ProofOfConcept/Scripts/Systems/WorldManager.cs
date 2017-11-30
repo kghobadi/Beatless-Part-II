@@ -46,7 +46,7 @@ public class WorldManager : MonoBehaviour
             seedSpawnAmount = Random.Range(3 + tradeDayCounter, 6 + tradeDayCounter);
             SpawnTrader();
         }
-        if (dayCounter % visitorFrequency == 0 && bedScript.dayPassed)
+        if (dayCounter % visitorFrequency == 0 && dayCounter != 2 && dayCounter != 4 && bedScript.dayPassed)
         {
             visitorDayCounter++;
             SpawnVisitors();
@@ -104,7 +104,7 @@ public class WorldManager : MonoBehaviour
         for(int i =0; i < coinSpawns.Length; i++)
         {
             int randomSpawn = Random.Range(0, 100);
-            if(randomSpawn < 25)
+            if(randomSpawn < 15)
             {
                 cropCoinClone = Instantiate(cropCurrency, coinSpawns[i].position, Quaternion.identity);
             }
