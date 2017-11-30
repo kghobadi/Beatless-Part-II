@@ -46,7 +46,7 @@ public class GardenCheck : MonoBehaviour
                 squareCounter++;
             }
         }
-        hasChecked = true;
+        //hasChecked = true;
 
     }
 }

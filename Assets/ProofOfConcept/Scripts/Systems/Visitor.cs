@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Visitor : MonoBehaviour {
+public class Visitor : MonoBehaviour
+{
+    public Transform player;
 
-    
     public float moveSpeed;
     Vector3 chosenPosition;
-    public int waitingDays;
+    int waitingDays;
     int waitDayCounter;
 
     public bool isCatHead;
@@ -17,10 +18,18 @@ public class Visitor : MonoBehaviour {
     Sun sunScript;
     Bed bedScript;
     WorldManager worldMan;
-    public bool enteringGarden, listening, leaving;
+    public bool enteringGarden, listening, thanking, leaving;
 
     GardenCheck gardenChecker;
     Animator animater;
+
+
+    public SpriteRenderer heart;
+    public Sprite circleSprite, squareSprite, triSprite;
+
+    public ParticleSystemRenderer particleHumanRend;
+    public Material circleSkin, squareSkin, triSkin;
+
 
     public enum LookingForPlant
     {
@@ -29,23 +38,62 @@ public class Visitor : MonoBehaviour {
     public LookingForPlant targetPlants;
     public int desiredPlantAmount;
 
-	void Start () {
+    void Start()
+    {
         worldMan = GameObject.FindGameObjectWithTag("WorldManager").GetComponent<WorldManager>();
         sunScript = GameObject.FindGameObjectWithTag("Sun").GetComponent<Sun>();
         bedScript = GameObject.FindGameObjectWithTag("Bed").GetComponent<Bed>();
         gardenChecker = GameObject.FindGameObjectWithTag("GardenChecker").GetComponent<GardenCheck>();
 
         animater = GetComponent<Animator>();
-        
+
 
         chosenPosition = worldMan.gardenViewingPositions[decider].position;
 
         transform.LookAt(worldMan.gardenCenter.position);
         enteringGarden = true;
-        
-	}
-	
-	void Update () {
+
+        Random.InitState(System.DateTime.Now.Millisecond);
+
+        int randy = Random.Range(0, 3);
+        if (randy == 0)
+            targetPlants = LookingForPlant.CIRCLE;
+        if (randy == 1)
+            targetPlants = LookingForPlant.SQUARE;
+        if (randy == 2)
+            targetPlants = LookingForPlant.TRIANGLE;
+
+
+        if (targetPlants == LookingForPlant.CIRCLE)
+        {
+            particleHumanRend.material = circleSkin;
+            heart.sprite = circleSprite;
+
+        }
+
+        if (targetPlants == LookingForPlant.SQUARE)
+        {
+            particleHumanRend.material = squareSkin;
+            heart.sprite = squareSprite;
+
+        }
+
+        if (targetPlants == LookingForPlant.TRIANGLE)
+        {
+            particleHumanRend.material = triSkin;
+            heart.sprite = triSprite;
+
+        }
+
+        waitingDays = Random.Range(2, 5);
+
+
+
+
+    }
+
+    void Update()
+    {
         if (bedScript.dayPassed)
         {
             waitDayCounter++;
@@ -73,27 +121,36 @@ public class Visitor : MonoBehaviour {
                 enteringGarden = false;
                 listening = true;
             }
-
         }
         if (listening)
         {
             transform.LookAt(worldMan.gardenCenter.position);
-            //play listening animation
+            //play listening animation MAKE LISTENING ANIMATION
             animater.SetBool("walking", false);
-            animater.SetBool("bowing", true);
-            gardenChecker.CheckGarden();
-            //look at target plants 
-            if (gardenChecker.hasChecked)
+            animater.speed = 0;
+            //animater.SetBool("bowing", true);
+
+
+
+
+            if (waitDayCounter >= 1)
             {
+
+                gardenChecker.CheckGarden();
+                //look at target plants 
+
+
                 if (targetPlants == LookingForPlant.CIRCLE)
                 {
                     if (gardenChecker.circleCounter >= desiredPlantAmount)
                     {
                         Debug.Log("I HAVE FOUND THE MEANING");
+                        thanking = true;
                         //animation change, person 'recovers'
                     }
                     else
                     {
+                        leaving = true;
                         Debug.Log("WHERE ARE MY PLANTS?");
                     }
                 }
@@ -102,10 +159,14 @@ public class Visitor : MonoBehaviour {
                     if (gardenChecker.triangleCounter >= desiredPlantAmount)
                     {
                         Debug.Log("I HAVE FOUND THE MEANING");
+                        thanking = true;
+                        listening = false;
                         //animation change, person 'recovers'
                     }
                     else
                     {
+                        leaving = true;
+                        listening = false;
                         Debug.Log("WHERE ARE MY PLANTS?");
                     }
                 }
@@ -114,27 +175,46 @@ public class Visitor : MonoBehaviour {
                     if (gardenChecker.squareCounter >= desiredPlantAmount)
                     {
                         Debug.Log("I HAVE FOUND THE MEANING");
+                        thanking = true;
+                        listening = false;
                         //animation change, person 'recovers'
                     }
                     else
                     {
+                        leaving = true;
+                        listening = false;
                         Debug.Log("WHERE ARE MY PLANTS?");
                     }
                 }
-                gardenChecker.hasChecked = false;
             }
-            
 
+
+
+
+
+        }
+
+        if (thanking)
+        {
+
+            if (animater.speed != 1)
+                animater.speed = 1;
+
+            animater.SetBool("bowing", true);
 
             if (sunScript.isNight || waitDayCounter >= waitingDays)
             {
-                listening = false;
+                thanking = false;
                 leaving = true;
             }
         }
+
         if (leaving)
         {
             transform.LookAt(chosenPosition);
+
+            if (animater.speed != 1)
+                animater.speed = 1;
             //play walking animation
             animater.SetBool("walking", true);
             animater.SetBool("bowing", false);
@@ -147,10 +227,21 @@ public class Visitor : MonoBehaviour {
                 Destroy(gameObject);
             }
         }
-	}
+
+        fadeInHeart();
+    }
 
     void FindPos(Vector3 position)
     {
         transform.position = Vector3.MoveTowards(transform.position, position, moveSpeed * Time.deltaTime);
+    }
+
+    void fadeInHeart()
+    {
+
+        float dist = Vector3.Distance(player.position, heart.transform.position);
+
+        heart.color = Color.grey - new Color(0, 0, 0, dist * Time.deltaTime * 10f);
+
     }
 }
