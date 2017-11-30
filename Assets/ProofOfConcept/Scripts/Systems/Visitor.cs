@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Visitor : MonoBehaviour {
+public class Visitor : MonoBehaviour
+{
 
-    
+
     public float moveSpeed;
     Vector3 chosenPosition;
     public int waitingDays;
@@ -29,23 +30,25 @@ public class Visitor : MonoBehaviour {
     public LookingForPlant targetPlants;
     public int desiredPlantAmount;
 
-	void Start () {
+    void Start()
+    {
         worldMan = GameObject.FindGameObjectWithTag("WorldManager").GetComponent<WorldManager>();
         sunScript = GameObject.FindGameObjectWithTag("Sun").GetComponent<Sun>();
         bedScript = GameObject.FindGameObjectWithTag("Bed").GetComponent<Bed>();
         gardenChecker = GameObject.FindGameObjectWithTag("GardenChecker").GetComponent<GardenCheck>();
 
         animater = GetComponent<Animator>();
-        
+
 
         chosenPosition = worldMan.gardenViewingPositions[decider].position;
 
         transform.LookAt(worldMan.gardenCenter.position);
         enteringGarden = true;
-        
-	}
-	
-	void Update () {
+
+    }
+
+    void Update()
+    {
         if (bedScript.dayPassed)
         {
             waitDayCounter++;
@@ -73,7 +76,6 @@ public class Visitor : MonoBehaviour {
                 enteringGarden = false;
                 listening = true;
             }
-
         }
         if (listening)
         {
@@ -83,47 +85,48 @@ public class Visitor : MonoBehaviour {
             animater.SetBool("bowing", true);
             gardenChecker.CheckGarden();
             //look at target plants 
-            if (gardenChecker.hasChecked)
+
+            //if (gardenChecker.hasChecked)
+            //{
+            if (targetPlants == LookingForPlant.CIRCLE)
             {
-                if (targetPlants == LookingForPlant.CIRCLE)
+                if (gardenChecker.circleCounter >= desiredPlantAmount)
                 {
-                    if (gardenChecker.circleCounter >= desiredPlantAmount)
-                    {
-                        Debug.Log("I HAVE FOUND THE MEANING");
-                        //animation change, person 'recovers'
-                    }
-                    else
-                    {
-                        Debug.Log("WHERE ARE MY PLANTS?");
-                    }
+                    Debug.Log("I HAVE FOUND THE MEANING");
+                    //animation change, person 'recovers'
                 }
-                if (targetPlants == LookingForPlant.TRIANGLE)
+                else
                 {
-                    if (gardenChecker.triangleCounter >= desiredPlantAmount)
-                    {
-                        Debug.Log("I HAVE FOUND THE MEANING");
-                        //animation change, person 'recovers'
-                    }
-                    else
-                    {
-                        Debug.Log("WHERE ARE MY PLANTS?");
-                    }
+                    Debug.Log("WHERE ARE MY PLANTS?");
                 }
-                if (targetPlants == LookingForPlant.SQUARE)
-                {
-                    if (gardenChecker.squareCounter >= desiredPlantAmount)
-                    {
-                        Debug.Log("I HAVE FOUND THE MEANING");
-                        //animation change, person 'recovers'
-                    }
-                    else
-                    {
-                        Debug.Log("WHERE ARE MY PLANTS?");
-                    }
-                }
-                gardenChecker.hasChecked = false;
             }
-            
+            if (targetPlants == LookingForPlant.TRIANGLE)
+            {
+                if (gardenChecker.triangleCounter >= desiredPlantAmount)
+                {
+                    Debug.Log("I HAVE FOUND THE MEANING");
+                    //animation change, person 'recovers'
+                }
+                else
+                {
+                    Debug.Log("WHERE ARE MY PLANTS?");
+                }
+            }
+            if (targetPlants == LookingForPlant.SQUARE)
+            {
+                if (gardenChecker.squareCounter >= desiredPlantAmount)
+                {
+                    Debug.Log("I HAVE FOUND THE MEANING");
+                    //animation change, person 'recovers'
+                }
+                else
+                {
+                    Debug.Log("WHERE ARE MY PLANTS?");
+                }
+            }
+            //    gardenChecker.hasChecked = false;
+            //}
+
 
 
             if (sunScript.isNight || waitDayCounter >= waitingDays)
@@ -147,7 +150,7 @@ public class Visitor : MonoBehaviour {
                 Destroy(gameObject);
             }
         }
-	}
+    }
 
     void FindPos(Vector3 position)
     {
