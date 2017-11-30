@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Visitor : MonoBehaviour
 {
-    public Transform player;
+    Transform player;
 
     public float moveSpeed;
     Vector3 chosenPosition;
@@ -40,6 +40,8 @@ public class Visitor : MonoBehaviour
 
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+
         worldMan = GameObject.FindGameObjectWithTag("WorldManager").GetComponent<WorldManager>();
         sunScript = GameObject.FindGameObjectWithTag("Sun").GetComponent<Sun>();
         bedScript = GameObject.FindGameObjectWithTag("Bed").GetComponent<Bed>();
