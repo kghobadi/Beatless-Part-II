@@ -20,7 +20,7 @@ public class Computer : Interactable {
     public override void handleClickSuccess()
     {
         //Picks up seed
-        if (!playerControl.isHoldingSeed)
+        if (!fpc.isHoldingSeed)
         {
             base.handleClickSuccess();
             Debug.Log("yes");
