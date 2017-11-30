@@ -31,6 +31,60 @@ ModelImporter:
     100046: transform5
     100048: transform6
     100050: //RootNode
+    100052: group4
+    100054: pasted__group
+    100056: pasted__group4_pasted__pPyramid4
+    100058: pasted__group5
+    100060: pasted__group5_pasted__group4_pasted__pPyramid4
+    100062: pasted__group6
+    100064: pasted__group7
+    100066: pasted__group8
+    100068: pasted__group9
+    100070: pasted__group_pasted__group4_pasted__pPyramid4
+    100072: pasted__pasted__group
+    100074: pasted__pasted__group4_pasted__pPyramid4
+    100076: pasted__pasted__group4_pasted__pPyramid4 1
+    100078: pasted__pasted__group4_pasted__pPyramid4 2
+    100080: pasted__pasted__group5
+    100082: pasted__pasted__group5 1
+    100084: pasted__pasted__group6
+    100086: pasted__pasted__group7
+    100088: pasted__pasted__group8
+    100090: pasted__pasted__group_pasted__group4_pasted__pPyramid4
+    100092: pasted__pasted__pasted__group
+    100094: pasted__pasted__pasted__group4_pasted__pPyramid4
+    100096: pasted__pasted__pasted__group4_pasted__pPyramid4 1
+    100098: pasted__pasted__pasted__group4_pasted__pPyramid4 2
+    100100: pasted__pasted__pasted__group4_pasted__pPyramid4 3
+    100102: pasted__pasted__pasted__group5
+    100104: pasted__pasted__pasted__group5 1
+    100106: pasted__pasted__pasted__group6
+    100108: pasted__pasted__pasted__group7
+    100110: pasted__pasted__pasted__group_pasted__group4_pasted__pPyramid4
+    100112: pasted__pasted__pasted__pasted__group4_pasted__pPyramid4
+    100114: pasted__pasted__pasted__pasted__group4_pasted__pPyramid4 1
+    100116: pasted__pasted__pasted__pasted__group4_pasted__pPyramid4 2
+    100118: pasted__pasted__pasted__pasted__group5
+    100120: pasted__pasted__pasted__pasted__group5 1
+    100122: pasted__pasted__pasted__pasted__pasted__group4_pasted__pPyramid4
+    100124: pasted__pasted__pasted__pasted__pasted__group4_pasted__pPyramid4 1
+    100126: pasted__pasted__pasted__transform10
+    100128: pasted__pasted__pasted__transform7
+    100130: pasted__pasted__pasted__transform8
+    100132: pasted__pasted__pasted__transform9
+    100134: pasted__pasted__transform10
+    100136: pasted__pasted__transform7
+    100138: pasted__pasted__transform8
+    100140: pasted__pasted__transform9
+    100142: pasted__transform10
+    100144: pasted__transform11
+    100146: pasted__transform12
+    100148: pasted__transform13
+    100150: pasted__transform14
+    100152: pasted__transform7
+    100154: pasted__transform8
+    100156: pasted__transform9
+    100158: joint9
     400000: group
     400002: group1
     400004: group2
@@ -57,9 +111,67 @@ ModelImporter:
     400046: transform5
     400048: transform6
     400050: //RootNode
+    400052: group4
+    400054: pasted__group
+    400056: pasted__group4_pasted__pPyramid4
+    400058: pasted__group5
+    400060: pasted__group5_pasted__group4_pasted__pPyramid4
+    400062: pasted__group6
+    400064: pasted__group7
+    400066: pasted__group8
+    400068: pasted__group9
+    400070: pasted__group_pasted__group4_pasted__pPyramid4
+    400072: pasted__pasted__group
+    400074: pasted__pasted__group4_pasted__pPyramid4
+    400076: pasted__pasted__group4_pasted__pPyramid4 1
+    400078: pasted__pasted__group4_pasted__pPyramid4 2
+    400080: pasted__pasted__group5
+    400082: pasted__pasted__group5 1
+    400084: pasted__pasted__group6
+    400086: pasted__pasted__group7
+    400088: pasted__pasted__group8
+    400090: pasted__pasted__group_pasted__group4_pasted__pPyramid4
+    400092: pasted__pasted__pasted__group
+    400094: pasted__pasted__pasted__group4_pasted__pPyramid4
+    400096: pasted__pasted__pasted__group4_pasted__pPyramid4 1
+    400098: pasted__pasted__pasted__group4_pasted__pPyramid4 2
+    400100: pasted__pasted__pasted__group4_pasted__pPyramid4 3
+    400102: pasted__pasted__pasted__group5
+    400104: pasted__pasted__pasted__group5 1
+    400106: pasted__pasted__pasted__group6
+    400108: pasted__pasted__pasted__group7
+    400110: pasted__pasted__pasted__group_pasted__group4_pasted__pPyramid4
+    400112: pasted__pasted__pasted__pasted__group4_pasted__pPyramid4
+    400114: pasted__pasted__pasted__pasted__group4_pasted__pPyramid4 1
+    400116: pasted__pasted__pasted__pasted__group4_pasted__pPyramid4 2
+    400118: pasted__pasted__pasted__pasted__group5
+    400120: pasted__pasted__pasted__pasted__group5 1
+    400122: pasted__pasted__pasted__pasted__pasted__group4_pasted__pPyramid4
+    400124: pasted__pasted__pasted__pasted__pasted__group4_pasted__pPyramid4 1
+    400126: pasted__pasted__pasted__transform10
+    400128: pasted__pasted__pasted__transform7
+    400130: pasted__pasted__pasted__transform8
+    400132: pasted__pasted__pasted__transform9
+    400134: pasted__pasted__transform10
+    400136: pasted__pasted__transform7
+    400138: pasted__pasted__transform8
+    400140: pasted__pasted__transform9
+    400142: pasted__transform10
+    400144: pasted__transform11
+    400146: pasted__transform12
+    400148: pasted__transform13
+    400150: pasted__transform14
+    400152: pasted__transform7
+    400154: pasted__transform8
+    400156: pasted__transform9
+    400158: joint9
+    2300000: pasted__group5_pasted__group4_pasted__pPyramid4
+    3300000: pasted__group5_pasted__group4_pasted__pPyramid4
     4300000: pCylinder2
+    4300002: pasted__group5_pasted__group4_pasted__pPyramid4
     9500000: //RootNode
     13700000: pCylinder2
+    13700002: pasted__group5_pasted__group4_pasted__pPyramid4
   materials:
     importMaterials: 1
     materialName: 0
