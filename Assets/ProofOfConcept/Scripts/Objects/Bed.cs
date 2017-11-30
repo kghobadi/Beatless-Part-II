@@ -78,6 +78,7 @@ public class Bed : Interactable
             if (sleepCounter < 0)
             {
                 fpc.isAwake = true;
+                cml.enabled = true;
                 sleepCounter = sleepLength;
                 sun.transform.position = sunStartPos;
                 fpc.isHoldingSeed = false;
@@ -89,7 +90,6 @@ public class Bed : Interactable
             alphaVal -= 0.6f * Time.deltaTime;
             interactable = true;
             fpc.speed = originalPSpeed;
-            cml.enabled = true;
             setDayPassed = false;
         }
 
