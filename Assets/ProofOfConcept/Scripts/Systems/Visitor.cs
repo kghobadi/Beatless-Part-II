@@ -236,7 +236,10 @@ public class Visitor : MonoBehaviour
 
     void FindPos(Vector3 position)
     {
-        transform.position = Vector3.MoveTowards(transform.position, position, moveSpeed * Time.deltaTime);
+        if (!isCatHead)
+            transform.position = Vector3.MoveTowards(transform.position, position, moveSpeed * Time.deltaTime);
+        else
+            transform.position = Vector3.MoveTowards(transform.position, position - (Vector3.down * 2), moveSpeed * Time.deltaTime);
     }
 
     void fadeInHeart()
