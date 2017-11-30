@@ -30,9 +30,10 @@ public class windMove : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		//multiplier = bed.speedMultiplier;
-		transform.position = new Vector3(transform.position.x, -5, transform.position.z);
-		moveAmount = clock.bpm;
+        //multiplier = bed.speedMultiplier;
+        transform.position = new Vector3(transform.position.x, -5, transform.position.z);
+
+        moveAmount = clock.bpm;
 		timer -= multiplier * Time.deltaTime;
 		if (timer <= 0) {
 			moveWind ();
