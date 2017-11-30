@@ -59,7 +59,7 @@ public class newSequencePlay : MonoBehaviour {
 		void Awake()
 		{
 
-		//sequencer.enabled = false;
+		sequencer.enabled = false;
 		source = GetComponent<AudioSource>();
 		source.outputAudioMixerGroup = mixer;
 
@@ -117,7 +117,6 @@ public class newSequencePlay : MonoBehaviour {
 			sequencer.enabled = true;
 			//changedSequence = false;
 			changedSequence = false;
-
             sequencer.syncTime = 0;
         }
 
