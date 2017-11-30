@@ -243,7 +243,7 @@ public class Visitor : MonoBehaviour
 
         float dist = Vector3.Distance(player.position, heart.transform.position);
 
-        heart.color = Color.grey - new Color(0, 0, 0, dist * Time.deltaTime * 10f);
+        heart.color = Color.grey - new Color(0, 0, 0, dist * .1f);
 
     }
 }
