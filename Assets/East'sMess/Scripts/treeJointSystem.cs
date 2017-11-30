@@ -38,8 +38,11 @@ public class treeJointSystem : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		swayAmount = GetComponentInParent<beatVisualizer>().progress;
 		
+		swayAmount = GetComponentInParent<beatVisualizer>().progress;
+		if (GetComponentInParent<beatVisualizer>() == null) {
+			swayAmount = GetComponent<beatVisualizer>().progress;
+		}
 		for (int i = 0; i < treeJoints.Count; i++) {
 			treeJoints [i].localEulerAngles = new Vector3 (origAng[i].x + Mathf.Sin(Time.time*swayAmount), origAng[i].y - Mathf.Sin(Time.time*swayAmount), origAng[i].z + Mathf.Sin(Time.time*swayAmount));
 		}
