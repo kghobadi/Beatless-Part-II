@@ -66,7 +66,7 @@ public class Inventory : MonoBehaviour
     void Update()
     {
 
-  //      Debug.Log(unEquip);
+        //      Debug.Log(unEquip);
 
 
         isFull = checkFull();
@@ -156,7 +156,10 @@ public class Inventory : MonoBehaviour
             }
 
             if (!unEquip)
-                slots[currentObject].GetChild(0).GetComponent<inventoryMan>().takeFromInvent();
+            {
+                if (!isEmpty[currentObject])
+                    slots[currentObject].GetChild(0).GetComponent<inventoryMan>().takeFromInvent();
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.Tab) && canOpen)
