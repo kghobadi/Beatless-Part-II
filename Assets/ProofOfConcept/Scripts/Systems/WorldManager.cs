@@ -31,6 +31,7 @@ public class WorldManager : MonoBehaviour
         bedScript = GameObject.FindGameObjectWithTag("Bed").GetComponent<Bed>();
         sunScript = GameObject.FindGameObjectWithTag("Sun").GetComponent<Sun>();
 
+        Random.InitState(System.DateTime.Now.Millisecond);
     }
 
     void Update()
