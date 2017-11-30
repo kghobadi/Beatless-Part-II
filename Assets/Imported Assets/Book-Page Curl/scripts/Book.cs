@@ -14,7 +14,7 @@ public class Book : MonoBehaviour {
     RectTransform BookPanel;
     public Sprite background;
     public Sprite[] bookPages;
-    public bool interactable=true;
+    public bool interactive=true;
     public bool enableShadowEffect=true;
     //represent the index of the sprite shown in the right page
     public int currentPage = 0;
@@ -100,7 +100,7 @@ public class Book : MonoBehaviour {
     }
     void Update()
     {
-        if (pageDragging&&interactable)
+        if (pageDragging&&interactive)
         {
             UpdateBook();
         }
@@ -267,7 +267,7 @@ public class Book : MonoBehaviour {
     }
     public void OnMouseDragRightPage()
     {
-        if (interactable)
+        if (interactive)
         DragRightPageToPoint(transformPoint(Input.mousePosition));
         
     }
@@ -302,13 +302,13 @@ public class Book : MonoBehaviour {
     }
     public void OnMouseDragLeftPage()
     {
-        if (interactable)
+        if (interactive)
         DragLeftPageToPoint(transformPoint(Input.mousePosition));
         
     }
     public void OnMouseRelease()
     {
-        if (interactable)
+        if (interactive)
             ReleasePage();
     }
     public void ReleasePage()
@@ -345,6 +345,10 @@ public class Book : MonoBehaviour {
             currentPage += 2;
         else
             currentPage -= 2;
+        if(currentPage > TotalPageCount)
+        {
+            currentPage = TotalPageCount;
+        }
         LeftNext.transform.SetParent(BookPanel.transform, true);
         Left.transform.SetParent(BookPanel.transform, true);
         LeftNext.transform.SetParent(BookPanel.transform, true);

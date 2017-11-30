@@ -205,7 +205,7 @@ public class Visitor : MonoBehaviour
 
             animater.SetBool("bowing", true);
 
-            if (sunScript.isNight || waitDayCounter >= waitingDays)
+            if (sunScript.isMidday || bedScript.dayPassed)
             {
                 thanking = false;
                 leaving = true;
