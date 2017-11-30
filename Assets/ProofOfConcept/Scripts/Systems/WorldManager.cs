@@ -46,7 +46,7 @@ public class WorldManager : MonoBehaviour
             seedSpawnAmount = Random.Range(3 + tradeDayCounter, 6 + tradeDayCounter);
             SpawnTrader();
         }
-        if (dayCounter % visitorFrequency == 0 && dayCounter != 2 && dayCounter != 4 && bedScript.dayPassed)
+        if (dayCounter % visitorFrequency == 0 && bedScript.dayPassed)
         {
             visitorDayCounter++;
             SpawnVisitors();
