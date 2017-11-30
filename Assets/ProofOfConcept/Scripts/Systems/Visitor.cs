@@ -88,7 +88,7 @@ public class Visitor : MonoBehaviour
 
         }
 
-        waitingDays = Random.Range(2, 5);
+        waitingDays = Random.Range(2, 4);
 
 
 
@@ -205,7 +205,7 @@ public class Visitor : MonoBehaviour
 
             animater.SetBool("bowing", true);
 
-            if (sunScript.isMidday || bedScript.dayPassed)
+            if (sunScript.isMidday || waitingDays == waitDayCounter)
             {
                 thanking = false;
                 leaving = true;
