@@ -36,6 +36,8 @@ public class Trader : Interactable
 
     Animator animater;
 
+    Bed bedScript;
+
     //click to buy instantiation needs to work
     //make it so that it can't have duplicate seed types, only selects 3 from total possible pool
 
@@ -45,6 +47,8 @@ public class Trader : Interactable
         interactable = true;
         animater = GetComponentInChildren<Animator>();
         animater.SetBool("walking", true);
+
+        bedScript = GameObject.FindGameObjectWithTag("Bed").GetComponent<Bed>();
 
         worldMan = GameObject.FindGameObjectWithTag("WorldManager").GetComponent<WorldManager>();
 
@@ -77,12 +81,12 @@ public class Trader : Interactable
             table.SetActive(true);
 
         }
-        else if(tradingActive)
-        {
-            tradingActive = false;
-            table.SetActive(false);
-            walkingAway = true;
-        }
+        //else if(tradingActive)
+        //{
+        //    tradingActive = false;
+        //    table.SetActive(false);
+        //    walkingAway = true;
+        //}
     }
     
     void Update()
@@ -115,9 +119,7 @@ public class Trader : Interactable
             {
 
                 isWaiting = false;
-                s1Seed.GetComponent<inventoryMan>().interactable = false;
-                s2Seed.GetComponent<inventoryMan>().interactable = false;
-                s3Seed.GetComponent<inventoryMan>().interactable = false;
+                
                 if (s1Interactable.clickedOn)
                 {
                     if (cropCurrency.cropCounter >= s1Price)
@@ -206,7 +208,10 @@ public class Trader : Interactable
         }
 
 
-
+        if (bedScript.dayPassed)
+        {
+            walkingAway = true;
+        }
 
     }
 

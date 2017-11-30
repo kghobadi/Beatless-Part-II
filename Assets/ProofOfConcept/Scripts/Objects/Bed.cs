@@ -52,6 +52,7 @@ public class Bed : Interactable
 		wond = GameObject.Find ("windParticles").GetComponent<ParticleSystem> ();
 		windBlast = GameObject.Find ("windBlast").GetComponent<ParticleSystem> ();
         originalPSpeed = fpc.speed;
+        dayCounter = 1;
     }
 
     void Update()

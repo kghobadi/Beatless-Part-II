@@ -88,41 +88,44 @@ public class NewSeed : MonoBehaviour
                 //Checks if the hit is a ground tile and within Distance for planting
                 if (hit.transform.gameObject.tag == "Ground" && Vector3.Distance(_player.transform.position, hit.point) <= withinPlantingRange && !textureShowing)
                 {
-
                     //grabs Cell tile and index
                     Cell fertile = tgs.CellGetAtPosition(hit.point, true);
-                    int cellIndex = tgs.CellGetIndex(fertile);
-                    currentCellIndex = cellIndex;
-
-                    if (currentCellIndex != previousCellIndex)
+                    if(fertile != null)
                     {
-                        previousCellIndex = currentCellIndex;
-                    }
 
-                    //checks if cell is fertile 
-                    if (tgs.CellGetTag(cellIndex) == 0)
-                    {
-                        //Sets texture to clickable
-                        tgs.CellToggleRegionSurface(cellIndex, true, canClickTexture);
+                        int cellIndex = tgs.CellGetIndex(fertile);
+                        currentCellIndex = cellIndex;
 
-                        //If player clicks, we plant seed and clear up Equip slot
-                        if (Input.GetMouseButtonDown(0))
+                        if (currentCellIndex != previousCellIndex)
                         {
-                            plantSeed = true;
-                            targetPos = hit.point;
-                            fpc.isHoldingSeed = false;
-                            inventMan.underPlayerControl = false;
-                            invent.somethingEquipped = false;
+                            previousCellIndex = currentCellIndex;
+                        }
 
-                            invent.usedNowTakeAgain(inventMan.slotNumRetake);
+                        //checks if cell is fertile 
+                        if (tgs.CellGetTag(cellIndex) == 0)
+                        {
+                            //Sets texture to clickable
+                            tgs.CellToggleRegionSurface(cellIndex, true, canClickTexture);
+
+                            //If player clicks, we plant seed and clear up Equip slot
+                            if (Input.GetMouseButtonDown(0))
+                            {
+                                plantSeed = true;
+                                targetPos = hit.point;
+                                fpc.isHoldingSeed = false;
+                                inventMan.underPlayerControl = false;
+                                invent.somethingEquipped = false;
+
+                                invent.usedNowTakeAgain(inventMan.slotNumRetake);
+
+                            }
 
                         }
 
+                        //If it's a new cell, set last cell back to fertileTexture
+                        if (tgs.CellGetTag(previousCellIndex) == 0)
+                            StartCoroutine(ChangeTexture(currentCellIndex, groundTexture));
                     }
-
-                    //If it's a new cell, set last cell back to fertileTexture
-                    if (tgs.CellGetTag(previousCellIndex) == 0)
-                        StartCoroutine(ChangeTexture(currentCellIndex, groundTexture));
                 }
 
             }
