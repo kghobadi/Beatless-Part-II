@@ -69,7 +69,7 @@ public class Seed : Interactable
 
         gameObject.name = "seed" + plant.name;
 
-        invent = playerControl.gameObject.GetComponent<Inventory>();
+        invent = fpc.gameObject.GetComponent<Inventory>();
 
         StartCoroutine(Decompose());
     }
@@ -111,7 +111,7 @@ public class Seed : Interactable
                         {
                             plantSeed = true;
                             targetPos = hit.point;
-                            playerControl.isHoldingSeed = false;
+                            fpc.isHoldingSeed = false;
                             inventMan.underPlayerControl = false;
 
                             invent.usedNowTakeAgain(inventMan.slotNumRetake);

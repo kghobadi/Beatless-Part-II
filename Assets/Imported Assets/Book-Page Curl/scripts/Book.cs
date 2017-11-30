@@ -63,6 +63,9 @@ public class Book : MonoBehaviour {
     //current flip mode
     FlipMode mode;
 
+    public AudioSource soundboard;
+    public AudioClip pageFlip;
+
     void Start()
     {
         float scaleFactor = 1;
@@ -237,6 +240,7 @@ public class Book : MonoBehaviour {
         if (currentPage >= bookPages.Length) return;
         pageDragging = true;
         mode = FlipMode.RightToLeft;
+        soundboard.PlayOneShot(pageFlip);
         f = point;
 
 
@@ -272,6 +276,7 @@ public class Book : MonoBehaviour {
         if (currentPage <= 0) return;
         pageDragging = true;
         mode = FlipMode.LeftToRight;
+        soundboard.PlayOneShot(pageFlip);
         f = point;
 
         NextPageClip.rectTransform.pivot = new Vector2(1, 0.12f);
@@ -403,4 +408,6 @@ public class Book : MonoBehaviour {
         if (onFinish != null)
             onFinish();
     }
+
+   
 }
