@@ -14,7 +14,7 @@ public class WorldManager : MonoBehaviour
 
     public GameObject traderPrefab;
     GameObject traderClone;
-    public GameObject cropCoin;
+    public GameObject cropCurrency;
     GameObject cropCoinClone;
 
     public int seedSpawnAmount;
@@ -31,6 +31,7 @@ public class WorldManager : MonoBehaviour
         bedScript = GameObject.FindGameObjectWithTag("Bed").GetComponent<Bed>();
         sunScript = GameObject.FindGameObjectWithTag("Sun").GetComponent<Sun>();
 
+        Random.InitState(System.DateTime.Now.Millisecond);
     }
 
     void Update()
@@ -103,9 +104,9 @@ public class WorldManager : MonoBehaviour
         for(int i =0; i < coinSpawns.Length; i++)
         {
             int randomSpawn = Random.Range(0, 100);
-            if(randomSpawn < 50)
+            if(randomSpawn < 25)
             {
-                cropCoinClone = Instantiate(cropCoin, coinSpawns[i].position, Quaternion.identity);
+                cropCoinClone = Instantiate(cropCurrency, coinSpawns[i].position, Quaternion.identity);
             }
         }
     }

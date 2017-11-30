@@ -79,20 +79,21 @@ public class Water : MonoBehaviour
 				Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
 				RaycastHit hit;
 
-				waterEffect.Emit (particleAmount);
-				//cameraSource.Play ();
+                //cameraSource.Play ();
 
-				//Checks if raycast hits
-				if (Physics.Raycast (ray, out hit)) {
+                waterEffect.Emit(particleAmount);
+                //Checks if raycast hits
+                if (Physics.Raycast (ray, out hit)) {
 					//Checks if the hit is a ground tile and within Distance for hoeing
 					if (hit.transform.gameObject.tag == "sequencer" && Vector3.Distance (_player.transform.position, hit.point) <= waterDistance) {
 						//Can add cursor sprite change here
+
 						cursorChange = true;
 						currentPlant = hit.transform.gameObject.GetComponent<NewPlantLife> ();
 						if (!currentPlant.hasBeenWateredToday) {
 							currentPlant.hasBeenWateredToday = true;
 							currentPlant.hasBeenWatered = true;
-							cameraSource.PlayOneShot(wateringSound);
+							cameraSource.PlayOneShot(wateringSound, 0.65f);
 
 							//to change ground texture to water texture
 							Cell tree = tgs.CellGetAtPosition (hit.transform.position, true);
