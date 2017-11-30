@@ -1,6 +1,6 @@
 //Maya ASCII 2016 scene
 //Name: tree2_old.ma
-//Last modified: Thu, Nov 30, 2017 01:12:58 AM
+//Last modified: Thu, Nov 30, 2017 01:37:56 PM
 //Codeset: UTF-8
 requires maya "2016";
 requires "stereoCamera" "10.0";
@@ -19,8 +19,8 @@ createNode transform -n "group3";
 createNode transform -s -n "persp";
 	rename -uid "96042150-7749-7D9C-48A2-FD9557ECCFDF";
 	setAttr ".v" no;
-	setAttr ".t" -type "double3" -35.625934032620904 13.762453793063713 -12.301698074799724 ;
-	setAttr ".r" -type "double3" -6.9383527299821566 -111.39999999999236 0 ;
+	setAttr ".t" -type "double3" -37.439871289863945 19.551323760276521 5.2929536371881749 ;
+	setAttr ".r" -type "double3" -14.738352729982276 -87.399999999991849 0 ;
 createNode camera -s -n "perspShape" -p "persp";
 	rename -uid "DDDDCEC6-BB4F-342C-D552-8FB9C77EE15A";
 	setAttr -k off ".v" no;
@@ -90,7 +90,6 @@ createNode joint -n "pasted__pasted__joint1" -p "pasted__group5";
 	rename -uid "C826EEAE-A341-CB52-39AD-8490EEAEFE51";
 	addAttr -ci true -sn "liw" -ln "lockInfluenceWeights" -min 0 -max 1 -at "bool";
 	setAttr ".uoc" 1;
-	setAttr ".t" -type "double3" 0 0 10 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr ".jo" -type "double3" 89.999999999999986 1.0609116902641673 90 ;
@@ -1550,15 +1549,15 @@ createNode lambert -n "pasted__leaves1";
 	setAttr ".c" -type "float3" 1 0.33610001 0 ;
 	setAttr ".ambc" -type "float3" 0.41463339 0.41463339 0.41463339 ;
 createNode lightLinker -s -n "lightLinker1";
-	rename -uid "2B2C896A-DD49-D573-68FC-319622D584DA";
+	rename -uid "9C014851-F24E-6BE3-CA3A-AAB99D772147";
 	setAttr -s 34 ".lnk";
 	setAttr -s 34 ".slnk";
 createNode displayLayerManager -n "layerManager";
-	rename -uid "B71A6C5E-2F47-76F7-67D4-938FDB164CC2";
+	rename -uid "96FC8182-6D45-1379-99AA-51A570F32807";
 createNode displayLayer -n "defaultLayer";
 	rename -uid "89F73E7E-3549-C7F9-E776-4A8C9896A75A";
 createNode renderLayerManager -n "renderLayerManager";
-	rename -uid "04EBB323-2449-FF13-46C0-FDAA58970115";
+	rename -uid "2191A0B5-A94D-22A7-0892-4CB736D07486";
 createNode renderLayer -n "defaultRenderLayer";
 	rename -uid "1BD86DD1-054C-B185-A728-6EAF34BD7236";
 	setAttr ".g" yes;
