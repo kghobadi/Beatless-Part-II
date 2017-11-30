@@ -66,6 +66,7 @@ public class Visitor : MonoBehaviour
         if (randy == 2)
             targetPlants = LookingForPlant.TRIANGLE;
 
+        desiredPlantAmount += Random.Range(0, 3);
 
         if (targetPlants == LookingForPlant.CIRCLE)
         {
