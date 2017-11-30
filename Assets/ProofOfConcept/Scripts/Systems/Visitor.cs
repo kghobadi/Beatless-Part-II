@@ -26,6 +26,7 @@ public class Visitor : MonoBehaviour
 
     public SpriteRenderer heart;
     public Sprite circleSprite, squareSprite, triSprite;
+    public Color heartColor;
 
     public ParticleSystemRenderer particleHumanRend;
     public Material circleSkin, squareSkin, triSkin;
@@ -243,7 +244,7 @@ public class Visitor : MonoBehaviour
 
         float dist = Vector3.Distance(player.position, heart.transform.position);
 
-        heart.color = Color.grey - new Color(0, 0, 0, dist * .1f);
+        heart.color = heartColor - new Color(0, 0, 0, dist * .1f);
 
     }
 }
