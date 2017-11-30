@@ -37,6 +37,8 @@ public class Inventory : MonoBehaviour
 
     GameObject rightArmObj;
 
+    bool unEquip;
+
     //public bool usedNowTakeAgain;
 
     void Start()
@@ -64,45 +66,51 @@ public class Inventory : MonoBehaviour
     void Update()
     {
 
+  //      Debug.Log(unEquip);
+
+
         isFull = checkFull();
 
         emptyCounter = checkEmpty();
 
-        if ((Input.GetKeyDown(KeyCode.Q) || Input.GetAxis("Mouse ScrollWheel") < 0f) && emptyCounter < isEmpty.Length)
-        {
-            if (somethingEquipped)
-            {
-                rightArmObj.transform.GetChild(0).GetComponent<inventoryMan>().putThisInInvent();
-            }
-            if(currentObject > 0)
-            {
-                currentObject--;
-            }
-            else
-            {
-                currentObject = slots.Length - 1;
-            }
-            for (int i = 0; i < slots.Length + 1; i++)
-                {
-                    if (isEmpty[currentObject])
-                    {
-                        if (currentObject > 0)
-                            currentObject--;
-                        else
-                        {
-                            currentObject = slots.Length - 1;
-                        }
-                    }
-                    else
-                    {
-                        i = slots.Length + 1;
-                    }
-                }
-            
-           
-            slots[currentObject].GetChild(0).GetComponent<inventoryMan>().takeFromInvent();
-        }
-        if ((Input.GetKeyDown(KeyCode.E) || Input.GetAxis("Mouse ScrollWheel") > 0f) && emptyCounter < isEmpty.Length)
+        //if ((Input.GetKeyDown(KeyCode.Q) || Input.GetAxis("Mouse ScrollWheel") < 0f) && emptyCounter < isEmpty.Length)
+        //{
+        //    if (somethingEquipped)
+        //    {
+        //        rightArmObj.transform.GetChild(0).GetComponent<inventoryMan>().putThisInInvent();
+        //    }
+        //    if (currentObject > 0)
+        //    {
+        //   
+        //            currentObject--;
+        //   
+        //       
+        //    }
+        //    else
+        //    {
+        //        currentObject = slots.Length - 1;
+        //    }
+        //    for (int i = 0; i < slots.Length + 1; i++)
+        //    {
+        //        if (isEmpty[currentObject])
+        //        {
+        //            if (currentObject > 0)
+        //                currentObject--;
+        //            else
+        //            {
+        //                currentObject = slots.Length - 1;
+        //            }
+        //        }
+        //        else
+        //        {
+        //            i = slots.Length + 1;
+        //        }
+        //    }
+
+
+        //    slots[currentObject].GetChild(0).GetComponent<inventoryMan>().takeFromInvent();
+        //}
+        if ((Input.GetKeyDown(KeyCode.E) || Input.GetAxis("Mouse ScrollWheel") > 0f))// && emptyCounter < isEmpty.Length)
         {
             if (somethingEquipped)
             {
@@ -110,30 +118,45 @@ public class Inventory : MonoBehaviour
             }
             if (currentObject < (slots.Length - 1))
             {
-                currentObject++;
+                if (!unEquip)
+                    currentObject++;
+                else
+                    unEquip = false;
             }
             else
             {
                 currentObject = 0;
+                unEquip = true;
             }
             for (int i = 0; i < slots.Length + 1; i++)
+            {
+
+                if (isEmpty[currentObject])
                 {
-                    if (isEmpty[currentObject])
+                    if (currentObject < (slots.Length - 1))
                     {
-                        if (currentObject < (slots.Length - 1))
+                        if (!unEquip)
                             currentObject++;
                         else
                         {
-                            currentObject = 0;
+                            unEquip = false;
+
                         }
                     }
                     else
                     {
-                        i = slots.Length + 1;
+                        currentObject = 0;
+                        unEquip = true;
                     }
                 }
-            
-            slots[currentObject].GetChild(0).GetComponent<inventoryMan>().takeFromInvent();
+                else
+                {
+                    i = slots.Length + 1;
+                }
+            }
+
+            if (!unEquip)
+                slots[currentObject].GetChild(0).GetComponent<inventoryMan>().takeFromInvent();
         }
 
         if (Input.GetKeyDown(KeyCode.Tab) && canOpen)
@@ -327,7 +350,7 @@ public class Inventory : MonoBehaviour
     int checkEmpty()
     {
         emptyCount = 0;
-        for(int i = 0; i < isEmpty.Length; i++)
+        for (int i = 0; i < isEmpty.Length; i++)
         {
             if (isEmpty[i])
             {

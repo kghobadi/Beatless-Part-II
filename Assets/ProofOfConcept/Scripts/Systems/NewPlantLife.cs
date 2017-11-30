@@ -20,6 +20,12 @@ public class NewPlantLife : MonoBehaviour
     AudioHelm.Sequencer seq;
 
     //playSequence playSeq;
+    public enum PlantType
+    {
+        CIRCLE, SQUARE, TRIANGLE
+    }
+
+    public PlantType thisPlant;
 
     public GameObject sapling, young, adult, old, stump;
     private GameObject saplingClone, youngClone, adultClone, oldClone, stumpClone; // can still add or remove from life cycle
@@ -57,6 +63,7 @@ public class NewPlantLife : MonoBehaviour
         neighbourPos = new Vector3[6];
         bed = GameObject.FindGameObjectWithTag("Bed");
         sleepScript = bed.GetComponent<Bed>();
+        
     }
     void Start()
     {

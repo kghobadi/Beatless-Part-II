@@ -81,7 +81,7 @@ public class newSequencePlay : MonoBehaviour {
 		windDir = sleepScript.windDir;
 		WindDirection ();
 
-		/*	if (Random.Range(0, 3) == 1)
+        /*	if (Random.Range(0, 3) == 1)
 			{
 				note = 0;
 				isLeader = true;
@@ -93,15 +93,14 @@ public class newSequencePlay : MonoBehaviour {
 			}
 
 			changedSequence = false; */
-		}
+
+            sequencer.syncTime = 0;
+    }
 
 		// Update is called once per frame
 		void Update()
 		{
-
-		if (life.ageCounter == 0) {
-			sequencer.syncTime = 0;
-		}
+        
 
 		//print (sequencer.GetSequencerPosition ());
 
@@ -118,7 +117,9 @@ public class newSequencePlay : MonoBehaviour {
 			sequencer.enabled = true;
 			//changedSequence = false;
 			changedSequence = false;
-			}
+
+            sequencer.syncTime = 0;
+        }
 
 		if (!changedSequence) {
 			if (life.ageCounter == 1) {
