@@ -26,6 +26,7 @@ public class Visitor : MonoBehaviour
 
     public SpriteRenderer heart;
     public Sprite circleSprite, squareSprite, triSprite;
+    public Color heartColor;
 
     public ParticleSystemRenderer particleHumanRend;
     public Material circleSkin, squareSkin, triSkin;
@@ -65,6 +66,7 @@ public class Visitor : MonoBehaviour
         if (randy == 2)
             targetPlants = LookingForPlant.TRIANGLE;
 
+        desiredPlantAmount += Random.Range(0, 3);
 
         if (targetPlants == LookingForPlant.CIRCLE)
         {
@@ -87,7 +89,7 @@ public class Visitor : MonoBehaviour
 
         }
 
-        waitingDays = Random.Range(2, 5);
+        waitingDays = Random.Range(2, 4);
 
 
 
@@ -204,7 +206,7 @@ public class Visitor : MonoBehaviour
 
             animater.SetBool("bowing", true);
 
-            if (sunScript.isMidday || bedScript.dayPassed)
+            if (sunScript.isMidday || waitingDays == waitDayCounter)
             {
                 thanking = false;
                 leaving = true;
@@ -235,7 +237,10 @@ public class Visitor : MonoBehaviour
 
     void FindPos(Vector3 position)
     {
-        transform.position = Vector3.MoveTowards(transform.position, position, moveSpeed * Time.deltaTime);
+        if (!isCatHead)
+            transform.position = Vector3.MoveTowards(transform.position, position, moveSpeed * Time.deltaTime);
+        else
+            transform.position = Vector3.MoveTowards(transform.position, position - (Vector3.down * 2), moveSpeed * Time.deltaTime);
     }
 
     void fadeInHeart()
@@ -243,7 +248,7 @@ public class Visitor : MonoBehaviour
 
         float dist = Vector3.Distance(player.position, heart.transform.position);
 
-        heart.color = Color.grey - new Color(0, 0, 0, dist * .1f);
+        heart.color = heartColor - new Color(0, 0, 0, dist * .1f);
 
     }
 }
