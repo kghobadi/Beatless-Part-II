@@ -103,7 +103,7 @@ public class WorldManager : MonoBehaviour
         for(int i =0; i < coinSpawns.Length; i++)
         {
             int randomSpawn = Random.Range(0, 100);
-            if(randomSpawn < 50)
+            if(randomSpawn < 25)
             {
                 cropCoinClone = Instantiate(cropCoin, coinSpawns[i].position, Quaternion.identity);
             }
