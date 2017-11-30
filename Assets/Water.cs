@@ -93,7 +93,7 @@ public class Water : MonoBehaviour
 						if (!currentPlant.hasBeenWateredToday) {
 							currentPlant.hasBeenWateredToday = true;
 							currentPlant.hasBeenWatered = true;
-							cameraSource.PlayOneShot(wateringSound);
+							cameraSource.PlayOneShot(wateringSound, 0.65f);
 
 							//to change ground texture to water texture
 							Cell tree = tgs.CellGetAtPosition (hit.transform.position, true);
