@@ -5,7 +5,7 @@ using UnityEngine;
 public class BookClick : Interactable {
 
     bool isReading;
-    public GameObject closeBookButton, bookBackground;
+    public GameObject closeBookButton, bookBackground, nextBut, prevBut;
     GameObject bookPrefab;
     camMouseLook cameraControl;
     public AudioClip closingBook;
@@ -17,6 +17,9 @@ public class BookClick : Interactable {
         bookPrefab.SetActive(false);
         closeBookButton.SetActive(false);
         bookBackground.SetActive(false);
+        nextBut.SetActive(false);
+        prevBut.SetActive(false);
+
     }
 
     public override void handleClickSuccess()
@@ -31,6 +34,8 @@ public class BookClick : Interactable {
             cameraControl.enabled = false;
             closeBookButton.SetActive(true);
             bookBackground.SetActive(true);
+            nextBut.SetActive(true);
+            prevBut.SetActive(true);
         }
     }
 
@@ -55,5 +60,7 @@ public class BookClick : Interactable {
         soundBoard.PlayOneShot(closingBook);
         closeBookButton.SetActive(false);
         bookBackground.SetActive(false);
+        nextBut.SetActive(false);
+        prevBut.SetActive(false);
     }
 }
