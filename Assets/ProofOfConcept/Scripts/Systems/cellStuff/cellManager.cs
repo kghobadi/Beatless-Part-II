@@ -12,6 +12,8 @@ public class cellManager : MonoBehaviour
     public Texture2D groundTexture, fertileTexture, plantedTexture;
     public bool filledAllTextures;
 
+
+    public bool resizing;
     void Start()
     {
         tgs = TerrainGridSystem.instance;
@@ -33,22 +35,26 @@ public class cellManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Alpha0))
+            resizeGrid(Random.Range(1.0f, 2.0f), Random.Range(1.0f, 2.0f));
 
 
-        //if (Input.GetMouseButton(0))
-        //{
-        //   // Debug.Log(tgs.cellHighlighted);
-        //    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        //    RaycastHit hit;
+    }
 
-        //    if (Physics.Raycast(ray, out hit))
-        //    {
-        //        if (hit.transform.gameObject.tag == "Ground")
-        //        {
-        //            Cell fertile = tgs.CellGetAtPosition(hit.point, true);
-        //            Debug.Log(fertile.row);
-        //        }
-        //    }
-        //}
+    public void resizeGrid(float columnMultiplier, float rowsMultiplier)
+    {
+
+        tgs.columnCount = Mathf.RoundToInt(tgs.columnCount * columnMultiplier);
+        tgs.rowCount = Mathf.RoundToInt(tgs.rowCount * rowsMultiplier);
+        tgs.gridScale = new Vector2(tgs.gridScale.x * columnMultiplier, tgs.gridScale.y * rowsMultiplier);
+        tgs.Redraw();
+        for (int i = 0; i < tgs.cells.Count; i++)
+        {
+            tgs.CellSetTag(i, 0);
+            tgs.CellToggleRegionSurface(i, true, groundTexture);
+        }
+        resizing = true;
+
+
     }
 }
