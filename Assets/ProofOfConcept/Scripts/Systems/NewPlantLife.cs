@@ -9,13 +9,15 @@ public class NewPlantLife : MonoBehaviour
 
     //bool fruitGrowing;
     //public int fruitAmount;
-    public int ageCounter;
-    public int growthPeriod;
+    public int ageCounter, deathCounter;
+    public int growthPeriod, growthPeriodSapling, growthPeriodAdult, growthPeriodOld;
+
+    public int extraLifeMax;
+    int extraLifeCounter;
+
 
     public bool hasBeenWatered;
     public bool hasBeenWateredToday;
-    public int extraLifeMax;
-    int extraLifeCounter;
 
     AudioHelm.Sequencer seq;
 
@@ -67,8 +69,9 @@ public class NewPlantLife : MonoBehaviour
     }
     void Start()
     {
-       // playAud = GetComponent<playSequence>();
-        //grabs Audio 
+        // playAud = GetComponent<playSequence>();
+        //grabs Audio
+        deathCounter = 0;
         treeSounds = gameObject.AddComponent<AudioSource>();
         //TerrainGridSystem ref
         tgs = TerrainGridSystem.instance;
@@ -79,27 +82,7 @@ public class NewPlantLife : MonoBehaviour
         cellIndex = tgs.CellGetIndex(groundTile);
         neighbors = tgs.CellGetNeighbours(groundTile);
         tgs.CellSetCanCross(cellIndex, false);
-        //fills up neighborIndexes with the proper cell indexes
-        for (int i = 0; i < neighbors.Count; i++)
-        {
-            int index = tgs.CellGetIndex(neighbors[i]);
-            neighborIndexes.Add(index);
-            neighbourPos[i] = tgs.CellGetPosition(index);
-            //this gives you neighbor cell position
-            //can be used to see which cell you’re being given
-            //raycast to this position to get the plant collider and get the sequencer
-            if (tgs.CellGetTag(index) == 1)
-            {
-                //this cell has a tree planted, but don’t run this in start
-                //send to an array of “plants nearby”
-
-                //for any rule make a bool in plantlife for “isFollowingRule” to see if neighbours are occupied or following a rule already
-                //are two adjacent cells in the index occupied that’s a triad
-                //if all cells are occupied that’s an arp, arp beats triad
-            }
-        }
-
-
+   
         if (plantedInEditor)
         {
             ageCounter -= 1;
@@ -118,9 +101,6 @@ public class NewPlantLife : MonoBehaviour
         StartCoroutine(Growth());
     }
 
-    //	note = seq.GetAllNoteOnsInRange (0, 96);
-
-    //	newNote = note [0];
     void Update()
     {
         if (hasGrown)
@@ -129,46 +109,39 @@ public class NewPlantLife : MonoBehaviour
             {
                 case 1: //Sapling
                     hasGrown = false;
+                    hasBeenWatered = false;
                     playAud.changedSequence = false;
                     tgs.CellToggleRegionSurface(cellIndex, true, growingTexture);
                     saplingClone = Instantiate(sapling, transform.position, Quaternion.Euler(0, randomRotation, 0), transform);
                     currentTree = saplingClone.transform;
-                    growthPeriod = 4;
+                    growthPeriod = growthPeriodSapling;
                     StartCoroutine(Growth());
                     break;
-                /*  case 1: //Young
-                      hasGrown = false;
-                      playAud.clipsSwitched = false;
-                      youngClone = Instantiate(young, transform.position, Quaternion.Euler(0, randomRotation, 0));
-                      Destroy(saplingClone);
-                      currentTree = youngClone.transform;
-                      fruitAmount = Random.Range(0, 2);
-                      growthDay = Random.Range(3, 5);
-                      StartCoroutine(Growth());
-                      break; */
-
                 case 2: //Adult
                     hasGrown = false;
+                    hasBeenWatered = false;
                     playAud.changedSequence = false;
                     Destroy(saplingClone);
                     adultClone = Instantiate(adult, transform.position, Quaternion.Euler(0, randomRotation, 0), transform);
                     currentTree = adultClone.transform;
                     //fruitAmount = Random.Range(0, 2);
-                    growthPeriod = 10;
+                    growthPeriod = growthPeriodAdult;
                     StartCoroutine(Growth());
                     break;
                 case 3: // Old
                     hasGrown = false;
-                   playAud.changedSequence = false;
+                    hasBeenWatered = false;
+                    playAud.changedSequence = false;
                     Destroy(adultClone);
                     oldClone = Instantiate(old, transform.position, Quaternion.Euler(0, randomRotation, 0), transform);
                     currentTree = oldClone.transform;
                     //fruitAmount = Random.Range(0, 2);
-                    growthPeriod = 6;
+                    growthPeriod = growthPeriodOld;
                     StartCoroutine(Growth());
                     break;
                 case 4: // Dead
                     hasGrown = false;
+                    hasBeenWatered = false;
                     playAud.changedSequence = false;
                     Destroy(oldClone);
                     currentTree = null;
@@ -186,13 +159,7 @@ public class NewPlantLife : MonoBehaviour
                     break;
             }
         }
-        //		seq.OnNoteOn (newNote);
-        //	currentTree.localScale = Vector3.Lerp (new Vector3(1.2f, 1.2f, 1.2f), new Vector3(1.4f, 1.4f, 1.4f), Mathf.PingPong(Time.time, 1));
-        //} else {
-        //	currentTree.localScale = Vector3.Lerp (currentTree.localScale, new Vector3 (1f, 1f, 1f), Time.deltaTime);
-
-        //}
-        //}
+    
     }
 
     IEnumerator Growth()
@@ -227,8 +194,8 @@ public class NewPlantLife : MonoBehaviour
         }
         else
         {
-            hasBeenWateredToday = false;
-            StartCoroutine(Growth());
+                hasBeenWateredToday = false;
+                StartCoroutine(Growth());
             //can add death state here and counter for Non-Watered growth periods. 
         }
     }
