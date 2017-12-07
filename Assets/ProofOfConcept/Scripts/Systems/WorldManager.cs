@@ -11,6 +11,7 @@ public class WorldManager : MonoBehaviour
     int dayCounter;
     public int traderFrequency, visitorFrequency;
     public int tradeDayCounter, visitorDayCounter;
+    public int cropSpawnChance;
 
     public GameObject traderPrefab;
     GameObject traderClone;
@@ -104,7 +105,7 @@ public class WorldManager : MonoBehaviour
         for(int i =0; i < coinSpawns.Length; i++)
         {
             int randomSpawn = Random.Range(0, 100);
-            if(randomSpawn < 15)
+            if(randomSpawn < cropSpawnChance)
             {
                 cropCoinClone = Instantiate(cropCurrency, coinSpawns[i].position, Quaternion.identity);
             }
