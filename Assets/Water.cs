@@ -36,7 +36,7 @@ public class Water : MonoBehaviour
     private Sprite normalSprite;
     private Sprite clickSprite;
 
-    bool cursorChange, changeBack;
+    bool cursorChange, changeBack, rotateCan, rotateCanBack;
     int frameCounter;
 
     //Sprite symbol; use to change cursor sprite
@@ -72,7 +72,7 @@ public class Water : MonoBehaviour
             symbol.sprite = normalSprite;
         }
 
-        if (inventMan.underPlayerControl)
+        if (inventMan.underPlayerControl && !rotateCan && !rotateCanBack)
         {
             //Sends out raycast
 			if (Input.GetMouseButtonDown (0)) {
@@ -81,19 +81,18 @@ public class Water : MonoBehaviour
 
                 //cameraSource.Play ();
 
-                waterEffect.Emit(particleAmount);
                 //Checks if raycast hits
                 if (Physics.Raycast (ray, out hit)) {
 					//Checks if the hit is a ground tile and within Distance for hoeing
 					if (hit.transform.gameObject.tag == "sequencer" && Vector3.Distance (_player.transform.position, hit.point) <= waterDistance) {
-						//Can add cursor sprite change here
-
-						cursorChange = true;
+                        //Can add cursor sprite change here
+                        //lerp position forward 60 on x
+                        rotateCan = true;
+                        cursorChange = true;
 						currentPlant = hit.transform.gameObject.GetComponent<NewPlantLife> ();
 						if (!currentPlant.hasBeenWateredToday) {
 							currentPlant.hasBeenWateredToday = true;
 							currentPlant.hasBeenWatered = true;
-							cameraSource.PlayOneShot(wateringSound, 0.65f);
 
 							//to change ground texture to water texture
 							Cell tree = tgs.CellGetAtPosition (hit.transform.position, true);
@@ -113,6 +112,23 @@ public class Water : MonoBehaviour
             {
                 changeBack = true;
                 frameCounter = 10;
+            }
+        }
+        if (rotateCan) {
+            transform.localEulerAngles = Vector3.MoveTowards(transform.localEulerAngles, new Vector3(60, 0, 0), Time.deltaTime * 100);
+            if(transform.localEulerAngles == new Vector3(60, 0, 0)) {
+                waterEffect.Emit(particleAmount); // water particles
+                cameraSource.PlayOneShot(wateringSound, 1f);
+                rotateCan = false;
+                rotateCanBack = true;
+            }
+        }
+        if (rotateCanBack)
+        {
+            transform.localEulerAngles = Vector3.MoveTowards(transform.localEulerAngles, Vector3.zero, Time.deltaTime * 100);
+            if (transform.localEulerAngles == Vector3.zero)
+            {
+                rotateCanBack = false;
             }
         }
     }
