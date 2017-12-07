@@ -72,7 +72,7 @@ public class Water : MonoBehaviour
             symbol.sprite = normalSprite;
         }
 
-        if (inventMan.underPlayerControl)
+        if (inventMan.underPlayerControl && !rotateCan && !rotateCanBack)
         {
             //Sends out raycast
 			if (Input.GetMouseButtonDown (0)) {
@@ -93,7 +93,6 @@ public class Water : MonoBehaviour
 						if (!currentPlant.hasBeenWateredToday) {
 							currentPlant.hasBeenWateredToday = true;
 							currentPlant.hasBeenWatered = true;
-							cameraSource.PlayOneShot(wateringSound, 0.65f);
 
 							//to change ground texture to water texture
 							Cell tree = tgs.CellGetAtPosition (hit.transform.position, true);
@@ -119,6 +118,7 @@ public class Water : MonoBehaviour
             transform.localEulerAngles = Vector3.MoveTowards(transform.localEulerAngles, new Vector3(60, 0, 0), Time.deltaTime * 100);
             if(transform.localEulerAngles == new Vector3(60, 0, 0)) {
                 waterEffect.Emit(particleAmount); // water particles
+                cameraSource.PlayOneShot(wateringSound, 1f);
                 rotateCan = false;
                 rotateCanBack = true;
             }
