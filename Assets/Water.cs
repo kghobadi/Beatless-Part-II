@@ -43,7 +43,7 @@ public class Water : MonoBehaviour
 
     void Start()
     {
-        frameCounter = 10;
+        frameCounter = 5;
         //TerrainGridSystem reference
         tgs = TerrainGridSystem.instance;
 
@@ -65,6 +65,17 @@ public class Water : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit))
+        {
+            //Checks if the hit is a ground tile and within Distance for hoeing
+            if (hit.transform.gameObject.tag == "sequencer" && Vector3.Distance(_player.transform.position, hit.point) <= waterDistance)
+            {
+                cursorChange = true;
+                changeBack = false;
+            }
+        }
         if (changeBack)
         {
             cursorChange = false;
@@ -72,13 +83,12 @@ public class Water : MonoBehaviour
             symbol.sprite = normalSprite;
         }
 
+
         if (inventMan.underPlayerControl && !rotateCan && !rotateCanBack)
         {
             //Sends out raycast
 			if (Input.GetMouseButtonDown (0)) {
-				Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
-				RaycastHit hit;
-
+				
                 //cameraSource.Play ();
 
                 //Checks if raycast hits
@@ -111,7 +121,7 @@ public class Water : MonoBehaviour
             if (frameCounter < 0)
             {
                 changeBack = true;
-                frameCounter = 10;
+                frameCounter = 5;
             }
         }
         if (rotateCan) {
