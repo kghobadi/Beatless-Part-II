@@ -19,6 +19,8 @@ public class NewPlantLife : MonoBehaviour
     public bool hasBeenWatered;
     public bool hasBeenWateredToday;
 
+	mixOutAmb ambiance;
+
     AudioHelm.Sequencer seq;
 
     //playSequence playSeq;
@@ -67,6 +69,7 @@ public class NewPlantLife : MonoBehaviour
         neighbourPos = new Vector3[6];
         bed = GameObject.FindGameObjectWithTag("Bed");
         sleepScript = bed.GetComponent<Bed>();
+		ambiance = GameObject.Find ("ambiance").GetComponent<mixOutAmb>();
 
     }
     void Start()
@@ -112,14 +115,15 @@ public class NewPlantLife : MonoBehaviour
         {
             switch (ageCounter)
             {
-                case 1: //Sapling
-                    hasGrown = false;
-                    hasBeenWatered = false;
-                    playAud.changedSequence = false;
-                    tgs.CellToggleRegionSurface(cellIndex, true, growingTexture);
-                    saplingClone = Instantiate(sapling, transform.position, Quaternion.Euler(0, randomRotation, 0), transform);
-                    currentTree = saplingClone.transform;
-                    growthPeriod = growthPeriodSapling;
+			case 1: //Sapling
+				hasGrown = false;
+				hasBeenWatered = false;
+				playAud.changedSequence = false;
+				tgs.CellToggleRegionSurface (cellIndex, true, growingTexture);
+				saplingClone = Instantiate (sapling, transform.position, Quaternion.Euler (0, randomRotation, 0), transform);
+				currentTree = saplingClone.transform;
+				growthPeriod = growthPeriodSapling;
+				ambiance.somethingPlanted = true;
                     StartCoroutine(Growth());
                     break;
                 case 2: //Adult
@@ -226,5 +230,9 @@ public class NewPlantLife : MonoBehaviour
         tgs.CellToggleRegionSurface(cellIndex, true, growingTexture);
         transform.position = tgs.CellGetPosition(cellIndex);
     }
+
+	void OnDestroy() {
+		ambiance.lookForPlants = true;
+	}
 
 }
