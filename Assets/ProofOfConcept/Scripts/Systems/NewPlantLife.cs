@@ -187,7 +187,6 @@ public class NewPlantLife : MonoBehaviour
             }
 
             tgs.CellToggleRegionSurface(cellIndex, true, growingTexture);
-            Debug.Log(growthPeriod);
         }
         //checks if hasBeenWatered, otherwise keeps growing in same Age
         if (hasBeenWatered)
