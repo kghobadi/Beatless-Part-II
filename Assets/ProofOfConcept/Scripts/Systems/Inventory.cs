@@ -181,7 +181,6 @@ public class Inventory : MonoBehaviour
         {
             canOpen = true;
         }
-
         //want to make a real-time grid, child items to Inventory, send them to space, if space is taken check object tag, if dif object move to new space
         //if inventory is full, play inv full sound
 
@@ -206,7 +205,7 @@ public class Inventory : MonoBehaviour
 
     public void closeInventory()
     {
-        Debug.Log("closing");
+        //        Debug.Log("closing");
         fpc.enabled = true;
         cameraControl.isActive = true;
         Cursor.lockState = CursorLockMode.Locked;

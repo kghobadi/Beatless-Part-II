@@ -49,6 +49,13 @@ public class NewSeed : MonoBehaviour
     inventoryMan inventMan;
     Inventory invent;
 
+    bool cursorChange, changeBack;
+    private Sprite normalSprite;
+    private Sprite clickSprite;
+    int frameCounter;
+
+    SpriteRenderer symbol;
+
     void Start()
     {
         _player = GameObject.FindGameObjectWithTag("Player");
@@ -61,6 +68,7 @@ public class NewSeed : MonoBehaviour
         sleepScript = bed.GetComponent<Bed>();
         //Random decompDay
         //decompositionDay = Random.Range(decompositionDaysMin, decompositionDaysMax);
+        symbol = GameObject.FindGameObjectWithTag("Symbol").GetComponent<SpriteRenderer>(); //searches for InteractSymbol
 
         //TerrainGridSystem Reference
         tgs = TerrainGridSystem.instance;
@@ -69,17 +77,29 @@ public class NewSeed : MonoBehaviour
 
         inventMan = GetComponent<inventoryMan>();
         invent = _player.GetComponent<Inventory>();
-        //StartCoroutine(Decompose());
+        
+        //loads Cursor Sprites
+        normalSprite = Resources.Load<Sprite>("CursorSprites/crosshair");
+        clickSprite = Resources.Load<Sprite>("CursorSprites/crosshairclicked");
+        frameCounter = 5;
     }
 
     void Update()
     {
+        if (changeBack)
+        {
+            cursorChange = false;
+            changeBack = false;
+            symbol.sprite = normalSprite;
+        }
         //Checks if has been picked up and equipped 
         if (inventMan.underPlayerControl)
         {
             //Sends out raycast
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
+
+            
 
             //Checks if raycast hits
             if (Physics.Raycast(ray, out hit))
@@ -92,7 +112,6 @@ public class NewSeed : MonoBehaviour
                     Cell fertile = tgs.CellGetAtPosition(hit.point, true);
                     if(fertile != null)
                     {
-
                         int cellIndex = tgs.CellGetIndex(fertile);
                         currentCellIndex = cellIndex;
 
@@ -105,11 +124,15 @@ public class NewSeed : MonoBehaviour
                         if (tgs.CellGetTag(cellIndex) == 0)
                         {
                             //Sets texture to clickable
+                            cursorChange = true;
+                            changeBack = false;
                             tgs.CellToggleRegionSurface(cellIndex, true, canClickTexture);
 
                             //If player clicks, we plant seed and clear up Equip slot
                             if (Input.GetMouseButtonDown(0))
                             {
+                                cursorChange = false;
+                                changeBack = true;
                                 plantSeed = true;
                                 targetPos = hit.point;
                                 fpc.isHoldingSeed = false;
@@ -153,6 +176,22 @@ public class NewSeed : MonoBehaviour
         //always rotate seed in world space
         transform.Rotate(0, 1, 0 * Time.deltaTime);
 
+        if (cursorChange)
+        {
+            symbol.sprite = clickSprite;
+            frameCounter--;
+            if (frameCounter < 0)
+            {
+                changeBack = true;
+                frameCounter = 5;
+            }
+        }
+
+        //if (inventMan.inInventory || !invent.somethingEquipped)
+        //{
+        //    cursorChange = false;
+        //    changeBack = true;
+        //}
     }
 
     public void PlantSeed(Cell tile, int index)
