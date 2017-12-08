@@ -14,6 +14,7 @@ public class cellManager : MonoBehaviour
 
 
     public bool resizing;
+
     void Start()
     {
         tgs = TerrainGridSystem.instance;
@@ -50,11 +51,20 @@ public class cellManager : MonoBehaviour
         tgs.Redraw();
         for (int i = 0; i < tgs.cells.Count; i++)
         {
-            tgs.CellSetTag(i, 0);
+            if (tgs.CellGetTag(i) != 0)
+                tgs.CellSetTag(i, 0);
             tgs.CellToggleRegionSurface(i, true, groundTexture);
         }
-        resizing = true;
 
 
+        GameObject[] currentPlants = GameObject.FindGameObjectsWithTag("sequencer");
+        for (int i = 0; i < currentPlants.Length; i++)
+        {
+
+            currentPlants[i].GetComponent<NewPlantLife>().repositionInGrid();
+
+        }
+
+        Debug.Log(currentPlants.Length);
     }
 }
