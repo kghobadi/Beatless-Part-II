@@ -86,6 +86,12 @@ public class NewSeed : MonoBehaviour
 
     void Update()
     {
+        if (changeBack)
+        {
+            cursorChange = false;
+            changeBack = false;
+            symbol.sprite = normalSprite;
+        }
         //Checks if has been picked up and equipped 
         if (inventMan.underPlayerControl)
         {
@@ -93,12 +99,7 @@ public class NewSeed : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
-            if (changeBack)
-            {
-                cursorChange = false;
-                changeBack = false;
-                symbol.sprite = normalSprite;
-            }
+            
 
             //Checks if raycast hits
             if (Physics.Raycast(ray, out hit))
@@ -130,6 +131,8 @@ public class NewSeed : MonoBehaviour
                             //If player clicks, we plant seed and clear up Equip slot
                             if (Input.GetMouseButtonDown(0))
                             {
+                                cursorChange = false;
+                                changeBack = true;
                                 plantSeed = true;
                                 targetPos = hit.point;
                                 fpc.isHoldingSeed = false;
@@ -183,6 +186,12 @@ public class NewSeed : MonoBehaviour
                 frameCounter = 5;
             }
         }
+
+        //if (inventMan.inInventory || !invent.somethingEquipped)
+        //{
+        //    cursorChange = false;
+        //    changeBack = true;
+        //}
     }
 
     public void PlantSeed(Cell tile, int index)

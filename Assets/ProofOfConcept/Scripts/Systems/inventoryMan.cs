@@ -160,7 +160,7 @@ public class inventoryMan : Interactable
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player" && !inInventory && !underPlayerControl)
         {
             putThisInInvent();
             soundBoard.PlayOneShot(InteractSound);
