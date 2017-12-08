@@ -206,7 +206,7 @@ public class Inventory : MonoBehaviour
 
     public void closeInventory()
     {
-        Debug.Log("closing");
+        //        Debug.Log("closing");
         fpc.enabled = true;
         cameraControl.isActive = true;
         Cursor.lockState = CursorLockMode.Locked;
