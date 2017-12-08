@@ -10,6 +10,8 @@ public class newSequencePlay : MonoBehaviour {
 
 		public bool changedSequence = false;
 
+		bool isUpgrade = false;
+
 		AudioSource source;
 
 		public bool isLeader = false;
@@ -279,44 +281,45 @@ public class newSequencePlay : MonoBehaviour {
 		
 		print (windDir);
 
-		switch(windDir) {
+			switch (windDir) {
 
-		case 0: // left to right
-			if (cell.row <= 4) {
-				note = cell.row;
-			} else {
-				note = cell.row - 5;
-			}
-			newStart = cell.column * 8;
-		break;
+			case 0: // left to right
+				if (cell.row <= 4) {
+					note = cell.row;
+				} else {
+					note = cell.row - 5;
+				}
+				newStart = cell.column * 8;
+				break;
 
-		case 1: //bottom to top
-			if (cell.column <= 4) {
-				note = cell.column;
-			} else {
-				note = cell.column - 5;
-			}
-			newStart = cell.row * 8;
-		break;
+			case 1: //bottom to top
+				if (cell.column <= 4) {
+					note = cell.column;
+				} else {
+					note = cell.column - 5;
+				}
+				newStart = cell.row * 8;
+				break;
 		
-		case 2: //top to bottom
-			if (cell.column >= 2) {
-				note = tgs.columnCount - (cell.column + 1);
-			} else {
-				note = (tgs.columnCount - (cell.column + 1)) - 5;
-			}
-			newStart = (tgs.rowCount - (cell.row + 1)) * 8;
-		break;
+			case 2: //top to bottom
+				if (cell.column >= 2) {
+					note = tgs.columnCount - (cell.column + 1);
+				} else {
+					note = (tgs.columnCount - (cell.column + 1)) - 5;
+				}
+				newStart = (tgs.rowCount - (cell.row + 1)) * 8;
+				break;
 		
-		case 3: // right to left
-			if (cell.row >= 2) {
-				note = tgs.rowCount - (cell.row + 1);
-			} else {
-				note = (tgs.rowCount - (cell.row + 1)) - 5;
+			case 3: // right to left
+				if (cell.row >= 2) {
+					note = tgs.rowCount - (cell.row + 1);
+				} else {
+					note = (tgs.rowCount - (cell.row + 1)) - 5;
+				}
+				newStart = (tgs.columnCount - (cell.column + 1)) * 8;
+				break;
 			}
-			newStart = (tgs.columnCount - (cell.column + 1)) * 8;
-		break;
-	}
+	
 	}
 
 
