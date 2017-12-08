@@ -12,6 +12,8 @@ public class cellManager : MonoBehaviour
     public Texture2D groundTexture, fertileTexture, plantedTexture;
     public bool filledAllTextures;
 
+	public bool somethingPlanted = false;
+
 
     public bool resizing;
 
@@ -64,7 +66,11 @@ public class cellManager : MonoBehaviour
             currentPlants[i].GetComponent<NewPlantLife>().repositionInGrid();
 
         }
-
+		if (currentPlants.Length >= 1) {
+			somethingPlanted = true;
+		} else {
+			somethingPlanted = false;
+		}
         Debug.Log(currentPlants.Length);
     }
 }
