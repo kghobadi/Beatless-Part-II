@@ -6,16 +6,16 @@ using UnityEngine;
 public class Trader : Interactable
 {
 
-    public Transform slot1, slot2, slot3;
+    public Transform slot1, slot2, slot3, slot4;
     public float moveSpeed;
-    TraderSlot s1Interactable, s2Interactable, s3Interactable;
-    TextMesh s1Text, s2Text, s3Text;
+    TraderSlot s1Interactable, s2Interactable, s3Interactable, s4Interactable;
+    TextMesh s1Text, s2Text, s3Text, s4Text;
     public GameObject table;
     public GameObject[] seeds;
     public int[] unitPrice;
 
     GameObject s1Seed, s2Seed, s3Seed, s1SeedClone, s2SeedClone, s3SeedClone;
-    int s1Price, s2Price, s3Price, s1Amount, s2Amount, s3Amount;
+    int s1Price, s2Price, s3Price, s1Amount, s2Amount, s3Amount, s4Price;
 
     bool tradingActive;
 
@@ -24,7 +24,7 @@ public class Trader : Interactable
     Inventory invent;
     inventoryMan currentInventMan;
 
-    public bool walkingWest, walkingToGate,isWaiting, walkingAway;
+    public bool walkingWest, walkingToGate, isWaiting, walkingAway;
 
     public float waitTimer;
 
@@ -37,6 +37,9 @@ public class Trader : Interactable
     Animator animater;
 
     Bed bedScript;
+
+
+    cellManager cellMan;
 
     //click to buy instantiation needs to work
     //make it so that it can't have duplicate seed types, only selects 3 from total possible pool
@@ -53,14 +56,17 @@ public class Trader : Interactable
         worldMan = GameObject.FindGameObjectWithTag("WorldManager").GetComponent<WorldManager>();
 
         invent = GameObject.FindGameObjectWithTag("Inventory").GetComponent<Inventory>();
+        cellMan = GameObject.Find("cellManager").GetComponent<cellManager>();
 
         s1Interactable = slot1.GetComponent<TraderSlot>();
         s2Interactable = slot2.GetComponent<TraderSlot>();
         s3Interactable = slot3.GetComponent<TraderSlot>();
+        s4Interactable = slot4.GetComponent<TraderSlot>();
 
         s1Text = slot1.GetChild(0).GetComponent<TextMesh>();
         s2Text = slot2.GetChild(0).GetComponent<TextMesh>();
         s3Text = slot3.GetChild(0).GetComponent<TextMesh>();
+        s4Text = slot4.GetChild(0).GetComponent<TextMesh>();
 
         resetItems();
         table.SetActive(false);
@@ -70,6 +76,8 @@ public class Trader : Interactable
 
         walkingToGate = true;
         interactable = false;
+
+
     }
 
     public override void handleClickSuccess()
@@ -88,7 +96,7 @@ public class Trader : Interactable
         //    walkingAway = true;
         //}
     }
-    
+
     void Update()
     {
 
@@ -105,7 +113,7 @@ public class Trader : Interactable
             transform.LookAt(_player.transform);
             interactable = true;
             waitTimer -= Time.deltaTime;
-            if(waitTimer < 0)
+            if (waitTimer < 0)
             {
                 isWaiting = false;
                 walkingAway = true;
@@ -119,13 +127,13 @@ public class Trader : Interactable
             {
 
                 isWaiting = false;
-                
+
                 if (s1Interactable.clickedOn)
                 {
                     if (cropCurrency.cropCounter >= s1Price)
                     {
                         //add s1Seed to your invent 
-                        if(!traderAudio.isPlaying)
+                        if (!traderAudio.isPlaying)
                             traderAudio.PlayOneShot(exchangeSound);
                         s1Seed = slot1.GetChild(1).gameObject;
                         s1Seed.GetComponent<inventoryMan>().putThisInInvent();
@@ -156,7 +164,7 @@ public class Trader : Interactable
                         cropCurrency.cropCounter -= s2Price;
                         s2Interactable.clickedOn = false;
                         s2Amount--;
-                        if(s2Amount <= 0)
+                        if (s2Amount <= 0)
                         {
                             s2Interactable.empty = true;
                         }
@@ -177,7 +185,7 @@ public class Trader : Interactable
                             traderAudio.PlayOneShot(exchangeSound);
                         s3Seed = slot3.GetChild(1).gameObject;
                         s3Seed.GetComponent<inventoryMan>().putThisInInvent();
-                        cropCurrency.cropCounter -= s2Price;
+                        cropCurrency.cropCounter -= s3Price;
                         s3Interactable.clickedOn = false;
                         s3Amount--;
                         if (s3Amount <= 0)
@@ -190,6 +198,25 @@ public class Trader : Interactable
                         //feedback you need more money SOUND
                         Debug.Log("cant buy");
                         s3Interactable.clickedOn = false;
+                    }
+                }
+                if (s4Interactable.clickedOn)
+                {
+                    if (cropCurrency.cropCounter >= s4Price)
+                    {
+                        if (!traderAudio.isPlaying)
+                            traderAudio.PlayOneShot(exchangeSound);
+                        cellMan.resizeTonight = true;
+                        cropCurrency.cropCounter -= s4Price;
+                        s4Interactable.empty = true;
+                        s4Text.text = "Thank you!";
+                        s4Interactable.clickedOn = false;
+                    }
+                    else
+                    {
+                        //feedback you need more money SoUND
+                        Debug.Log("cant buy");
+                        s4Interactable.clickedOn = false;
                     }
                 }
             }
@@ -221,7 +248,7 @@ public class Trader : Interactable
         int s1Int, s2Int, s3Int;
 
         s1Int = Random.Range(0, 2);
-        for(int i = 0; i < worldMan.seedSpawnAmount; i++)
+        for (int i = 0; i < worldMan.seedSpawnAmount; i++)
         {
             Vector3 spawnPosition = (Random.insideUnitSphere * 0.5f) + slot1.position + new Vector3(0, 0.25f, 0);
             s1Seed = Instantiate(seeds[s1Int], spawnPosition, Quaternion.identity);
@@ -259,14 +286,28 @@ public class Trader : Interactable
         s3Text.text = s3Price.ToString();
         s3Amount = worldMan.seedSpawnAmount;
 
-        Debug.Log(s1Price +"+"+ s2Price+ "+" +s3Price);
-        Debug.Log(unitPrice[s2Int]);
+
+        if (cellMan.currentSize < cellMan.prices.Length - 1)
+        {
+            s4Interactable.empty = false;
+            s4Price = cellMan.prices[cellMan.currentSize + 1];
+            s4Text.text = "Expand your farm\n overnight!\n\n" + s4Price.ToString();
+        }
+        else
+        {
+            s4Interactable.empty = true;
+            s4Text.text = "insert joke about greedy\n capitalism here please :)";
+        }
+
+
+        //Debug.Log(s1Price + "+" + s2Price + "+" + s3Price);
+        //Debug.Log(unitPrice[s2Int]);
 
     }
 
     public void WalkToGate()
     {
-        if(transform.position != worldMan.gatePosition.position)
+        if (transform.position != worldMan.gatePosition.position)
         {
             transform.position = Vector3.MoveTowards(transform.position, worldMan.gatePosition.position, moveSpeed * Time.deltaTime);
         }
@@ -306,7 +347,7 @@ public class Trader : Interactable
                 Destroy(gameObject);
             }
         }
-        
+
     }
 
 
