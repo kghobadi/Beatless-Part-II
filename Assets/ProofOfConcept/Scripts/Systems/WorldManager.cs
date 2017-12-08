@@ -52,7 +52,7 @@ public class WorldManager : MonoBehaviour
             visitorDayCounter++;
             SpawnVisitors();
         }
-        if(bedScript.dayPassed)
+        if (bedScript.dayPassed)
         {
             SpawnCropCoins();
         }
@@ -102,10 +102,10 @@ public class WorldManager : MonoBehaviour
 
     void SpawnCropCoins()
     {
-        for(int i =0; i < coinSpawns.Length; i++)
+        for (int i = 0; i < coinSpawns.Length; i++)
         {
             int randomSpawn = Random.Range(0, 100);
-            if(randomSpawn < cropSpawnChance)
+            if (randomSpawn < cropSpawnChance)
             {
                 cropCoinClone = Instantiate(cropCurrency, coinSpawns[i].position, Quaternion.identity);
             }
