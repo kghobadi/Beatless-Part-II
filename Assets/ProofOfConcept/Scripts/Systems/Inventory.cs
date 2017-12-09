@@ -26,6 +26,7 @@ public class Inventory : MonoBehaviour
     public Image[] slotSprites;
     public Image inventorySlots, lightUpSlot;
     float showInventCounter;
+    public float showInventTotal;
 
     public bool[] isEmpty;
 
@@ -68,7 +69,7 @@ public class Inventory : MonoBehaviour
         inventorySlots.enabled = false;
         inventorySlots.gameObject.SetActive(false);
         lightUpSlot.enabled = false;
-        showInventCounter = 1f;
+        showInventCounter = showInventTotal;
     }
 
 
@@ -126,7 +127,7 @@ public class Inventory : MonoBehaviour
             inventorySlots.gameObject.SetActive(true);
             inventorySlots.enabled = true;
             lightUpSlot.enabled = true;
-            showInventCounter = 1f;
+            showInventCounter = showInventTotal;
             if (somethingEquipped)
             {
                 rightArmObj.transform.GetChild(0).GetComponent<inventoryMan>().putThisInInvent();
@@ -194,7 +195,7 @@ public class Inventory : MonoBehaviour
                 inventorySlots.enabled = false;
                 inventorySlots.gameObject.SetActive(false);
                 lightUpSlot.enabled = false;
-                showInventCounter = 1f;
+                showInventCounter = showInventTotal;
             }
         }
 

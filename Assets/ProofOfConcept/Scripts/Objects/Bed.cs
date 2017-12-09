@@ -36,8 +36,11 @@ public class Bed : Interactable
 
     public float speedMultiplier;
 
+    WorldManager worldMan;
+
     public override void Start()
 	{
+        worldMan = GameObject.FindGameObjectWithTag("WorldManager").GetComponent<WorldManager>();
 		clock = GameObject.Find ("clock").GetComponent<AudioHelm.AudioHelmClock> ();
         windZone = GameObject.Find ("WindZone").GetComponent<Transform>();
         base.Start();
@@ -115,6 +118,10 @@ public class Bed : Interactable
             wondModule.simulationSpeed = minSimSpeed * speedMultiplier;
             ParticleSystem.MainModule windBlastModule = windBlast.main;
             windBlastModule.simulationSpeed = blastMinSpeed * speedMultiplier;
+            if (worldMan.isRaining)
+            {
+                worldMan.isRaining = false;
+            }
 
             windDir = Random.Range(0, 4);
             switch (windDir) {

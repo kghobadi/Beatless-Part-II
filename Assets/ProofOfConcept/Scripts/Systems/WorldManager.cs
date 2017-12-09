@@ -27,12 +27,20 @@ public class WorldManager : MonoBehaviour
 
     public GameObject[] visitors;
 
+    Rain rainSystem;
+    public int rainFrequency;
+    public bool isRaining;
+    public int rainType;
+
     void Start()
     {
         bedScript = GameObject.FindGameObjectWithTag("Bed").GetComponent<Bed>();
         sunScript = GameObject.FindGameObjectWithTag("Sun").GetComponent<Sun>();
 
         Random.InitState(System.DateTime.Now.Millisecond);
+        rainFrequency = 1;//Random.Range(5, 9);
+
+        rainSystem = GameObject.FindGameObjectWithTag("Rain").GetComponent<Rain>();
     }
 
     void Update()
@@ -47,11 +55,25 @@ public class WorldManager : MonoBehaviour
             seedSpawnAmount = Random.Range(3 + tradeDayCounter, 6 + tradeDayCounter);
             SpawnTrader();
         }
-        //if (dayCounter % visitorFrequency == 0 && bedScript.dayPassed)
-        //{
-        //    visitorDayCounter++;
-        //    SpawnVisitors();
-        //}
+        if (dayCounter % rainFrequency == 0 && bedScript.dayPassed)
+        {
+            //rainFrequency = Random.Range(3, 6);
+            isRaining = true;
+            float rainDecider = Random.Range(0f, 100f);
+            if(rainDecider <= 33f) // slight shower
+            {
+                rainType = 1;
+            }
+            if (rainDecider > 33f && rainDecider <= 66f) // downpour
+            {
+                rainType = 2;
+            }
+            if (rainDecider > 66f && rainDecider < 100f) // heavy rain
+            {
+                rainType = 3;
+            }
+            rainSystem.RainType();
+        }
         if (bedScript.dayPassed)
         {
             SpawnCropCoins();

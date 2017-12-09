@@ -20,11 +20,18 @@ public class Crop : Interactable {
         interactable = true;
     }
 
+    public override void OnMouseEnter()
+    {
+        base.OnMouseEnter();
+    }
+
     public override void handleClickSuccess()
     {
         base.handleClickSuccess();
 
         //play pick up sound
+
+        identifierObject.GetComponent<spriteRender>().enabled = false;
         crops.cropCounter += 1;
         Destroy(gameObject);
     }
@@ -45,6 +52,7 @@ public class Crop : Interactable {
         {
             crops.cropCounter += 1;
             soundBoard.PlayOneShot(InteractSound);
+            identifierObject.GetComponent<spriteRender>().enabled = false;
             Destroy(gameObject);
             //play pick up sound
         }
