@@ -83,9 +83,11 @@ public abstract class Interactable : MonoBehaviour
 
     public virtual void handleClickSuccess()
     {
+        symbol.sprite = clickSprite ;
         Play();
-
-       
+        symbol.sprite = normalSprite;
+        identifierObject.GetComponent<SpriteRenderer>().enabled = false;
+        paper.enabled = false;
     }
 
 
@@ -104,6 +106,7 @@ public abstract class Interactable : MonoBehaviour
     {
         soundBoard.PlayOneShot(InteractSound);
     }
+   
 
 
 }

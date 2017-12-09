@@ -38,7 +38,7 @@ public class WorldManager : MonoBehaviour
         sunScript = GameObject.FindGameObjectWithTag("Sun").GetComponent<Sun>();
 
         Random.InitState(System.DateTime.Now.Millisecond);
-        rainFrequency = 1;//Random.Range(5, 9);
+        rainFrequency = Random.Range(3, 6);
 
         rainSystem = GameObject.FindGameObjectWithTag("Rain").GetComponent<Rain>();
     }
@@ -57,7 +57,7 @@ public class WorldManager : MonoBehaviour
         }
         if (dayCounter % rainFrequency == 0 && bedScript.dayPassed)
         {
-            //rainFrequency = Random.Range(3, 6);
+            rainFrequency = Random.Range(3, 6);
             isRaining = true;
             float rainDecider = Random.Range(0f, 100f);
             if(rainDecider <= 33f) // slight shower
