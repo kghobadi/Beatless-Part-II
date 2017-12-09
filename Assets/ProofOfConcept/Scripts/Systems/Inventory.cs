@@ -24,6 +24,7 @@ public class Inventory : MonoBehaviour
 
     public Transform[] slots;
     public Image[] slotSprites;
+    public Text[] slotAmounts;
     public Image inventorySlots, lightUpSlot;
     public float showInventCounter, showInventTotal;
 
@@ -62,6 +63,7 @@ public class Inventory : MonoBehaviour
         {
             isEmpty[i] = true;
             slotSprites[i].enabled = false;
+            slotAmounts[i].text = "";
         }
         emptyCounter = slots.Length;
         somethingEquipped = false;
@@ -291,7 +293,7 @@ public class Inventory : MonoBehaviour
                         objectToSave.GetComponent<inventoryMan>().slotNumRetake = indexToSaveInNew;
                         objectToSave.localPosition = new Vector3(Random.Range(-0.3f, 0.3f), 0.05f, Random.Range(-0.3f, 0.3f));
                         objectToSave.localScale = objectToSave.localScale / 2f;
-
+                        slotAmounts[i].text = slots[i].childCount.ToString();
                         objectToSave.gameObject.layer = 11;
                     }
                     else
@@ -361,6 +363,7 @@ public class Inventory : MonoBehaviour
         {
             closeInventory();
             Transform takeOut = slots[slotNumber].GetChild(childIndex);
+            slotAmounts[slotNumber].text = slots[slotNumber].childCount.ToString();
             //takeOut.parent = this.transform;
             //takeOut.localPosition = new Vector3(0, 0, 1);
             if (slotChildCount == 1)
@@ -388,6 +391,7 @@ public class Inventory : MonoBehaviour
             if (isEmpty[i])
             {
                 emptyCount++;
+                slotAmounts[i].text = "";
                 slotSprites[i].sprite = null;
                 slotSprites[i].enabled = false;
             }
