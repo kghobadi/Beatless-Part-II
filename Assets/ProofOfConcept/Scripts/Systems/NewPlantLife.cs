@@ -39,7 +39,7 @@ public class NewPlantLife : MonoBehaviour
     bool hasGrown;
     private AudioSource treeSounds;
     //public AudioClip growthSound;
-	newSequencePlay playAud;
+    newSequencePlay playAud;
     //public float fruitYpos;
     int randomRotation;
     TerrainGridSystem tgs;
@@ -57,15 +57,17 @@ public class NewPlantLife : MonoBehaviour
     public GameObject crop;
     GameObject cropClone;
 
+    cellManager cellMan;
+
     void Awake()
     {
         seq = GetComponent<AudioHelm.Sequencer>();
-		playAud = GetComponent<newSequencePlay>();
+        playAud = GetComponent<newSequencePlay>();
         //grabs Sun ref
         neighbourPos = new Vector3[6];
         bed = GameObject.FindGameObjectWithTag("Bed");
         sleepScript = bed.GetComponent<Bed>();
-        
+
     }
     void Start()
     {
@@ -82,7 +84,7 @@ public class NewPlantLife : MonoBehaviour
         cellIndex = tgs.CellGetIndex(groundTile);
         neighbors = tgs.CellGetNeighbours(groundTile);
         tgs.CellSetCanCross(cellIndex, false);
-   
+
         if (plantedInEditor)
         {
             ageCounter -= 1;
@@ -99,6 +101,9 @@ public class NewPlantLife : MonoBehaviour
             growthPeriod = 1;
         }
         StartCoroutine(Growth());
+
+        cellMan = GameObject.Find("cellManager").GetComponent<cellManager>();
+
     }
 
     void Update()
@@ -159,7 +164,8 @@ public class NewPlantLife : MonoBehaviour
                     break;
             }
         }
-    
+
+
     }
 
     IEnumerator Growth()
@@ -173,7 +179,7 @@ public class NewPlantLife : MonoBehaviour
                 growthPeriod -= 1;
                 hasBeenWateredToday = false; //if a day has passed, must be watered again
             }
-            else if(hasBeenWateredToday && ageCounter >= 2 && extraLifeCounter < extraLifeMax)
+            else if (hasBeenWateredToday && ageCounter >= 2 && extraLifeCounter < extraLifeMax)
             {
                 growthPeriod += 1;
                 extraLifeCounter += 1;
@@ -181,7 +187,6 @@ public class NewPlantLife : MonoBehaviour
             }
 
             tgs.CellToggleRegionSurface(cellIndex, true, growingTexture);
-            Debug.Log(growthPeriod);
         }
         //checks if hasBeenWatered, otherwise keeps growing in same Age
         if (hasBeenWatered)
@@ -194,8 +199,8 @@ public class NewPlantLife : MonoBehaviour
         }
         else
         {
-                hasBeenWateredToday = false;
-                StartCoroutine(Growth());
+            hasBeenWateredToday = false;
+            StartCoroutine(Growth());
             //can add death state here and counter for Non-Watered growth periods. 
         }
     }
@@ -212,6 +217,14 @@ public class NewPlantLife : MonoBehaviour
         }
     }
 
+    public void repositionInGrid()
+    {
+        Cell repositionIn = tgs.CellGetAtPosition(transform.position, true);
+        cellIndex = tgs.CellGetIndex(repositionIn);
+        tgs.CellSetTag(repositionIn, 1);
 
+        tgs.CellToggleRegionSurface(cellIndex, true, growingTexture);
+        transform.position = tgs.CellGetPosition(cellIndex);
+    }
 
 }

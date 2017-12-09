@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class FirstPersonController : MonoBehaviour
 {
+    public bool rightClickToMove;
 
     public float speed;
     public float sprintSpeed;
@@ -19,7 +20,7 @@ public class FirstPersonController : MonoBehaviour
     //public AudioClip mining;
 
     //public ParticleSystem rockBits;
-
+    Vector3 movement;
 
     float moveForwardBackward;
     float moveLeftRight;
@@ -47,7 +48,7 @@ public class FirstPersonController : MonoBehaviour
 
     void Update()
     {
-        //if(Input.GetKey(KeyCode.LeftShift)|| Input.GetKey(KeyCode.RightShift))
+        //if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
         //{
         //    speed = sprintSpeed;
         //}
@@ -55,16 +56,34 @@ public class FirstPersonController : MonoBehaviour
         //{
         //    speed = 10f;
         //}
-        moveForwardBackward = Input.GetAxis("Vertical") * speed;
-        moveLeftRight = Input.GetAxis("Horizontal") * speed;
-        moveUpDown = Input.GetAxis("Mouse ScrollWheel") * scrollSpeed;
-
-        if ((moveForwardBackward != 0 || moveLeftRight != 0) && !cameraAudSource.isPlaying)
+        if (!rightClickToMove)
         {
-            PlayFootStepAudio();
-        }
+            moveForwardBackward = Input.GetAxis("Vertical") * speed;
+            moveLeftRight = Input.GetAxis("Horizontal") * speed;
+            moveUpDown = Input.GetAxis("Mouse ScrollWheel") * scrollSpeed;
+            if ((moveForwardBackward != 0 || moveLeftRight != 0) && !cameraAudSource.isPlaying)
+            {
+                PlayFootStepAudio();
+            }
 
-        Vector3 movement = new Vector3(moveLeftRight, moveUpDown, moveForwardBackward);
+            movement = new Vector3(moveLeftRight, moveUpDown, moveForwardBackward);
+        }
+        if (rightClickToMove)
+        {
+            if (Input.GetMouseButton(1))
+            {
+                movement = new Vector3(0, 0, 1 * speed);
+                if (!cameraAudSource.isPlaying)
+                {
+                    PlayFootStepAudio();
+                }
+            }
+            else
+            {
+                movement = Vector3.zero;
+            }
+        }
+        
 
         movement = transform.rotation * movement;
         player.Move(movement * Time.deltaTime);

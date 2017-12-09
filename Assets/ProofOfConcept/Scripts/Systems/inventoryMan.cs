@@ -76,8 +76,8 @@ public class inventoryMan : Interactable
             if (Input.GetKeyDown(KeyCode.Tab))
                 putThisInInvent();
 
-            if (Input.GetKeyDown(KeyCode.Space))
-                dropItem();
+            //if (Input.GetKeyDown(KeyCode.Space))
+            //    dropItem();
         }
 
         //        Debug.Log(inInventory);
@@ -156,6 +156,15 @@ public class inventoryMan : Interactable
         yield return new WaitForEndOfFrame();
         underPlayerControl = true;
 
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Player" && !inInventory && !underPlayerControl)
+        {
+            putThisInInvent();
+            soundBoard.PlayOneShot(InteractSound);
+        }
     }
 
 }
