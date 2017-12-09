@@ -100,16 +100,7 @@ public class Water : MonoBehaviour
                         rotateCan = true;
                         cursorChange = true;
 						currentPlant = hit.transform.gameObject.GetComponent<NewPlantLife> ();
-						if (!currentPlant.hasBeenWateredToday) {
-							currentPlant.hasBeenWateredToday = true;
-							currentPlant.hasBeenWatered = true;
-
-							//to change ground texture to water texture
-							Cell tree = tgs.CellGetAtPosition (hit.transform.position, true);
-							int index = currentPlant.cellIndex;
-							tgs.CellToggleRegionSurface (index, true, wateredTexture);
-
-						}
+						
 					}
 				}
 			} 
@@ -129,6 +120,17 @@ public class Water : MonoBehaviour
             if(transform.localEulerAngles == new Vector3(60, 0, 0)) {
                 waterEffect.Emit(particleAmount); // water particles
                 cameraSource.PlayOneShot(wateringSound, 1f);
+                if (!currentPlant.hasBeenWateredToday)
+                {
+                    currentPlant.hasBeenWateredToday = true;
+                    currentPlant.hasBeenWatered = true;
+
+                    //to change ground texture to water texture
+                    Cell tree = tgs.CellGetAtPosition(hit.transform.position, true);
+                    int index = currentPlant.cellIndex;
+                    tgs.CellToggleRegionSurface(index, true, wateredTexture);
+
+                }
                 rotateCan = false;
                 rotateCanBack = true;
             }

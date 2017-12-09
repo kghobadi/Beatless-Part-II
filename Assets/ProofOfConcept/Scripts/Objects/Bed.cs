@@ -38,6 +38,7 @@ public class Bed : Interactable
 
     WorldManager worldMan;
     cellManager cellMan;
+    Rain rainSystem;
 
     public override void Start()
 	{
@@ -59,6 +60,7 @@ public class Bed : Interactable
         originalPSpeed = fpc.speed;
         dayCounter = 1;
         speedMultiplier = 1;
+        rainSystem = GameObject.FindGameObjectWithTag("Rain").GetComponent<Rain>();
     }
 
     void Update()
@@ -120,6 +122,8 @@ public class Bed : Interactable
             wondModule.simulationSpeed = minSimSpeed * speedMultiplier;
             ParticleSystem.MainModule windBlastModule = windBlast.main;
             windBlastModule.simulationSpeed = blastMinSpeed * speedMultiplier;
+            ParticleSystem.VelocityOverLifetimeModule rainVelocity = rainSystem.rainEffect.velocityOverLifetime;
+
             if (worldMan.isRaining)
             {
                 worldMan.isRaining = false;
@@ -134,6 +138,8 @@ public class Bed : Interactable
                     windBlast.transform.position = new Vector3(7.5f - (cellMan.addToSequencer * 4), 0, 10);
                     windBlast.GetComponent<windMove>().originalPos = windBlast.transform.position;
                     windBlast.GetComponent<windMove>().dirMultiplier = Vector3.right;
+                    rainVelocity.z = 0;
+                    rainVelocity.x = -20;
 
                     //set the start of particles
                     //set their motion
@@ -148,6 +154,8 @@ public class Bed : Interactable
                     windBlast.transform.position = new Vector3(15, 0, 2.5f - (cellMan.addToSequencer * 4));
                     windBlast.GetComponent<windMove>().originalPos = windBlast.transform.position;
                     windBlast.GetComponent<windMove>().dirMultiplier = Vector3.forward;
+                    rainVelocity.x = 0;
+                    rainVelocity.z = -20;
                     break;
 
 			case 2: //top to bottom
@@ -157,6 +165,8 @@ public class Bed : Interactable
                     windBlast.transform.position = new Vector3(15, 0, 17.5f + (cellMan.addToSequencer * 4));
                     windBlast.GetComponent<windMove>().originalPos = windBlast.transform.position;
                     windBlast.GetComponent<windMove>().dirMultiplier = Vector3.back;
+                    rainVelocity.x = 0;
+                    rainVelocity.z = 20;
                     break;
 
 			case 3: //right to left
@@ -166,6 +176,8 @@ public class Bed : Interactable
                     windBlast.transform.position = new Vector3(22.5f + (cellMan.addToSequencer * 4), 0, 10);
                     windBlast.GetComponent<windMove>().originalPos = windBlast.transform.position;
                     windBlast.GetComponent<windMove>().dirMultiplier = Vector3.left;
+                    rainVelocity.z = 0;
+                    rainVelocity.x = 20;
                     break;
 
 

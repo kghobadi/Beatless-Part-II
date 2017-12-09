@@ -41,9 +41,13 @@ public class TraderSlot : Interactable
     {
         if (!empty && interactable)
         {
-            base.handleClickSuccess();
             clickedOn = true;
-            paper.enabled = true;
+        }
+        if(empty && !interactable)
+        {
+            base.handleClickSuccess();
+            priceRenderer.enabled = false;
+            slotText.enabled = false;
         }
             
 

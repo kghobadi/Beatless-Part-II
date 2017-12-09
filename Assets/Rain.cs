@@ -6,7 +6,7 @@ using TGS;
 public class Rain: MonoBehaviour {
     TerrainGridSystem tgs;
 
-    ParticleSystem rainEffect;
+    public ParticleSystem rainEffect;
     
     public Texture2D wateredTexture;
 
