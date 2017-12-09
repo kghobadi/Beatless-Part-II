@@ -228,7 +228,7 @@ public class Trader : Interactable
         }
         if (walkingAway)
         {
-            animater.speed = 2;
+            animater.speed = 1;
             interactable = false;
             table.SetActive(false);
             WalkAway();

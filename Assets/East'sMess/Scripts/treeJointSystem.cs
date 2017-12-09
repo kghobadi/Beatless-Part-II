@@ -39,7 +39,6 @@ public class treeJointSystem : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
-		swayAmount = GetComponentInParent<beatVisualizer>().progress;
 		if (GetComponentInParent<beatVisualizer>() == null) {
 			swayAmount = GetComponent<beatVisualizer>().progress;
 		}

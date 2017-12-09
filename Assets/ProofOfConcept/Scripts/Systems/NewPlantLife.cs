@@ -223,6 +223,8 @@ public class NewPlantLife : MonoBehaviour
         cellIndex = tgs.CellGetIndex(repositionIn);
         tgs.CellSetTag(repositionIn, 1);
 
+        seq.length = (cellMan.sequencerSize * 8);
+
         tgs.CellToggleRegionSurface(cellIndex, true, growingTexture);
         transform.position = tgs.CellGetPosition(cellIndex);
     }
