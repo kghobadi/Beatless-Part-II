@@ -33,7 +33,7 @@ public class Trader : Interactable
 
     public AudioClip traderArrives, exchangeSound;
 
-    Animator animater;
+    public Animator animater;
 
     Bed bedScript;
 
@@ -47,7 +47,6 @@ public class Trader : Interactable
     {
         base.Start();
         interactable = true;
-        animater = GetComponentInChildren<Animator>();
         animater.SetBool("walking", true);
 
         bedScript = GameObject.FindGameObjectWithTag("Bed").GetComponent<Bed>();
@@ -70,6 +69,7 @@ public class Trader : Interactable
 
         walkingToGate = true;
         interactable = false;
+
 
 
     }
@@ -116,7 +116,7 @@ public class Trader : Interactable
         }
         if (tradingActive)
         {
-            transform.LookAt(_player.transform);
+            interactable = false;
             if (Vector3.Distance(transform.position, _player.transform.position) < 10)
             {
 
@@ -285,7 +285,7 @@ public class Trader : Interactable
         {
             s4Interactable.empty = false;
             s4Price = cellMan.prices[cellMan.currentSize + 1];
-            s4Interactable.slotPrice = "Expand your farm\n overnight!\n\n" + s4Price.ToString();
+            s4Interactable.slotPrice = s4Price.ToString();
         }
         else
         {
