@@ -47,11 +47,11 @@ public class WorldManager : MonoBehaviour
             seedSpawnAmount = Random.Range(3 + tradeDayCounter, 6 + tradeDayCounter);
             SpawnTrader();
         }
-        if (dayCounter % visitorFrequency == 0 && bedScript.dayPassed)
-        {
-            visitorDayCounter++;
-            SpawnVisitors();
-        }
+        //if (dayCounter % visitorFrequency == 0 && bedScript.dayPassed)
+        //{
+        //    visitorDayCounter++;
+        //    SpawnVisitors();
+        //}
         if (bedScript.dayPassed)
         {
             SpawnCropCoins();
@@ -82,23 +82,23 @@ public class WorldManager : MonoBehaviour
         }
     }
 
-    void SpawnVisitors()
-    {
-        int randomPosition = Random.Range(0, visitorSpawns.Length);
-        int randomVis = Random.Range(0, visitors.Length);
-        if (randomVis == 1)
-        {
-            GameObject visitorClone = Instantiate(visitors[randomVis], visitorSpawns[randomPosition].position - new Vector3(0, 6, 0), Quaternion.identity);
-            visitorClone.GetComponent<Visitor>().decider = randomPosition;
-            visitorClone.GetComponent<Visitor>().isCatHead = true;
-        }
-        else
-        {
-            GameObject visitorClone = Instantiate(visitors[randomVis], visitorSpawns[randomPosition].position, Quaternion.identity);
-            visitorClone.GetComponent<Visitor>().decider = randomPosition;
-        }
+    //void SpawnVisitors()
+    //{
+    //    int randomPosition = Random.Range(0, visitorSpawns.Length);
+    //    int randomVis = Random.Range(0, visitors.Length);
+    //    if (randomVis == 1)
+    //    {
+    //        GameObject visitorClone = Instantiate(visitors[randomVis], visitorSpawns[randomPosition].position - new Vector3(0, 6, 0), Quaternion.identity);
+    //        visitorClone.GetComponent<Visitor>().decider = randomPosition;
+    //        visitorClone.GetComponent<Visitor>().isCatHead = true;
+    //    }
+    //    else
+    //    {
+    //        GameObject visitorClone = Instantiate(visitors[randomVis], visitorSpawns[randomPosition].position, Quaternion.identity);
+    //        visitorClone.GetComponent<Visitor>().decider = randomPosition;
+    //    }
 
-    }
+    //}
 
     void SpawnCropCoins()
     {
