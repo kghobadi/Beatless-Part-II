@@ -22,6 +22,8 @@ public class Inventory : MonoBehaviour
     public AudioClip bagClose;
 
     public Transform[] slots;
+    public Sprite[] slotSprites;
+    public Sprite lightUpSlot;
 
     public bool[] isEmpty;
 

@@ -34,6 +34,7 @@ public class inventoryMan : Interactable
         rightArmObj = GameObject.FindGameObjectWithTag("rightArm");
 
         originalLayer = gameObject.layer;
+
     }
 
     public override void handleClickSuccess()

@@ -11,6 +11,10 @@ public abstract class Interactable : MonoBehaviour
     private Sprite interactSprite;
     private Sprite clickSprite;
 
+    //for hovering over objects
+    protected GameObject identifierObject; 
+    private SpriteRenderer paper;
+
     //public Vector3 startScale;
     //public float scaleFactor;
     //public Material outlineShader;
@@ -31,7 +35,11 @@ public abstract class Interactable : MonoBehaviour
         _player = GameObject.FindGameObjectWithTag("Player"); //searches for Player
         cammy = GameObject.FindGameObjectWithTag("MainCamera"); //searches for Camera
         symbol = GameObject.FindGameObjectWithTag("Symbol").GetComponent<SpriteRenderer>(); //searches for InteractSymbol
+        identifierObject = GameObject.FindGameObjectWithTag("Identifier");
+        paper = identifierObject.transform.GetChild(0).GetComponent<SpriteRenderer>();
 
+        identifierObject.GetComponent<SpriteRenderer>().enabled = false;
+        paper.enabled = false;
         //loads Cursor Sprites
         normalSprite = Resources.Load<Sprite>("CursorSprites/crosshair");
         interactSprite = Resources.Load<Sprite>("CursorSprites/crosshairclicked");
@@ -45,35 +53,39 @@ public abstract class Interactable : MonoBehaviour
         //startScale = transform.localScale;
     }
 
-    void OnMouseEnter()
+    public virtual void OnMouseEnter()
     {
         if (Vector3.Distance(transform.position, _player.transform.position) <= withinDistance && interactable)
         {
+
+            identifierObject.GetComponent<SpriteRenderer>().enabled = true;
+            paper.enabled = true;
             cammy.GetComponent<camMouseLook>().sensitivityX = 1.5f;
             cammy.GetComponent<camMouseLook>().sensitivityY = 1.5f;
             symbol.sprite = interactSprite;
-            //transform.localScale *= scaleFactor;
 
         }
     }
 
-    void OnMouseExit()
+    // can write an Update timer for Identifier if necessary
+
+    public virtual void OnMouseExit()
     {
         if (interactable)
         {
             symbol.sprite = normalSprite;
-            //cammy.GetComponent<camMouseLook>().sensitivityX = 2f;
-            //cammy.GetComponent<camMouseLook>().sensitivityY = 2f;
-            //transform.localScale = startScale;
+            
+
+            identifierObject.GetComponent<SpriteRenderer>().enabled = false;
+            paper.enabled = false;
         }
     }
 
     public virtual void handleClickSuccess()
     {
-        symbol.sprite = clickSprite;
         Play();
-        symbol.sprite = normalSprite;
-        // transform.localScale = startScale;
+
+       
     }
 
 
