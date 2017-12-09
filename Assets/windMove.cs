@@ -31,7 +31,10 @@ public class windMove : MonoBehaviour {
         dirMultiplier = Vector3.left;
 	}
 	
-	// Update is called once per frame
+    //HOW TO FIX WIND:
+    //wait to start movement until sequencer begins in morning
+    //after going across the grid, should wait for interval of silence which seq takes between beats 60 and 64
+
 	void Update () {
         //multiplier = bed.speedMultiplier;
         transform.position = new Vector3(transform.position.x, -4, transform.position.z);

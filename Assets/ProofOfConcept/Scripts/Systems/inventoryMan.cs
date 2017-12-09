@@ -118,6 +118,7 @@ public class inventoryMan : Interactable
             invent.inventorySlots.gameObject.SetActive(true);
             invent.inventorySlots.enabled = true;
             invent.lightUpSlot.enabled = true;
+            invent.showInventCounter = invent.showInventTotal;
         }
         else
             Debug.Log("inventory full");

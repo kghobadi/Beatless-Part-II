@@ -25,8 +25,7 @@ public class Inventory : MonoBehaviour
     public Transform[] slots;
     public Image[] slotSprites;
     public Image inventorySlots, lightUpSlot;
-    float showInventCounter;
-    public float showInventTotal;
+    public float showInventCounter, showInventTotal;
 
     public bool[] isEmpty;
 

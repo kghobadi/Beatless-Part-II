@@ -13,8 +13,9 @@ public class TraderSlot : Interactable
     private SpriteRenderer priceRenderer;
     public Text slotText;
     public string slotPrice;
+    
+    // Need a separate pricetag and UI image for GridExpansion. I can draw another 2 frame animation 
 
-    // Use this for initialization
     public override void Start()
     {
         base.Start();
@@ -38,9 +39,13 @@ public class TraderSlot : Interactable
 
     public override void handleClickSuccess()
     {
-        base.handleClickSuccess();
         if (!empty && interactable)
+        {
+            base.handleClickSuccess();
             clickedOn = true;
+            paper.enabled = true;
+        }
+            
 
     }
     public override void OnMouseExit()

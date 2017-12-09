@@ -13,7 +13,7 @@ public abstract class Interactable : MonoBehaviour
 
     //for hovering over objects
     protected GameObject identifierObject; 
-    private SpriteRenderer paper;
+    protected SpriteRenderer paper;
 
     //public Vector3 startScale;
     //public float scaleFactor;
