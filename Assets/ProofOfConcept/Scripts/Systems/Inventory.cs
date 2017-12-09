@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour
 {
@@ -22,8 +23,9 @@ public class Inventory : MonoBehaviour
     public AudioClip bagClose;
 
     public Transform[] slots;
-    public Sprite[] slotSprites;
-    public Sprite lightUpSlot;
+    public Image[] slotSprites;
+    public Image inventorySlots, lightUpSlot;
+    float showInventCounter;
 
     public bool[] isEmpty;
 
@@ -59,9 +61,14 @@ public class Inventory : MonoBehaviour
         for (int i = 0; i < isEmpty.Length; i++)
         {
             isEmpty[i] = true;
+            slotSprites[i].enabled = false;
         }
         emptyCounter = slots.Length;
         somethingEquipped = false;
+        inventorySlots.enabled = false;
+        inventorySlots.gameObject.SetActive(false);
+        lightUpSlot.enabled = false;
+        showInventCounter = 1f;
     }
 
 
@@ -112,8 +119,14 @@ public class Inventory : MonoBehaviour
 
         //    slots[currentObject].GetChild(0).GetComponent<inventoryMan>().takeFromInvent();
         //}
+
+
         if ((Input.GetKeyDown(KeyCode.E) || Input.GetAxis("Mouse ScrollWheel") > 0f))// && emptyCounter < isEmpty.Length)
         {
+            inventorySlots.gameObject.SetActive(true);
+            inventorySlots.enabled = true;
+            lightUpSlot.enabled = true;
+            showInventCounter = 1f;
             if (somethingEquipped)
             {
                 rightArmObj.transform.GetChild(0).GetComponent<inventoryMan>().putThisInInvent();
@@ -164,14 +177,25 @@ public class Inventory : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Tab) && canOpen)
-        {
-            openInventory();
+        //if (Input.GetKeyDown(KeyCode.Tab) && canOpen)
+        //{
+        //    openInventory();
 
-        }
-        if (Input.GetKeyDown(KeyCode.Tab) && !canOpen)
+        //}
+        //if (Input.GetKeyDown(KeyCode.Tab) && !canOpen)
+        //{
+        //    closeInventory();
+        //}
+        if (inventorySlots.enabled)
         {
-            closeInventory();
+            showInventCounter -= Time.deltaTime;
+            if(showInventCounter < 0)
+            {
+                inventorySlots.enabled = false;
+                inventorySlots.gameObject.SetActive(false);
+                lightUpSlot.enabled = false;
+                showInventCounter = 1f;
+            }
         }
 
         if (inventoryOpen)
@@ -186,6 +210,7 @@ public class Inventory : MonoBehaviour
         //want to make a real-time grid, child items to Inventory, send them to space, if space is taken check object tag, if dif object move to new space
         //if inventory is full, play inv full sound
 
+        lightUpSlot.transform.position = slotSprites[currentObject].gameObject.transform.position;
 
     }
 
@@ -239,6 +264,8 @@ public class Inventory : MonoBehaviour
                     objectToSave.gameObject.layer = 11;
 
                     isEmpty[indexToSaveIn] = false;
+                    slotSprites[indexToSaveIn].sprite = objectToSave.GetComponent<inventoryMan>().inventSprite;
+                    slotSprites[indexToSaveIn].enabled = true;
                 }
                 else
                 {
@@ -305,6 +332,8 @@ public class Inventory : MonoBehaviour
                             objectToSave.GetComponent<inventoryMan>().slotNumRetake = indexToSaveIn;
 
                             isEmpty[indexToSaveIn] = false;
+                            slotSprites[indexToSaveIn].sprite = objectToSave.GetComponent<inventoryMan>().inventSprite;
+                            slotSprites[indexToSaveIn].enabled = true;
                         }
                         else
                         {
@@ -359,6 +388,8 @@ public class Inventory : MonoBehaviour
             if (isEmpty[i])
             {
                 emptyCount++;
+                slotSprites[i].sprite = null;
+                slotSprites[i].enabled = false;
             }
         }
         return emptyCount;

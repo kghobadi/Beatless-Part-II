@@ -15,6 +15,9 @@ public class inventoryMan : Interactable
 {
     public bool underPlayerControl;
     public bool inInventory, canEquip;
+
+    public Sprite inventSprite;
+
     Inventory invent;
 
     public bool isSingle;
@@ -112,6 +115,9 @@ public class inventoryMan : Interactable
             underPlayerControl = false;
             inInventory = true;
             interactable = true;
+            invent.inventorySlots.gameObject.SetActive(true);
+            invent.inventorySlots.enabled = true;
+            invent.lightUpSlot.enabled = true;
         }
         else
             Debug.Log("inventory full");
