@@ -15,8 +15,11 @@ public class windMove : MonoBehaviour {
 
 	AudioHelm.AudioHelmClock clock;
 
+    cellManager cellMan;
+
 	// Use this for initialization
 	void Start () {
+        cellMan = GameObject.Find("cellManager").GetComponent<cellManager>();
 		position = transform;
         originalPos = transform.position;
 		bed = GameObject.FindGameObjectWithTag("Bed").GetComponent<Bed> ();
@@ -39,7 +42,7 @@ public class windMove : MonoBehaviour {
 			moveWind ();
 			timer = timerTotal;
 		}
-        if(timesMoved > 6)
+        if(timesMoved > (6 + cellMan.addToSequencer))
         {
             transform.position = originalPos;
             timesMoved = 0;

@@ -37,11 +37,13 @@ public class Bed : Interactable
     public float speedMultiplier;
 
     WorldManager worldMan;
+    cellManager cellMan;
 
     public override void Start()
 	{
         worldMan = GameObject.FindGameObjectWithTag("WorldManager").GetComponent<WorldManager>();
-		clock = GameObject.Find ("clock").GetComponent<AudioHelm.AudioHelmClock> ();
+        cellMan = GameObject.Find("cellManager").GetComponent<cellManager>();
+        clock = GameObject.Find ("clock").GetComponent<AudioHelm.AudioHelmClock> ();
         windZone = GameObject.Find ("WindZone").GetComponent<Transform>();
         base.Start();
         fpc = _player.GetComponent<FirstPersonController>();
@@ -129,7 +131,7 @@ public class Bed : Interactable
 				wond.transform.eulerAngles = new Vector3 (-90, 0, -90);
                     windZone.transform.localEulerAngles = new Vector3(0, -90, 0);
                     windBlast.transform.eulerAngles = new Vector3(-90, 0, -90);
-                    windBlast.transform.position = new Vector3(7.5f, 0, 10);
+                    windBlast.transform.position = new Vector3(7.5f - (cellMan.addToSequencer * 4), 0, 10);
                     windBlast.GetComponent<windMove>().originalPos = windBlast.transform.position;
                     windBlast.GetComponent<windMove>().dirMultiplier = Vector3.right;
 
@@ -143,7 +145,7 @@ public class Bed : Interactable
                     windZone.transform.localEulerAngles = new Vector3(0, 0, 0);
 
                     windBlast.transform.eulerAngles = new Vector3(-90, 0, 180);
-                    windBlast.transform.position = new Vector3(15, 0, 2.5f);
+                    windBlast.transform.position = new Vector3(15, 0, 2.5f - (cellMan.addToSequencer * 4));
                     windBlast.GetComponent<windMove>().originalPos = windBlast.transform.position;
                     windBlast.GetComponent<windMove>().dirMultiplier = Vector3.forward;
                     break;
@@ -152,7 +154,7 @@ public class Bed : Interactable
 				wond.transform.eulerAngles = new Vector3(-90, 0, 0);
                     windZone.transform.localEulerAngles = new Vector3(0, 180, 0);
                     windBlast.transform.eulerAngles = new Vector3(-90, 0, 0);
-                    windBlast.transform.position = new Vector3(15, 0, 17.5f);
+                    windBlast.transform.position = new Vector3(15, 0, 17.5f + (cellMan.addToSequencer * 4));
                     windBlast.GetComponent<windMove>().originalPos = windBlast.transform.position;
                     windBlast.GetComponent<windMove>().dirMultiplier = Vector3.back;
                     break;
@@ -161,7 +163,7 @@ public class Bed : Interactable
 				wond.transform.eulerAngles = new Vector3(-90, 0, 90);
                     windZone.transform.localEulerAngles = new Vector3(0, 90, 0);
                     windBlast.transform.eulerAngles = new Vector3(-90, 0, 90);
-                    windBlast.transform.position = new Vector3(22.5f, 0, 10);
+                    windBlast.transform.position = new Vector3(22.5f + (cellMan.addToSequencer * 4), 0, 10);
                     windBlast.GetComponent<windMove>().originalPos = windBlast.transform.position;
                     windBlast.GetComponent<windMove>().dirMultiplier = Vector3.left;
                     break;
