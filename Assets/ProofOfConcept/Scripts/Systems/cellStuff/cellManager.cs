@@ -22,6 +22,8 @@ public class cellManager : MonoBehaviour
     public int[] prices;
 
     public int currentSize = 0;
+    public int sequencerSize = 8;
+    public int addToSequencer = 0;
     void Start()
     {
         tgs = TerrainGridSystem.instance;
@@ -66,6 +68,8 @@ public class cellManager : MonoBehaviour
         if (currentSize <= columnsAndRows.Length)
         {
             currentSize++;
+            addToSequencer++; //used in newSequencePlay
+            sequencerSize++; //actual sequencer length increment. used in newPlantLife
 
             tgs.columnCount = (int)columnsAndRows[currentSize].x;
             tgs.rowCount = (int)columnsAndRows[currentSize].y; ;
@@ -78,6 +82,7 @@ public class cellManager : MonoBehaviour
                     tgs.CellSetTag(i, 0);
                 tgs.CellToggleRegionSurface(i, true, groundTexture);
             }
+
 
 
             GameObject[] currentPlants = GameObject.FindGameObjectsWithTag("sequencer");
