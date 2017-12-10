@@ -19,6 +19,7 @@ public class Crop : Interactable {
         bed = GameObject.FindGameObjectWithTag("Bed").GetComponent<Bed>();
         interactable = true;
     }
+    
 
     public override void handleClickSuccess()
     {
@@ -49,4 +50,5 @@ public class Crop : Interactable {
             //play pick up sound
         }
     }
+
 }
