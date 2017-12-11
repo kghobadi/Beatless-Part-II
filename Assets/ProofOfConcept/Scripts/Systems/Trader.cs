@@ -9,7 +9,6 @@ public class Trader : Interactable
     public Transform slot1, slot2, slot3, slot4;
     public float moveSpeed;
     TraderSlot s1Interactable, s2Interactable, s3Interactable, s4Interactable;
-    TextMesh s1Text, s2Text, s3Text, s4Text;
     public GameObject table;
     public GameObject[] seeds;
     public int[] unitPrice;
@@ -34,7 +33,7 @@ public class Trader : Interactable
 
     public AudioClip traderArrives, exchangeSound;
 
-    Animator animater;
+    public Animator animater;
 
     Bed bedScript;
 
@@ -48,7 +47,6 @@ public class Trader : Interactable
     {
         base.Start();
         interactable = true;
-        animater = GetComponentInChildren<Animator>();
         animater.SetBool("walking", true);
 
         bedScript = GameObject.FindGameObjectWithTag("Bed").GetComponent<Bed>();
@@ -62,12 +60,7 @@ public class Trader : Interactable
         s2Interactable = slot2.GetComponent<TraderSlot>();
         s3Interactable = slot3.GetComponent<TraderSlot>();
         s4Interactable = slot4.GetComponent<TraderSlot>();
-
-        s1Text = slot1.GetChild(0).GetComponent<TextMesh>();
-        s2Text = slot2.GetChild(0).GetComponent<TextMesh>();
-        s3Text = slot3.GetChild(0).GetComponent<TextMesh>();
-        s4Text = slot4.GetChild(0).GetComponent<TextMesh>();
-
+        
         resetItems();
         table.SetActive(false);
 
@@ -76,6 +69,7 @@ public class Trader : Interactable
 
         walkingToGate = true;
         interactable = false;
+
 
 
     }
@@ -122,7 +116,7 @@ public class Trader : Interactable
         }
         if (tradingActive)
         {
-            transform.LookAt(_player.transform);
+            interactable = false;
             if (Vector3.Distance(transform.position, _player.transform.position) < 10)
             {
 
@@ -209,7 +203,7 @@ public class Trader : Interactable
                         cellMan.resizeTonight = true;
                         cropCurrency.cropCounter -= s4Price;
                         s4Interactable.empty = true;
-                        s4Text.text = "Thank you!";
+                        s4Interactable.slotPrice = "Thank you!";
                         s4Interactable.clickedOn = false;
                     }
                     else
@@ -228,7 +222,7 @@ public class Trader : Interactable
         }
         if (walkingAway)
         {
-            animater.speed = 2;
+            animater.speed = 1;
             interactable = false;
             table.SetActive(false);
             WalkAway();
@@ -257,7 +251,7 @@ public class Trader : Interactable
         }
         s1Interactable.empty = false;
         s1Price = unitPrice[s1Int];
-        s1Text.text = s1Price.ToString();
+        s1Interactable.slotPrice = s1Price.ToString();
         s1Amount = worldMan.seedSpawnAmount;
 
         s2Int = Random.Range(2, 4);
@@ -270,7 +264,7 @@ public class Trader : Interactable
         }
         s2Interactable.empty = false;
         s2Price = unitPrice[s2Int];
-        s2Text.text = s2Price.ToString();
+        s2Interactable.slotPrice = s2Price.ToString();
         s2Amount = worldMan.seedSpawnAmount;
 
         s3Int = Random.Range(4, 6);
@@ -283,7 +277,7 @@ public class Trader : Interactable
         }
         s3Interactable.empty = false;
         s3Price = unitPrice[s3Int];
-        s3Text.text = s3Price.ToString();
+        s3Interactable.slotPrice = s3Price.ToString();
         s3Amount = worldMan.seedSpawnAmount;
 
 
@@ -291,12 +285,12 @@ public class Trader : Interactable
         {
             s4Interactable.empty = false;
             s4Price = cellMan.prices[cellMan.currentSize + 1];
-            s4Text.text = "Expand your farm\n overnight!\n\n" + s4Price.ToString();
+            s4Interactable.slotPrice = s4Price.ToString();
         }
         else
         {
             s4Interactable.empty = true;
-            s4Text.text = "insert joke about greedy\n capitalism here please :)";
+            s4Interactable.slotPrice = "insert joke about greedy\n capitalism here please :)";
         }
 
 
