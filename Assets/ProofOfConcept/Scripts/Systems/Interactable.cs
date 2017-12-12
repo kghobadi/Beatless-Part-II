@@ -24,19 +24,26 @@ public abstract class Interactable : MonoBehaviour
     protected float withinDistanceActive = 10f;
 
     protected AudioSource soundBoard;
-    public AudioClip InteractSound;
+    public AudioClip InteractSound, firstTimePickup;
 
     public bool interactable;
 
     protected FirstPersonController fpc;
 
+    public int objNumber;
+    WorldManager worldMan;
+
+    protected GameObject pageNotifier;
+
     public virtual void Start()
     {
+        worldMan = GameObject.FindGameObjectWithTag("WorldManager").GetComponent<WorldManager>();
         _player = GameObject.FindGameObjectWithTag("Player"); //searches for Player
         cammy = GameObject.FindGameObjectWithTag("MainCamera"); //searches for Camera
         symbol = GameObject.FindGameObjectWithTag("Symbol").GetComponent<SpriteRenderer>(); //searches for InteractSymbol
         identifierObject = GameObject.FindGameObjectWithTag("Identifier");
         paper = identifierObject.transform.GetChild(0).GetComponent<SpriteRenderer>();
+        pageNotifier = GameObject.Find("PageNotifier");
 
         identifierObject.GetComponent<SpriteRenderer>().enabled = false;
         paper.enabled = false;
@@ -57,9 +64,11 @@ public abstract class Interactable : MonoBehaviour
     {
         if (Vector3.Distance(transform.position, _player.transform.position) <= withinDistance && interactable)
         {
-
-            identifierObject.GetComponent<SpriteRenderer>().enabled = true;
-            paper.enabled = true;
+            if (!worldMan.firstTimePickups[objNumber])
+            {
+                identifierObject.GetComponent<SpriteRenderer>().enabled = true;
+                paper.enabled = true;
+            }
             cammy.GetComponent<camMouseLook>().sensitivityX = 1.5f;
             cammy.GetComponent<camMouseLook>().sensitivityY = 1.5f;
             symbol.sprite = interactSprite;
@@ -74,20 +83,36 @@ public abstract class Interactable : MonoBehaviour
         if (interactable)
         {
             symbol.sprite = normalSprite;
-            
 
-            identifierObject.GetComponent<SpriteRenderer>().enabled = false;
-            paper.enabled = false;
+
+            if (!worldMan.firstTimePickups[objNumber])
+            {
+                identifierObject.GetComponent<SpriteRenderer>().enabled = false;
+                paper.enabled = false;
+            }
         }
     }
 
     public virtual void handleClickSuccess()
     {
-        symbol.sprite = clickSprite ;
-        Play();
-        symbol.sprite = normalSprite;
-        identifierObject.GetComponent<SpriteRenderer>().enabled = false;
-        paper.enabled = false;
+        
+        if (!worldMan.firstTimePickups[objNumber])
+        {
+            identifierObject.GetComponent<SpriteRenderer>().enabled = false;
+            paper.enabled = false;
+            worldMan.firstTimePickups[objNumber] = true;
+            symbol.sprite = clickSprite;
+            soundBoard.PlayOneShot(firstTimePickup);
+            symbol.sprite = normalSprite;
+            pageNotifier.SetActive(true);
+            pageNotifier.GetComponent<SpriteRenderer>().enabled = true;
+        }
+        else
+        {
+            symbol.sprite = clickSprite;
+            Play();
+            symbol.sprite = normalSprite;
+        }
     }
 
 

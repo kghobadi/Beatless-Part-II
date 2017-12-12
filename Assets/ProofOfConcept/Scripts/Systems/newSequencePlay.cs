@@ -285,7 +285,6 @@ public class newSequencePlay : MonoBehaviour {
 
 	public void WindDirection() {
 		
-		print (windDir);
 
 			switch (windDir) {
 

@@ -31,7 +31,7 @@ public class Ax : MonoBehaviour
 
     WorldManager worldMan;
 
-    bool cursorChange, changeBack;
+    bool cursorChange, changeBack, swingAx, axBack;
     int frameCounter;
 
     //public float lerpSpeed;
@@ -80,8 +80,12 @@ public class Ax : MonoBehaviour
         //Checks if has been picked up and equipped 
         if (inventMan.underPlayerControl)
         {
+            if(!swingAx && !axBack)
+            {
+                transform.localEulerAngles = new Vector3(40, 100, 30);
+            }
             //Sends out raycast
-            if (Input.GetMouseButton(0))
+            if (Input.GetMouseButton(0) && !swingAx && !axBack)
             {
                 
 
@@ -96,6 +100,7 @@ public class Ax : MonoBehaviour
                     if (hit.transform.gameObject.tag == "sequencer" && Vector3.Distance(_player.transform.position, hit.point) <= axDistance)
                     {
                         cursorChange = true;
+                        swingAx = true;
                         currentTree = hit.transform.gameObject;
                         Cell tree = tgs.CellGetAtPosition(hit.point, true);
                         int index = currentTree.GetComponent<NewPlantLife>().cellIndex;
@@ -121,7 +126,27 @@ public class Ax : MonoBehaviour
                        
                         cameraSource.PlayOneShot(cropYield);
                         Destroy(hit.transform.gameObject);
+
                     }
+                }
+            }
+            if (swingAx)
+            {
+                transform.localPosition = Vector3.MoveTowards(transform.localPosition, new Vector3(-1, 0, 0), Time.deltaTime * 100);
+                if (transform.localPosition.x == -1)
+                {
+                    swingAx = false;
+                    axBack = true;
+                    Debug.Log("this happened");
+                }
+            }
+
+            if (axBack)
+            {
+                transform.localPosition = Vector3.MoveTowards(transform.localPosition, new Vector3(0, 0, 0), Time.deltaTime *  100);
+                if (transform.localPosition.x == 0)
+                {
+                    axBack = false;
                 }
             }
 
@@ -138,8 +163,8 @@ public class Ax : MonoBehaviour
                 frameCounter = 5;
             }
         }
-       
 
+        
     }
 
     void SpawnCrops(int min, int max)
