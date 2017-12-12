@@ -139,7 +139,7 @@ public class Bed : Interactable
                     windBlast.GetComponent<windMove>().originalPos = windBlast.transform.position;
                     windBlast.GetComponent<windMove>().dirMultiplier = Vector3.right;
                     rainVelocity.z = 0;
-                    rainVelocity.x = -20;
+                    rainVelocity.x = 20;
 
                     //set the start of particles
                     //set their motion
@@ -177,7 +177,7 @@ public class Bed : Interactable
                     windBlast.GetComponent<windMove>().originalPos = windBlast.transform.position;
                     windBlast.GetComponent<windMove>().dirMultiplier = Vector3.left;
                     rainVelocity.z = 0;
-                    rainVelocity.x = 20;
+                    rainVelocity.x = -20;
                     break;
 
 
