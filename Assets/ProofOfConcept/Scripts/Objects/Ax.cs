@@ -31,7 +31,7 @@ public class Ax : MonoBehaviour
 
     WorldManager worldMan;
 
-    bool cursorChange, changeBack;
+    bool cursorChange, changeBack, swingAx, axBack;
     int frameCounter;
 
     //public float lerpSpeed;
@@ -96,6 +96,7 @@ public class Ax : MonoBehaviour
                     if (hit.transform.gameObject.tag == "sequencer" && Vector3.Distance(_player.transform.position, hit.point) <= axDistance)
                     {
                         cursorChange = true;
+                        swingAx = true;
                         currentTree = hit.transform.gameObject;
                         Cell tree = tgs.CellGetAtPosition(hit.point, true);
                         int index = currentTree.GetComponent<NewPlantLife>().cellIndex;
@@ -121,6 +122,7 @@ public class Ax : MonoBehaviour
                        
                         cameraSource.PlayOneShot(cropYield);
                         Destroy(hit.transform.gameObject);
+
                     }
                 }
             }
@@ -138,8 +140,25 @@ public class Ax : MonoBehaviour
                 frameCounter = 5;
             }
         }
-       
 
+        if (swingAx)
+        {
+            transform.localEulerAngles = Vector3.MoveTowards(transform.localEulerAngles, new Vector3(80, 0, 0), Time.deltaTime * 500);
+            if (transform.localEulerAngles.x > 75)
+            {
+                swingAx = false;
+                axBack = true;
+            }
+        }
+
+        if (axBack)
+        {
+            transform.localEulerAngles = Vector3.MoveTowards(transform.localEulerAngles, Vector3.zero, Time.deltaTime * 500);
+            if (transform.localEulerAngles.x < 5)
+            {
+                axBack = false;
+            }
+        }
     }
 
     void SpawnCrops(int min, int max)
