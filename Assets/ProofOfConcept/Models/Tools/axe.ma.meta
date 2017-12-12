@@ -12,7 +12,6 @@ ModelImporter:
     100008: pSphere1
     100010: transform1
     100012: transform2
-    100014: polySurface3
     400000: //RootNode
     400002: group
     400004: pasted__pSphere1
@@ -20,13 +19,9 @@ ModelImporter:
     400008: pSphere1
     400010: transform1
     400012: transform2
-    400014: polySurface3
     2300000: polySurface2
-    2300002: polySurface3
     3300000: polySurface2
-    3300002: polySurface3
     4300000: polySurface2
-    4300002: polySurface3
     9500000: //RootNode
   materials:
     importMaterials: 1
