@@ -27,6 +27,7 @@ public class inventoryMan : Interactable
     public int slotNumRetake;
 
     GameObject rightArmObj;
+    
 
     public override void Start()
     {
@@ -166,13 +167,13 @@ public class inventoryMan : Interactable
 
     }
 
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "Player" && !inInventory && !underPlayerControl)
-        {
-            putThisInInvent();
-            soundBoard.PlayOneShot(InteractSound);
-        }
-    }
+    //void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.gameObject.tag == "Player" && !inInventory && !underPlayerControl)
+    //    {
+    //        putThisInInvent();
+    //        soundBoard.PlayOneShot(InteractSound);
+    //    }
+    //}
 
 }

@@ -116,6 +116,8 @@ public class Trader : Interactable
         }
         if (tradingActive)
         {
+            cropCurrency.cropShower.gameObject.SetActive(true);
+            cropCurrency.cropShower.enabled = true;
             interactable = false;
             if (Vector3.Distance(transform.position, _player.transform.position) < 10)
             {

@@ -116,8 +116,8 @@ public class Water : MonoBehaviour
             }
         }
         if (rotateCan) {
-            transform.localEulerAngles = Vector3.MoveTowards(transform.localEulerAngles, new Vector3(60, 0, 0), Time.deltaTime * 100);
-            if(transform.localEulerAngles == new Vector3(60, 0, 0)) {
+            transform.localEulerAngles = Vector3.MoveTowards(transform.localEulerAngles, new Vector3(40, 0, 0), Time.deltaTime * 100);
+            if(transform.localEulerAngles == new Vector3(40, 0, 0)) {
                 waterEffect.Emit(particleAmount); // water particles
                 cameraSource.PlayOneShot(wateringSound, 1f);
                 if (!currentPlant.hasBeenWateredToday)
