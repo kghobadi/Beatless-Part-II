@@ -27,12 +27,20 @@ public class WorldManager : MonoBehaviour
 
     public GameObject[] visitors;
 
+    Rain rainSystem;
+    public int rainFrequency;
+    public bool isRaining;
+    public int rainType;
+
     void Start()
     {
         bedScript = GameObject.FindGameObjectWithTag("Bed").GetComponent<Bed>();
         sunScript = GameObject.FindGameObjectWithTag("Sun").GetComponent<Sun>();
 
         Random.InitState(System.DateTime.Now.Millisecond);
+        rainFrequency = Random.Range(3, 6);
+
+        rainSystem = GameObject.FindGameObjectWithTag("Rain").GetComponent<Rain>();
     }
 
     void Update()
@@ -47,12 +55,26 @@ public class WorldManager : MonoBehaviour
             seedSpawnAmount = Random.Range(3 + tradeDayCounter, 6 + tradeDayCounter);
             SpawnTrader();
         }
-        if (dayCounter % visitorFrequency == 0 && bedScript.dayPassed)
+        if (dayCounter % rainFrequency == 0 && bedScript.dayPassed)
         {
-            visitorDayCounter++;
-            SpawnVisitors();
+            rainFrequency = Random.Range(3, 6);
+            isRaining = true;
+            float rainDecider = Random.Range(0f, 100f);
+            if(rainDecider <= 33f) // slight shower
+            {
+                rainType = 1;
+            }
+            if (rainDecider > 33f && rainDecider <= 66f) // downpour
+            {
+                rainType = 2;
+            }
+            if (rainDecider > 66f && rainDecider < 100f) // heavy rain
+            {
+                rainType = 3;
+            }
+            rainSystem.RainType();
         }
-        if(bedScript.dayPassed)
+        if (bedScript.dayPassed)
         {
             SpawnCropCoins();
         }
@@ -82,30 +104,30 @@ public class WorldManager : MonoBehaviour
         }
     }
 
-    void SpawnVisitors()
-    {
-        int randomPosition = Random.Range(0, visitorSpawns.Length);
-        int randomVis = Random.Range(0, visitors.Length);
-        if (randomVis == 1)
-        {
-            GameObject visitorClone = Instantiate(visitors[randomVis], visitorSpawns[randomPosition].position - new Vector3(0, 6, 0), Quaternion.identity);
-            visitorClone.GetComponent<Visitor>().decider = randomPosition;
-            visitorClone.GetComponent<Visitor>().isCatHead = true;
-        }
-        else
-        {
-            GameObject visitorClone = Instantiate(visitors[randomVis], visitorSpawns[randomPosition].position, Quaternion.identity);
-            visitorClone.GetComponent<Visitor>().decider = randomPosition;
-        }
+    //void SpawnVisitors()
+    //{
+    //    int randomPosition = Random.Range(0, visitorSpawns.Length);
+    //    int randomVis = Random.Range(0, visitors.Length);
+    //    if (randomVis == 1)
+    //    {
+    //        GameObject visitorClone = Instantiate(visitors[randomVis], visitorSpawns[randomPosition].position - new Vector3(0, 6, 0), Quaternion.identity);
+    //        visitorClone.GetComponent<Visitor>().decider = randomPosition;
+    //        visitorClone.GetComponent<Visitor>().isCatHead = true;
+    //    }
+    //    else
+    //    {
+    //        GameObject visitorClone = Instantiate(visitors[randomVis], visitorSpawns[randomPosition].position, Quaternion.identity);
+    //        visitorClone.GetComponent<Visitor>().decider = randomPosition;
+    //    }
 
-    }
+    //}
 
     void SpawnCropCoins()
     {
-        for(int i =0; i < coinSpawns.Length; i++)
+        for (int i = 0; i < coinSpawns.Length; i++)
         {
             int randomSpawn = Random.Range(0, 100);
-            if(randomSpawn < cropSpawnChance)
+            if (randomSpawn < cropSpawnChance)
             {
                 cropCoinClone = Instantiate(cropCurrency, coinSpawns[i].position, Quaternion.identity);
             }

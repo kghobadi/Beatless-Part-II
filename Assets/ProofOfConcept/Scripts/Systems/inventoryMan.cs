@@ -15,6 +15,9 @@ public class inventoryMan : Interactable
 {
     public bool underPlayerControl;
     public bool inInventory, canEquip;
+
+    public Sprite inventSprite;
+
     Inventory invent;
 
     public bool isSingle;
@@ -34,6 +37,7 @@ public class inventoryMan : Interactable
         rightArmObj = GameObject.FindGameObjectWithTag("rightArm");
 
         originalLayer = gameObject.layer;
+
     }
 
     public override void handleClickSuccess()
@@ -76,8 +80,8 @@ public class inventoryMan : Interactable
             if (Input.GetKeyDown(KeyCode.Tab))
                 putThisInInvent();
 
-            if (Input.GetKeyDown(KeyCode.Space))
-                dropItem();
+            //if (Input.GetKeyDown(KeyCode.Space))
+            //    dropItem();
         }
 
         //        Debug.Log(inInventory);
@@ -111,6 +115,10 @@ public class inventoryMan : Interactable
             underPlayerControl = false;
             inInventory = true;
             interactable = true;
+            invent.inventorySlots.gameObject.SetActive(true);
+            invent.inventorySlots.enabled = true;
+            invent.lightUpSlot.enabled = true;
+            invent.showInventCounter = invent.showInventTotal;
         }
         else
             Debug.Log("inventory full");
@@ -156,6 +164,15 @@ public class inventoryMan : Interactable
         yield return new WaitForEndOfFrame();
         underPlayerControl = true;
 
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Player" && !inInventory && !underPlayerControl)
+        {
+            putThisInInvent();
+            soundBoard.PlayOneShot(InteractSound);
+        }
     }
 
 }
