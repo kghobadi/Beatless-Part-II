@@ -80,8 +80,12 @@ public class Ax : MonoBehaviour
         //Checks if has been picked up and equipped 
         if (inventMan.underPlayerControl)
         {
+            if(!swingAx && !axBack)
+            {
+                transform.localEulerAngles = new Vector3(40, 100, 30);
+            }
             //Sends out raycast
-            if (Input.GetMouseButton(0))
+            if (Input.GetMouseButton(0) && !swingAx && !axBack)
             {
                 
 
@@ -126,6 +130,25 @@ public class Ax : MonoBehaviour
                     }
                 }
             }
+            if (swingAx)
+            {
+                transform.localPosition = Vector3.MoveTowards(transform.localPosition, new Vector3(-1, 0, 0), Time.deltaTime * 100);
+                if (transform.localPosition.x == -1)
+                {
+                    swingAx = false;
+                    axBack = true;
+                    Debug.Log("this happened");
+                }
+            }
+
+            if (axBack)
+            {
+                transform.localPosition = Vector3.MoveTowards(transform.localPosition, new Vector3(0, 0, 0), Time.deltaTime *  100);
+                if (transform.localPosition.x == 0)
+                {
+                    axBack = false;
+                }
+            }
 
 
         }
@@ -141,24 +164,7 @@ public class Ax : MonoBehaviour
             }
         }
 
-        if (swingAx)
-        {
-            transform.localEulerAngles = Vector3.MoveTowards(transform.localEulerAngles, new Vector3(80, 0, 0), Time.deltaTime * 500);
-            if (transform.localEulerAngles.x > 75)
-            {
-                swingAx = false;
-                axBack = true;
-            }
-        }
-
-        if (axBack)
-        {
-            transform.localEulerAngles = Vector3.MoveTowards(transform.localEulerAngles, Vector3.zero, Time.deltaTime * 500);
-            if (transform.localEulerAngles.x < 5)
-            {
-                axBack = false;
-            }
-        }
+        
     }
 
     void SpawnCrops(int min, int max)
