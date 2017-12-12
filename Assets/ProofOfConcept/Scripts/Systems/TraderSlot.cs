@@ -34,6 +34,7 @@ public class TraderSlot : Interactable
         priceRenderer.enabled = true;
         slotText.text = slotPrice;
         slotText.enabled = true;
+        paper.enabled = true;
 
     }
 
@@ -48,6 +49,7 @@ public class TraderSlot : Interactable
             base.handleClickSuccess();
             priceRenderer.enabled = false;
             slotText.enabled = false;
+            paper.enabled = false;
         }
             
 
@@ -57,6 +59,7 @@ public class TraderSlot : Interactable
         base.OnMouseExit();
         priceRenderer.enabled = false;
         slotText.enabled = false;
+        paper.enabled = false;
     }
 
     // Update is called once per frame
