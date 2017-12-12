@@ -32,6 +32,8 @@ public class WorldManager : MonoBehaviour
     public bool isRaining;
     public int rainType;
 
+    public bool[] firstTimePickups;
+
     void Start()
     {
         bedScript = GameObject.FindGameObjectWithTag("Bed").GetComponent<Bed>();

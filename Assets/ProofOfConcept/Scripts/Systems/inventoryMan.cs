@@ -27,6 +27,7 @@ public class inventoryMan : Interactable
     public int slotNumRetake;
 
     GameObject rightArmObj;
+    
 
     public override void Start()
     {
