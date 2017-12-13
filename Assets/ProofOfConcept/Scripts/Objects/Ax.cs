@@ -123,7 +123,7 @@ public class Ax : MonoBehaviour
                         }
                         else if (currentTree.GetComponent<NewPlantLife>().ageCounter == 3)
                         {
-                            SpawnCrops(5, 8);
+                            SpawnCrops(3, 6);
 
                         }
 
