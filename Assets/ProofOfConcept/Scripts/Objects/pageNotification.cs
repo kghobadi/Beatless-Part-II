@@ -21,7 +21,6 @@ public class pageNotification : MonoBehaviour {
             if (showPageTimer < 0)
             {
                 pageNotified.enabled = false;
-                pageNotified.gameObject.SetActive(false);
                 showPageTimer = showPageTotal;
             }
         }

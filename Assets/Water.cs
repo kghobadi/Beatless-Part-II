@@ -46,6 +46,7 @@ public class Water : MonoBehaviour
         frameCounter = 5;
         //TerrainGridSystem reference
         tgs = TerrainGridSystem.instance;
+        cameraSource = Camera.main.GetComponent<AudioSource>();
 
         _player = GameObject.FindWithTag("Player");
         symbol = GameObject.FindGameObjectWithTag("Symbol").GetComponent<SpriteRenderer>(); //searches for InteractSymbol
