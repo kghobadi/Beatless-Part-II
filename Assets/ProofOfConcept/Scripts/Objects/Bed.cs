@@ -39,10 +39,12 @@ public class Bed : Interactable
     WorldManager worldMan;
     cellManager cellMan;
     Rain rainSystem;
+    spin windMill;
 
     public override void Start()
 	{
         worldMan = GameObject.FindGameObjectWithTag("WorldManager").GetComponent<WorldManager>();
+        windMill = GameObject.FindGameObjectWithTag("WindMill").GetComponent<spin>();
         cellMan = GameObject.Find("cellManager").GetComponent<cellManager>();
         clock = GameObject.Find ("clock").GetComponent<AudioHelm.AudioHelmClock> ();
         windZone = GameObject.Find ("WindZone").GetComponent<Transform>();
@@ -123,6 +125,7 @@ public class Bed : Interactable
             ParticleSystem.MainModule windBlastModule = windBlast.main;
             windBlastModule.simulationSpeed = blastMinSpeed * speedMultiplier;
             ParticleSystem.VelocityOverLifetimeModule rainVelocity = rainSystem.rainEffect.velocityOverLifetime;
+            
 
             if (worldMan.isRaining)
             {
@@ -141,6 +144,7 @@ public class Bed : Interactable
                     rainVelocity.z = 0;
                     rainVelocity.x = 20;
 
+                    windMill.rotSpeed = -windMill.origRotSpeed * speedMultiplier;
                     //set the start of particles
                     //set their motion
                     //set simulation speed here when you've fucked w the BPM thingy
@@ -156,6 +160,7 @@ public class Bed : Interactable
                     windBlast.GetComponent<windMove>().dirMultiplier = Vector3.forward;
                     rainVelocity.x = 0;
                     rainVelocity.z = 20;
+                    windMill.rotSpeed = -windMill.origRotSpeed * speedMultiplier;
                     break;
 
 			case 2: //top to bottom
@@ -167,6 +172,7 @@ public class Bed : Interactable
                     windBlast.GetComponent<windMove>().dirMultiplier = Vector3.back;
                     rainVelocity.x = 0;
                     rainVelocity.z = -20;
+                    windMill.rotSpeed = windMill.origRotSpeed * speedMultiplier;
                     break;
 
 			case 3: //right to left
@@ -178,6 +184,7 @@ public class Bed : Interactable
                     windBlast.GetComponent<windMove>().dirMultiplier = Vector3.left;
                     rainVelocity.z = 0;
                     rainVelocity.x = -20;
+                    windMill.rotSpeed = windMill.origRotSpeed * speedMultiplier;
                     break;
 
 
