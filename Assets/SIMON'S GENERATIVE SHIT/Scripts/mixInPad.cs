@@ -10,13 +10,13 @@ public class mixInPad : MonoBehaviour {
 
 	void OnTriggerEnter(Collider coll) {
 		if (coll.tag == "Player") {
-			padOn.TransitionTo (1f);
+			padOn.TransitionTo (5f);
 		}
 	}
 
 	void OnTriggerExit(Collider coll) {
 		if (coll.tag == "Player") {
-			padOff.TransitionTo (1f);
+			padOff.TransitionTo (3f);
 		}
 
 	}
