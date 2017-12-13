@@ -60,7 +60,7 @@ public class Trader : Interactable
         s2Interactable = slot2.GetComponent<TraderSlot>();
         s3Interactable = slot3.GetComponent<TraderSlot>();
         s4Interactable = slot4.GetComponent<TraderSlot>();
-        
+
         resetItems();
         table.SetActive(false);
 
@@ -182,10 +182,11 @@ public class Trader : Interactable
                 {
                     if (cropCurrency.cropCounter >= s3Price)
                     {
+                        Debug.Log("buying s3");
                         //add s1Seed to your invent 
                         if (!traderAudio.isPlaying)
                             traderAudio.PlayOneShot(exchangeSound);
-                        if(slot3.childCount > 0)
+                        if (slot3.childCount > 0)
                         {
                             s3Seed = slot3.GetChild(0).gameObject;
                         }
