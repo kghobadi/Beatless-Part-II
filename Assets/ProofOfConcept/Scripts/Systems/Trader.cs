@@ -103,7 +103,8 @@ public class Trader : Interactable
         }
         if (isWaiting)
         {
-            animater.speed = 0;
+            animater.SetBool("walking", false);
+            animater.SetBool("waiting", true);
             transform.LookAt(_player.transform);
             interactable = true;
             waitTimer -= Time.deltaTime;
@@ -116,6 +117,9 @@ public class Trader : Interactable
         }
         if (tradingActive)
         {
+            animater.SetBool("waiting", false);
+            animater.SetBool("walking", false);
+            animater.SetBool("selling", true);
             cropCurrency.cropShower.gameObject.SetActive(true);
             cropCurrency.cropShower.enabled = true;
             interactable = false;
@@ -233,7 +237,9 @@ public class Trader : Interactable
         }
         if (walkingAway)
         {
-            animater.speed = 1;
+            animater.SetBool("walking", true);
+            animater.SetBool("selling", false);
+            animater.SetBool("waiting", false);
             interactable = false;
             table.SetActive(false);
             WalkAway();
