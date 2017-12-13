@@ -104,7 +104,6 @@ public abstract class Interactable : MonoBehaviour
             symbol.sprite = clickSprite;
             soundBoard.PlayOneShot(firstTimePickup);
             symbol.sprite = normalSprite;
-            pageNotifier.SetActive(true);
             pageNotifier.GetComponent<SpriteRenderer>().enabled = true;
         }
         else
