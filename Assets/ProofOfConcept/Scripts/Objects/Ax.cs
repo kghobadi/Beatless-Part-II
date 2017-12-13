@@ -115,12 +115,12 @@ public class Ax : MonoBehaviour
                         }
                         else if (currentTree.GetComponent<NewPlantLife>().ageCounter == 2)
                         {
-                            SpawnCrops(3, 6);
+                            SpawnCrops(2, 4);
                             
                         }
                         else if (currentTree.GetComponent<NewPlantLife>().ageCounter == 3)
                         {
-                            SpawnCrops(5, 8);
+                            SpawnCrops(3, 6);
 
                         }
                        
