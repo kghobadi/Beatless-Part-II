@@ -155,7 +155,7 @@ public class Bed : Interactable
                     windBlast.GetComponent<windMove>().originalPos = windBlast.transform.position;
                     windBlast.GetComponent<windMove>().dirMultiplier = Vector3.forward;
                     rainVelocity.x = 0;
-                    rainVelocity.z = -20;
+                    rainVelocity.z = 20;
                     break;
 
 			case 2: //top to bottom
@@ -166,7 +166,7 @@ public class Bed : Interactable
                     windBlast.GetComponent<windMove>().originalPos = windBlast.transform.position;
                     windBlast.GetComponent<windMove>().dirMultiplier = Vector3.back;
                     rainVelocity.x = 0;
-                    rainVelocity.z = 20;
+                    rainVelocity.z = -20;
                     break;
 
 			case 3: //right to left
