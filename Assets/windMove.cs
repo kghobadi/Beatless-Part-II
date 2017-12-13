@@ -37,20 +37,20 @@ public class windMove : MonoBehaviour {
 
 	void Update () {
         //multiplier = bed.speedMultiplier;
-        transform.position = new Vector3(transform.position.x, -4, transform.position.z);
         multiplier = bed.speedMultiplier;
-        
-		timer -= multiplier * Time.deltaTime;
+
+       
+        timer -= multiplier * Time.deltaTime;
 		if (timer <= 0) {
 			moveWind ();
 			timer = timerTotal;
 		}
-        if(timesMoved > (6 + cellMan.addToSequencer))
+        if (timesMoved > (6 + cellMan.addToSequencer))
         {
             transform.position = originalPos;
             timesMoved = 0;
         }
-	}
+    }
 	void moveWind(){
 		position.position += moveAmount * dirMultiplier;
 		particleMove.Play();
