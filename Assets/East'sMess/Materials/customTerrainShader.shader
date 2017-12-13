@@ -21,6 +21,7 @@
 		struct Input {
 			float2 uv_MainTex;
 			float3 localPos;
+
 		};
 
 		half _Glossiness;
@@ -37,7 +38,7 @@
 
 
 		void surf (Input IN, inout SurfaceOutputStandard o) {
-			float3 localPos = IN.worldPos - mul(unity_ObjectToWorld, float4(0, 0, 0, 1)).xyz;
+			//float3 localPos = IN.worldPos - mul(unity_ObjectToWorld, float4(0, 0, 0, 1)).xyz;
 			// Albedo comes from a texture tinted by color
 			fixed4 c = tex2D (_MainTex, IN.uv_MainTex) * _Color;
 			o.Albedo = c.rgb;
