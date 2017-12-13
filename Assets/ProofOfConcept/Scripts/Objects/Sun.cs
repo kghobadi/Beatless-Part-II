@@ -4,7 +4,7 @@ using System.Collections;
 public class Sun : MonoBehaviour
 {
 
-    public float rotationSpeed = 10;
+    public float rotationSpeed = 1000;
     public Transform rotation;
 
     public Light sun;

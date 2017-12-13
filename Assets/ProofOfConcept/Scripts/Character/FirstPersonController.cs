@@ -29,6 +29,8 @@ public class FirstPersonController : MonoBehaviour
     public AudioClip[] currentFootsteps, indoorFootsteps, gardenFootsteps, pathFootsteps;
     AudioSource cameraAudSource;
 
+	public openDoor doorBool;
+
     Vector3 targetPosition; // for point to click
 
     public bool indoors, garden, path;
@@ -127,6 +129,16 @@ public class FirstPersonController : MonoBehaviour
             garden = false;
             indoors = false;
         }
+		if (other.gameObject.tag == "Door") {
+			doorBool.open = true;
+		}
     }
+	void OnTriggerExit(Collider other){
+		if (other.gameObject.tag == "Door") {
+			doorBool.open = false;
+		}
+	}
+
+
 
 }
