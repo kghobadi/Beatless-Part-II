@@ -45,12 +45,13 @@ public class newSequencePlay : MonoBehaviour {
 
 		Cell cell;
 
+    cellManager cellMan;
 		public int column;
 		public int row;
 
-		
-
-
+        public int cellGridMax, cellGridMin;
+        public int numberToSubtract;
+    
 		//public int startScale = 8;
 		//public int startMultiplier = 8;
 
@@ -61,6 +62,7 @@ public class newSequencePlay : MonoBehaviour {
 		void Awake()
 		{
 
+        cellMan = GameObject.Find("cellManager").GetComponent<cellManager>();
 		sequencer.enabled = false;
 		source = GetComponent<AudioSource>();
 		source.outputAudioMixerGroup = mixer;
@@ -79,6 +81,10 @@ public class newSequencePlay : MonoBehaviour {
 		cell = tgs.CellGetAtPosition (transform.position, true);
 		row = cell.row;
 		column = cell.column;
+
+        cellGridMax = 4;
+        cellGridMin = 2;
+        numberToSubtract = 5;
 
 		windDir = sleepScript.windDir;
 		WindDirection ();
@@ -102,16 +108,15 @@ public class newSequencePlay : MonoBehaviour {
 		// Update is called once per frame
 		void Update()
 		{
+
+        //print (sequencer.GetSequencerPosition ());
+
+        //Vector3 pos = transform.position;
+        //Cell cell = tgs.CellGetAtPosition (pos);
+        //int row = cell.row;
+        //int column = cell.column;
         
-
-		//print (sequencer.GetSequencerPosition ());
-
-		//Vector3 pos = transform.position;
-		//Cell cell = tgs.CellGetAtPosition (pos);
-		//int row = cell.row;
-		//int column = cell.column;
-
-			if (sleepScript.dayPassed)
+        if (sleepScript.dayPassed)
 			{
 			//windDir = Random.Range (0, 4);
 			windDir = sleepScript.windDir;
@@ -120,6 +125,7 @@ public class newSequencePlay : MonoBehaviour {
 			//changedSequence = false;
 			changedSequence = false;
             sequencer.syncTime = 0;
+            
         }
 
 		if (!changedSequence) {
@@ -279,42 +285,41 @@ public class newSequencePlay : MonoBehaviour {
 
 	public void WindDirection() {
 		
-		print (windDir);
 
 			switch (windDir) {
 
 			case 0: // left to right
-				if (cell.row <= 4) {
+				if (cell.row <= (cellGridMax + cellMan.addToSequencer)) {
 					note = cell.row;
 				} else {
-					note = cell.row - 5;
+					note = cell.row - (numberToSubtract + cellMan.addToSequencer);
 				}
 				newStart = cell.column * 8;
 				break;
 
 			case 1: //bottom to top
-				if (cell.column <= 4) {
+				if (cell.column <= (cellGridMax + cellMan.addToSequencer)) {
 					note = cell.column;
 				} else {
-					note = cell.column - 5;
+					note = cell.column - (numberToSubtract + cellMan.addToSequencer);
 				}
 				newStart = cell.row * 8;
 				break;
 		
 			case 2: //top to bottom
-				if (cell.column >= 2) {
+				if (cell.column >= (cellGridMin + cellMan.addToSequencer)) {
 					note = tgs.columnCount - (cell.column + 1);
 				} else {
-					note = (tgs.columnCount - (cell.column + 1)) - 5;
+					note = (tgs.columnCount - (cell.column + 1)) - (numberToSubtract + cellMan.addToSequencer);
 				}
 				newStart = (tgs.rowCount - (cell.row + 1)) * 8;
 				break;
 		
 			case 3: // right to left
-				if (cell.row >= 2) {
+				if (cell.row >= (cellGridMin + cellMan.addToSequencer)) {
 					note = tgs.rowCount - (cell.row + 1);
 				} else {
-					note = (tgs.rowCount - (cell.row + 1)) - 5;
+					note = (tgs.rowCount - (cell.row + 1)) - (numberToSubtract + cellMan.addToSequencer);
 				}
 				newStart = (tgs.columnCount - (cell.column + 1)) * 8;
 				break;

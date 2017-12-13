@@ -4,7 +4,7 @@ using System.Collections;
 public class Sun : MonoBehaviour
 {
 
-    public float rotationSpeed = 10;
+    public float rotationSpeed = 1000;
     public Transform rotation;
 
     public Light sun;
@@ -31,18 +31,23 @@ public class Sun : MonoBehaviour
 
         if(transform.position.x > middayInterval)
         {
+			sun.color = Color.Lerp(sun.color, Color.blue, Time.deltaTime / 10);
             isMorning = true;
             isMidday = false;
             isNight = false;
         }
         else if(transform.position.x < middayInterval && transform.position.x > nightInterval)
         {
+			sun.color = Color.Lerp (sun.color, Color.yellow, Time.deltaTime / 10);
             isMorning = false;
             isMidday = true;
             isNight = false;
         }
         else if (transform.position.x < nightInterval)
         {
+			sun.color = Color.Lerp(sun.color, Color.blue, Time.deltaTime / 10);
+
+
             isMorning = false;
             isMidday = false;
             isNight = true;

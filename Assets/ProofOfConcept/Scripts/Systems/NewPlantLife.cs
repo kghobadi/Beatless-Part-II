@@ -169,6 +169,8 @@ public class NewPlantLife : MonoBehaviour
             }
         }
 
+        // can switch Ground Tile color here when Tree is playing sound
+
 
     }
 
@@ -226,6 +228,8 @@ public class NewPlantLife : MonoBehaviour
         Cell repositionIn = tgs.CellGetAtPosition(transform.position, true);
         cellIndex = tgs.CellGetIndex(repositionIn);
         tgs.CellSetTag(repositionIn, 1);
+
+        seq.length = (cellMan.sequencerSize * 8);
 
         tgs.CellToggleRegionSurface(cellIndex, true, growingTexture);
         transform.position = tgs.CellGetPosition(cellIndex);

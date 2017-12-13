@@ -8,6 +8,8 @@ public class Crop : Interactable {
     CropCurrency crops;
 
     Bed bed;
+
+
     //audio source in UI
     //Pick up sound
 
@@ -19,13 +21,18 @@ public class Crop : Interactable {
         bed = GameObject.FindGameObjectWithTag("Bed").GetComponent<Bed>();
         interactable = true;
     }
+    
 
     public override void handleClickSuccess()
     {
         base.handleClickSuccess();
 
         //play pick up sound
+        
+        crops.cropShower.gameObject.SetActive(true);
         crops.cropCounter += 1;
+        crops.cropShower.enabled = true;
+        crops.showCropsCounter = crops.showCropsTotal;
         Destroy(gameObject);
     }
 
@@ -43,10 +50,15 @@ public class Crop : Interactable {
     {
         if(other.gameObject.tag == "Player")
         {
+            
+            crops.cropShower.gameObject.SetActive(true);
             crops.cropCounter += 1;
+            crops.cropShower.enabled = true;
+            crops.showCropsCounter = crops.showCropsTotal;
             soundBoard.PlayOneShot(InteractSound);
             Destroy(gameObject);
             //play pick up sound
         }
     }
+
 }

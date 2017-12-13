@@ -14,9 +14,17 @@ public class cellManager : MonoBehaviour
 
 	public bool somethingPlanted = false;
 
+    public bool resizeTonight;
 
-    public bool resizing;
+    WorldManager worldMan;
+    Bed bed;
 
+    public Vector2[] columnsAndRows;
+    public int[] prices;
+
+    public int currentSize = 0;
+    public int sequencerSize = 8;
+    public int addToSequencer = 0;
     void Start()
     {
         tgs = TerrainGridSystem.instance;
@@ -33,44 +41,59 @@ public class cellManager : MonoBehaviour
             //if (tgs.CellGetTag(i) == 5)
             //tgs.CellSetCanCross(i, false);
         }
+
+        worldMan = GameObject.FindWithTag("WorldManager").GetComponent<WorldManager>();
+        bed = GameObject.FindWithTag("Bed").GetComponent<Bed>();
+
+
+        if (prices.Length != columnsAndRows.Length)
+            Debug.Log("MAKE PRICES SAME SIZE AS COLUMNSANDROWS PLEASE!");
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha0))
-            resizeGrid(Random.Range(1.0f, 2.0f), Random.Range(1.0f, 2.0f));
+
+
+        if (bed.dayPassed && resizeTonight)
+        {
+            resizeGrid();
+            resizeTonight = false;
+        }
 
 
     }
 
-    public void resizeGrid(float columnMultiplier, float rowsMultiplier)
+    public void resizeGrid()
     {
-
-        tgs.columnCount = Mathf.RoundToInt(tgs.columnCount * columnMultiplier);
-        tgs.rowCount = Mathf.RoundToInt(tgs.rowCount * rowsMultiplier);
-        tgs.gridScale = new Vector2(tgs.gridScale.x * columnMultiplier, tgs.gridScale.y * rowsMultiplier);
-        tgs.Redraw();
-        for (int i = 0; i < tgs.cells.Count; i++)
+        if (currentSize <= columnsAndRows.Length)
         {
-            if (tgs.CellGetTag(i) != 0)
-                tgs.CellSetTag(i, 0);
-            tgs.CellToggleRegionSurface(i, true, groundTexture);
+            currentSize++;
+            addToSequencer++; //used in newSequencePlay
+            sequencerSize++; //actual sequencer length increment. used in newPlantLife
+
+            tgs.columnCount = (int)columnsAndRows[currentSize].x;
+            tgs.rowCount = (int)columnsAndRows[currentSize].y; ;
+            tgs.gridScale = new Vector2((columnsAndRows[currentSize].x / columnsAndRows[currentSize - 1].x) * tgs.gridScale.x,
+                                        (columnsAndRows[currentSize].y / columnsAndRows[currentSize - 1].y) * tgs.gridScale.y);
+            tgs.Redraw();
+            for (int i = 0; i < tgs.cells.Count; i++)
+            {
+                if (tgs.CellGetTag(i) != 0)
+                    tgs.CellSetTag(i, 0);
+                tgs.CellToggleRegionSurface(i, true, groundTexture);
+            }
+
+
+
+            GameObject[] currentPlants = GameObject.FindGameObjectsWithTag("sequencer");
+            for (int i = 0; i < currentPlants.Length; i++)
+            {
+
+                currentPlants[i].GetComponent<NewPlantLife>().repositionInGrid();
+
+            }
+
         }
-
-
-        GameObject[] currentPlants = GameObject.FindGameObjectsWithTag("sequencer");
-        for (int i = 0; i < currentPlants.Length; i++)
-        {
-
-            currentPlants[i].GetComponent<NewPlantLife>().repositionInGrid();
-
-        }
-		if (currentPlants.Length >= 1) {
-			somethingPlanted = true;
-		} else {
-			somethingPlanted = false;
-		}
-        Debug.Log(currentPlants.Length);
     }
 }

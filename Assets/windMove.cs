@@ -15,8 +15,11 @@ public class windMove : MonoBehaviour {
 
 	AudioHelm.AudioHelmClock clock;
 
+    cellManager cellMan;
+
 	// Use this for initialization
 	void Start () {
+        cellMan = GameObject.Find("cellManager").GetComponent<cellManager>();
 		position = transform;
         originalPos = transform.position;
 		bed = GameObject.FindGameObjectWithTag("Bed").GetComponent<Bed> ();
@@ -28,7 +31,10 @@ public class windMove : MonoBehaviour {
         dirMultiplier = Vector3.left;
 	}
 	
-	// Update is called once per frame
+    //HOW TO FIX WIND:
+    //wait to start movement until sequencer begins in morning
+    //after going across the grid, should wait for interval of silence which seq takes between beats 60 and 64
+
 	void Update () {
         //multiplier = bed.speedMultiplier;
         transform.position = new Vector3(transform.position.x, -4, transform.position.z);
@@ -39,7 +45,7 @@ public class windMove : MonoBehaviour {
 			moveWind ();
 			timer = timerTotal;
 		}
-        if(timesMoved > 6)
+        if(timesMoved > (6 + cellMan.addToSequencer))
         {
             transform.position = originalPos;
             timesMoved = 0;
