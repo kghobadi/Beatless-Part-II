@@ -31,8 +31,10 @@ public class Ax : MonoBehaviour
 
     WorldManager worldMan;
 
-    bool cursorChange, changeBack, swingAx, axBack;
+    public bool cursorChange, changeBack, swingAx, axBack;
     int frameCounter;
+
+    float lerpVal;
 
     //public float lerpSpeed;
     //public Transform lerpTransform;
@@ -80,14 +82,14 @@ public class Ax : MonoBehaviour
         //Checks if has been picked up and equipped 
         if (inventMan.underPlayerControl)
         {
-            if(!swingAx && !axBack)
+            if (!swingAx && !axBack)
             {
                 transform.localEulerAngles = new Vector3(40, 100, 30);
             }
             //Sends out raycast
             if (Input.GetMouseButton(0) && !swingAx && !axBack)
             {
-                
+
 
                 //transform.rotation = Quaternion.Lerp(transform.rotation, lerpTransform.rotation, Time.time * lerpSpeed);
                 //start particle system
@@ -101,6 +103,7 @@ public class Ax : MonoBehaviour
                     {
                         cursorChange = true;
                         swingAx = true;
+                        lerpVal = 0;
                         currentTree = hit.transform.gameObject;
                         Cell tree = tgs.CellGetAtPosition(hit.point, true);
                         int index = currentTree.GetComponent<NewPlantLife>().cellIndex;
@@ -108,22 +111,22 @@ public class Ax : MonoBehaviour
                         tgs.CellSetTag(tree, 0);
                         //play sound
                         //play falling animation
-                        
-                        if(currentTree.GetComponent<NewPlantLife>().ageCounter == 1)
+
+                        if (currentTree.GetComponent<NewPlantLife>().ageCounter == 1)
                         {
                             SpawnCrops(1, 3);
                         }
                         else if (currentTree.GetComponent<NewPlantLife>().ageCounter == 2)
                         {
                             SpawnCrops(3, 6);
-                            
+
                         }
                         else if (currentTree.GetComponent<NewPlantLife>().ageCounter == 3)
                         {
                             SpawnCrops(5, 8);
 
                         }
-                       
+
                         cameraSource.PlayOneShot(cropYield);
                         Destroy(hit.transform.gameObject);
 
@@ -132,9 +135,11 @@ public class Ax : MonoBehaviour
             }
             if (swingAx)
             {
-                transform.localPosition = Vector3.MoveTowards(transform.localPosition, new Vector3(-1, 0, 0), Time.deltaTime * 100);
-                if (transform.localPosition.x == -1)
+                transform.localEulerAngles = Vector3.Lerp(new Vector3(40, 100, 30), new Vector3(-50, 50, 36), lerpVal);
+                lerpVal += Time.deltaTime * 5;
+                if (lerpVal > 0.98f)
                 {
+
                     swingAx = false;
                     axBack = true;
                     Debug.Log("this happened");
@@ -143,28 +148,29 @@ public class Ax : MonoBehaviour
 
             if (axBack)
             {
-                transform.localPosition = Vector3.MoveTowards(transform.localPosition, new Vector3(0, 0, 0), Time.deltaTime *  100);
-                if (transform.localPosition.x == 0)
+                lerpVal -= Time.deltaTime * 1.5f;
+                transform.localEulerAngles = Vector3.Lerp(new Vector3(40, 100, 30), new Vector3(-50, 50, 36), lerpVal);
+                if (lerpVal < 0.02f)
                 {
                     axBack = false;
                 }
             }
 
-
+            lerpVal = Mathf.Clamp01(lerpVal);
         }
 
         if (cursorChange)
         {
             symbol.sprite = clickSprite;
             frameCounter--;
-            if(frameCounter < 0)
+            if (frameCounter < 0)
             {
                 changeBack = true;
                 frameCounter = 5;
             }
         }
 
-        
+
     }
 
     void SpawnCrops(int min, int max)
