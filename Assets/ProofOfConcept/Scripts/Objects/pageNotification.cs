@@ -21,7 +21,10 @@ public class pageNotification : MonoBehaviour {
             if (showPageTimer < 0)
             {
                 pageNotified.enabled = false;
+<<<<<<< HEAD
               
+=======
+>>>>>>> master
                 showPageTimer = showPageTotal;
             }
         }

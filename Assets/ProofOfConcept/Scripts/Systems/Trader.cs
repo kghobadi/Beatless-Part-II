@@ -131,7 +131,10 @@ public class Trader : Interactable
                         //add s1Seed to your invent 
                         if (!traderAudio.isPlaying)
                             traderAudio.PlayOneShot(exchangeSound);
-                        s1Seed = slot1.GetChild(1).gameObject;
+                        if (slot1.childCount > 0)
+                        {
+                            s1Seed = slot1.GetChild(0).gameObject;
+                        }
                         s1Seed.GetComponent<inventoryMan>().putThisInInvent();
                         cropCurrency.cropCounter -= s1Price;
                         s1Interactable.clickedOn = false;
@@ -155,7 +158,10 @@ public class Trader : Interactable
                         //add 21Seed to your invent 
                         if (!traderAudio.isPlaying)
                             traderAudio.PlayOneShot(exchangeSound);
-                        s2Seed = slot2.GetChild(1).gameObject;
+                        if (slot2.childCount > 0)
+                        {
+                            s2Seed = slot2.GetChild(0).gameObject;
+                        }
                         s2Seed.GetComponent<inventoryMan>().putThisInInvent();
                         cropCurrency.cropCounter -= s2Price;
                         s2Interactable.clickedOn = false;
@@ -179,7 +185,10 @@ public class Trader : Interactable
                         //add s1Seed to your invent 
                         if (!traderAudio.isPlaying)
                             traderAudio.PlayOneShot(exchangeSound);
-                        s3Seed = slot3.GetChild(1).gameObject;
+                        if(slot3.childCount > 0)
+                        {
+                            s3Seed = slot3.GetChild(0).gameObject;
+                        }
                         s3Seed.GetComponent<inventoryMan>().putThisInInvent();
                         cropCurrency.cropCounter -= s3Price;
                         s3Interactable.clickedOn = false;
