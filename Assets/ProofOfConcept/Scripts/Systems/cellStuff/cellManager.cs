@@ -9,7 +9,7 @@ public class cellManager : MonoBehaviour
     TerrainGridSystem tgs;
     public Vector3 cellCenter;
 
-    public Texture2D groundTexture, fertileTexture, plantedTexture;
+    public Texture2D groundTexture, plantedTexture;
     public bool filledAllTextures;
 
 	public bool somethingPlanted = false;
