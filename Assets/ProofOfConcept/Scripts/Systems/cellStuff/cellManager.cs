@@ -12,6 +12,7 @@ public class cellManager : MonoBehaviour
     public Texture2D groundTexture, plantedTexture;
     public bool filledAllTextures;
 
+	public bool somethingPlanted = false;
 
     public bool resizeTonight;
 
