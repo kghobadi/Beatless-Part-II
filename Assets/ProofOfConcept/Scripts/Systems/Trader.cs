@@ -27,7 +27,7 @@ public class Trader : Interactable
 
     public float waitTimer;
 
-    WorldManager worldMan;
+  
 
     AudioSource traderAudio;
 
@@ -35,10 +35,12 @@ public class Trader : Interactable
 
     public Animator animater;
 
-    Bed bedScript;
 
 
     cellManager cellMan;
+
+    float tim;
+    public GameObject horn;
 
     //click to buy instantiation needs to work
     //make it so that it can't have duplicate seed types, only selects 3 from total possible pool
@@ -48,10 +50,9 @@ public class Trader : Interactable
         base.Start();
         interactable = true;
         animater.SetBool("walking", true);
-
-        bedScript = GameObject.FindGameObjectWithTag("Bed").GetComponent<Bed>();
-
-        worldMan = GameObject.FindGameObjectWithTag("WorldManager").GetComponent<WorldManager>();
+        
+        
+        
 
         invent = GameObject.FindGameObjectWithTag("Inventory").GetComponent<Inventory>();
         cellMan = GameObject.Find("cellManager").GetComponent<cellManager>();
@@ -119,6 +120,7 @@ public class Trader : Interactable
         {
             animater.SetBool("waiting", false);
             animater.SetBool("walking", false);
+            animater.SetBool("horn", false);
             animater.SetBool("selling", true);
             cropCurrency.cropShower.gameObject.SetActive(true);
             cropCurrency.cropShower.enabled = true;
@@ -138,6 +140,15 @@ public class Trader : Interactable
                         if (slot1.childCount > 0)
                         {
                             s1Seed = slot1.GetChild(0).gameObject;
+                        }
+                        if (!worldMan.firstTimePickups[s1Seed.GetComponent<inventoryMan>().objNumber])
+                        {
+                            pageNotifier.GetComponent<SpriteRenderer>().enabled = true;
+                            if (bookPage != null)
+                            {
+                                worldMan.bookRef.bookPages[worldMan.bookRef.pageAdder] = bookPage;
+                                worldMan.bookRef.pageAdder++;
+                            }
                         }
                         s1Seed.GetComponent<inventoryMan>().putThisInInvent();
                         cropCurrency.cropCounter -= s1Price;
@@ -166,6 +177,15 @@ public class Trader : Interactable
                         {
                             s2Seed = slot2.GetChild(0).gameObject;
                         }
+                        if (!worldMan.firstTimePickups[s2Seed.GetComponent<inventoryMan>().objNumber])
+                        {
+                            pageNotifier.GetComponent<SpriteRenderer>().enabled = true;
+                            if (bookPage != null)
+                            {
+                                worldMan.bookRef.bookPages[worldMan.bookRef.pageAdder] = bookPage;
+                                worldMan.bookRef.pageAdder++;
+                            }
+                        }
                         s2Seed.GetComponent<inventoryMan>().putThisInInvent();
                         cropCurrency.cropCounter -= s2Price;
                         s2Interactable.clickedOn = false;
@@ -193,6 +213,15 @@ public class Trader : Interactable
                         if (slot3.childCount > 0)
                         {
                             s3Seed = slot3.GetChild(0).gameObject;
+                        }
+                        if (!worldMan.firstTimePickups[s3Seed.GetComponent<inventoryMan>().objNumber])
+                        {
+                            pageNotifier.GetComponent<SpriteRenderer>().enabled = true;
+                            if (bookPage != null)
+                            {
+                                worldMan.bookRef.bookPages[worldMan.bookRef.pageAdder] = bookPage;
+                                worldMan.bookRef.pageAdder++;
+                            }
                         }
                         s3Seed.GetComponent<inventoryMan>().putThisInInvent();
                         cropCurrency.cropCounter -= s3Price;
@@ -240,6 +269,7 @@ public class Trader : Interactable
         {
             animater.SetBool("walking", true);
             animater.SetBool("selling", false);
+            animater.SetBool("horn", false);
             animater.SetBool("waiting", false);
             interactable = false;
             table.SetActive(false);
@@ -326,9 +356,28 @@ public class Trader : Interactable
         else
         {
             // SIMON play Arrival Sound
-            traderAudio.PlayOneShot(traderArrives);
-            walkingToGate = false;
-            isWaiting = true;
+            animater.SetBool("walking", false);
+            animater.SetBool("selling", false);
+            animater.SetBool("horn", true);
+            animater.SetBool("waiting", false);
+
+            if (!traderAudio.isPlaying)
+                traderAudio.PlayOneShot(traderArrives);
+
+            tim += Time.deltaTime;
+            horn.SetActive(true);
+
+            if (tim > traderArrives.length)
+            {
+                animater.SetBool("walking", false);
+                animater.SetBool("selling", true);
+                animater.SetBool("horn", false);
+                animater.SetBool("waiting", false);
+                tim = 0;
+                walkingToGate = false;
+                isWaiting = true;
+                horn.SetActive(false);
+            }
         }
     }
 
