@@ -9,8 +9,8 @@ public class TraderSlot : Interactable
     public bool clickedOn;
     public bool empty;
 
-    private GameObject priceTag;
-    private SpriteRenderer priceRenderer;
+    public GameObject priceTag;
+    public SpriteRenderer priceRenderer;
     public Text slotText;
     public string slotPrice;
     

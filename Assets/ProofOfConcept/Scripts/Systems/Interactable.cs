@@ -7,7 +7,7 @@ public abstract class Interactable : MonoBehaviour
     protected GameObject _player;
     protected GameObject cammy; // camera reference
     protected SpriteRenderer symbol; // 2d sprite renderer icon reference
-    private Sprite normalSprite;
+    protected Sprite normalSprite;
     private Sprite interactSprite;
     private Sprite clickSprite;
 

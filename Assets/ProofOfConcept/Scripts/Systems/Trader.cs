@@ -122,8 +122,8 @@ public class Trader : Interactable
             animater.SetBool("walking", false);
             animater.SetBool("horn", false);
             animater.SetBool("selling", true);
-            cropCurrency.cropShower.gameObject.SetActive(true);
             cropCurrency.cropShower.enabled = true;
+            cropCurrency.cropDisplayAmount.enabled = true;
             interactable = false;
             if (Vector3.Distance(transform.position, _player.transform.position) < 10)
             {
@@ -267,10 +267,19 @@ public class Trader : Interactable
         }
         if (walkingAway)
         {
+            tradingActive = false;
             animater.SetBool("walking", true);
             animater.SetBool("selling", false);
             animater.SetBool("horn", false);
             animater.SetBool("waiting", false);
+            s1Interactable.priceRenderer.enabled = false;
+            s1Interactable.slotText.enabled = false;
+            s2Interactable.priceRenderer.enabled = false;
+            s2Interactable.slotText.enabled = false;
+            s3Interactable.priceRenderer.enabled = false;
+            s3Interactable.slotText.enabled = false;
+            paper.enabled = false;
+            symbol.sprite = normalSprite;
             interactable = false;
             table.SetActive(false);
             WalkAway();
