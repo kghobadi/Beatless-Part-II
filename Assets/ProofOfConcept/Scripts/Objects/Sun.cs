@@ -10,12 +10,13 @@ public class Sun : MonoBehaviour
     public Light sun;
     public bool isMorning, isMidday, isNight;
 	public Color morn, mid, night;
-
+	public LensFlare flareColor;
     float totalXRange, interval, middayInterval, nightInterval;
 
 
     void Start()
     {
+		sun.color = morn;
         totalXRange = transform.position.x * 2;
         interval = totalXRange / 3;
         middayInterval = transform.position.x - interval;
@@ -25,6 +26,7 @@ public class Sun : MonoBehaviour
     void Update()
     {
         //rotates sun around zero 
+		//flareColor.color = sun.color;
         if (transform.position.y >= -75)
         {
             transform.RotateAround(Vector3.zero, Vector3.forward, rotationSpeed * Time.deltaTime);
@@ -33,7 +35,7 @@ public class Sun : MonoBehaviour
         if(transform.position.x > middayInterval)
         {
 			sun.color = Color.Lerp(sun.color, morn, Time.deltaTime / 10);
-			sun.intensity = Mathf.Lerp (sun.intensity, 1, Time.deltaTime);
+			sun.intensity = Mathf.Lerp (sun.intensity, 1.5f, Time.deltaTime);
             isMorning = true;
             isMidday = false;
             isNight = false;
@@ -41,7 +43,7 @@ public class Sun : MonoBehaviour
         else if(transform.position.x < middayInterval && transform.position.x > nightInterval)
         {
 			sun.color = Color.Lerp (sun.color, mid, Time.deltaTime / 10);
-			sun.intensity = Mathf.Lerp (sun.intensity, 3, Time.deltaTime);
+			sun.intensity = Mathf.Lerp (sun.intensity, 2, Time.deltaTime);
             isMorning = false;
             isMidday = true;
             isNight = false;
