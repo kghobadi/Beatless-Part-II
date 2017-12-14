@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Audio;
 public class Bed : Interactable
 {
     public bool dayPassed;
@@ -18,11 +19,14 @@ public class Bed : Interactable
     GameObject sun;
 
 	AudioHelm.AudioHelmClock clock;
+	bool mixersTransitioned;
 
 	public int windDir = 0;
 	ParticleSystem wond;
 	ParticleSystem windBlast;
     Sun sunScript;
+	public AudioMixerSnapshot bedSnap, bedSnap1, regular, regular2;
+
 
     Vector3 sunStartPos;
 
@@ -95,6 +99,11 @@ public class Bed : Interactable
         }
         else
         {
+			if (!mixersTransitioned) {
+				regular.TransitionTo (1f);
+				regular2.TransitionTo (1f);
+				mixersTransitioned = true;
+			}
             alphaVal -= 0.6f * Time.deltaTime;
             interactable = true;
             fpc.speed = originalPSpeed;
@@ -114,6 +123,9 @@ public class Bed : Interactable
         {
             fpc.isAwake = false;
 			setDayPassed = false;
+			mixersTransitioned = false;
+			bedSnap.TransitionTo (0.01f);
+			bedSnap1.TransitionTo (0.01f);
             dayCounter++;
             Random.InitState(System.DateTime.Now.Millisecond);
             clock.bpm = Random.Range(minBpm, maxBpm);
@@ -123,6 +135,8 @@ public class Bed : Interactable
             ParticleSystem.MainModule windBlastModule = windBlast.main;
             windBlastModule.simulationSpeed = blastMinSpeed * speedMultiplier;
             ParticleSystem.VelocityOverLifetimeModule rainVelocity = rainSystem.rainEffect.velocityOverLifetime;
+			//regular.TransitionTo (3f);
+			//regular2.TransitionTo (3f);
             
 
             if (worldMan.isRaining)

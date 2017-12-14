@@ -39,6 +39,9 @@ public class Trader : Interactable
 
     cellManager cellMan;
 
+    float tim;
+    public GameObject horn;
+
     //click to buy instantiation needs to work
     //make it so that it can't have duplicate seed types, only selects 3 from total possible pool
 
@@ -117,6 +120,7 @@ public class Trader : Interactable
         {
             animater.SetBool("waiting", false);
             animater.SetBool("walking", false);
+            animater.SetBool("horn", false);
             animater.SetBool("selling", true);
             cropCurrency.cropShower.gameObject.SetActive(true);
             cropCurrency.cropShower.enabled = true;
@@ -265,6 +269,7 @@ public class Trader : Interactable
         {
             animater.SetBool("walking", true);
             animater.SetBool("selling", false);
+            animater.SetBool("horn", false);
             animater.SetBool("waiting", false);
             interactable = false;
             table.SetActive(false);
@@ -351,9 +356,28 @@ public class Trader : Interactable
         else
         {
             // SIMON play Arrival Sound
-            traderAudio.PlayOneShot(traderArrives);
-            walkingToGate = false;
-            isWaiting = true;
+            animater.SetBool("walking", false);
+            animater.SetBool("selling", false);
+            animater.SetBool("horn", true);
+            animater.SetBool("waiting", false);
+
+            if (!traderAudio.isPlaying)
+                traderAudio.PlayOneShot(traderArrives);
+
+            tim += Time.deltaTime;
+            horn.SetActive(true);
+
+            if (tim > traderArrives.length)
+            {
+                animater.SetBool("walking", false);
+                animater.SetBool("selling", true);
+                animater.SetBool("horn", false);
+                animater.SetBool("waiting", false);
+                tim = 0;
+                walkingToGate = false;
+                isWaiting = true;
+                horn.SetActive(false);
+            }
         }
     }
 
