@@ -83,7 +83,7 @@
     "poly_lfo_sync": 1,
     "poly_lfo_tempo": 7,
     "poly_lfo_waveform": 0,
-    "polyphony": 4,
+    "polyphony": 16,
     "portamento": -9,
     "portamento_type": 0,
     "resonance": 0.29333333333333333481,
