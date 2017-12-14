@@ -14,7 +14,6 @@ public class Bed : Interactable
     
     public Image sleepBlack;
 
-    FirstPersonController fpc;
     camMouseLook cml;
 
     GameObject sun;
@@ -40,7 +39,6 @@ public class Bed : Interactable
 
     public float speedMultiplier;
 
-    WorldManager worldMan;
     cellManager cellMan;
     Rain rainSystem;
     spin windMill;

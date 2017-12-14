@@ -14,6 +14,7 @@ public class Book : MonoBehaviour {
     RectTransform BookPanel;
     public Sprite background;
     public Sprite[] bookPages;
+    public int pageAdder;
     public bool interactive=true;
     public bool enableShadowEffect=true;
     //represent the index of the sprite shown in the right page
@@ -68,6 +69,7 @@ public class Book : MonoBehaviour {
 
     void Start()
     {
+        pageAdder = 6;
         float scaleFactor = 1;
         if (canvas) scaleFactor = canvas.scaleFactor;
         float pageWidth = (BookPanel.rect.width* scaleFactor - 1) / 2;

@@ -7,8 +7,6 @@ public class Crop : Interactable {
 
     CropCurrency crops;
 
-    Bed bed;
-
 
     //audio source in UI
     //Pick up sound
@@ -18,7 +16,6 @@ public class Crop : Interactable {
         base.Start();
 
         crops = _player.GetComponent<CropCurrency>();
-        bed = GameObject.FindGameObjectWithTag("Bed").GetComponent<Bed>();
         interactable = true;
     }
     
@@ -29,9 +26,9 @@ public class Crop : Interactable {
 
         //play pick up sound
         
-        crops.cropShower.gameObject.SetActive(true);
         crops.cropCounter += 1;
         crops.cropShower.enabled = true;
+        crops.cropDisplayAmount.enabled = true;
         crops.showCropsCounter = crops.showCropsTotal;
         Destroy(gameObject);
     }
@@ -40,7 +37,7 @@ public class Crop : Interactable {
     {
         //always rotate seed in world space
         transform.Rotate(0, 1, 0 * Time.deltaTime);
-        if (bed.dayPassed)
+        if (bedScript.dayPassed)
         {
             Destroy(gameObject);
         }
@@ -50,10 +47,9 @@ public class Crop : Interactable {
     {
         if(other.gameObject.tag == "Player")
         {
-            
-            crops.cropShower.gameObject.SetActive(true);
             crops.cropCounter += 1;
             crops.cropShower.enabled = true;
+            crops.cropDisplayAmount.enabled = true;
             crops.showCropsCounter = crops.showCropsTotal;
             soundBoard.PlayOneShot(InteractSound);
             Destroy(gameObject);
