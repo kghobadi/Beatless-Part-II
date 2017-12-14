@@ -59,42 +59,40 @@ public class Ax : MonoBehaviour
 
     void Update()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit))
-        {
-            //Checks if the hit is a ground tile and within Distance for hoeing
-            if (hit.transform.gameObject.tag == "sequencer" && Vector3.Distance(_player.transform.position, hit.point) <= axDistance)
-            {
-                cursorChange = true;
-                changeBack = false;
-            }
-
-        }
-
-        if (changeBack)
-        {
-            cursorChange = false;
-            changeBack = false;
-            symbol.sprite = normalSprite;
-        }
         //Checks if has been picked up and equipped 
         if (inventMan.underPlayerControl)
         {
+            GetComponent<BoxCollider>().enabled = false;
             if (!swingAx && !axBack)
             {
                 transform.localEulerAngles = new Vector3(40, 100, 30);
             }
+
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                //Checks if the hit is a ground tile and within Distance for hoeing
+                if (hit.transform.gameObject.tag == "sequencer" && Vector3.Distance(_player.transform.position, hit.point) <= axDistance)
+                {
+                    Debug.Log("hit");
+                    cursorChange = true;
+                    changeBack = false;
+                }
+
+            }
+            if (changeBack)
+            {
+                symbol.sprite = normalSprite;
+                cursorChange = false;
+                changeBack = false;
+            }
+
+            
             //Sends out raycast
             if (Input.GetMouseButton(0) && !swingAx && !axBack)
             {
-
-
-                //transform.rotation = Quaternion.Lerp(transform.rotation, lerpTransform.rotation, Time.time * lerpSpeed);
-                //start particle system
-                //sphere cast
-
                 //Checks if raycast hits
                 if (Physics.Raycast(ray, out hit))
                 {
@@ -157,20 +155,18 @@ public class Ax : MonoBehaviour
             }
 
             lerpVal = Mathf.Clamp01(lerpVal);
-        }
 
-        if (cursorChange)
-        {
-            symbol.sprite = clickSprite;
-            frameCounter--;
-            if (frameCounter < 0)
+            if (cursorChange)
             {
-                changeBack = true;
-                frameCounter = 5;
+                symbol.sprite = clickSprite;
+                frameCounter--;
+                if (frameCounter < 0)
+                {
+                    changeBack = true;
+                    frameCounter = 5;
+                }
             }
         }
-
-
     }
 
     void SpawnCrops(int min, int max)
