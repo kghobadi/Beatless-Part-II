@@ -90,7 +90,7 @@ public class NewPlantLife : MonoBehaviour
 
         if (plantedInEditor)
         {
-            ageCounter -= 1;
+            ageCounter = 2;
             transform.position = tgs.CellGetPosition(cellIndex);
             tgs.CellSetTag(cellIndex, 1);
             tgs.CellToggleRegionSurface(cellIndex, true, growingTexture);

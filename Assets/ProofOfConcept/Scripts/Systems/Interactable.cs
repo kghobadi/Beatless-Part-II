@@ -14,6 +14,7 @@ public abstract class Interactable : MonoBehaviour
     //for hovering over objects
     protected GameObject identifierObject; 
     protected SpriteRenderer paper;
+    public Sprite bookPage;
 
     //public Vector3 startScale;
     //public float scaleFactor;
@@ -31,12 +32,15 @@ public abstract class Interactable : MonoBehaviour
     protected FirstPersonController fpc;
 
     public int objNumber;
-    WorldManager worldMan;
+    protected WorldManager worldMan;
 
     protected GameObject pageNotifier;
+    protected Bed bedScript;
+
 
     public virtual void Start()
     {
+        bedScript = GameObject.FindGameObjectWithTag("Bed").GetComponent<Bed>();
         worldMan = GameObject.FindGameObjectWithTag("WorldManager").GetComponent<WorldManager>();
         _player = GameObject.FindGameObjectWithTag("Player"); //searches for Player
         cammy = GameObject.FindGameObjectWithTag("MainCamera"); //searches for Camera
@@ -105,6 +109,11 @@ public abstract class Interactable : MonoBehaviour
             soundBoard.PlayOneShot(firstTimePickup);
             symbol.sprite = normalSprite;
             pageNotifier.GetComponent<SpriteRenderer>().enabled = true;
+            if(bookPage != null)
+            {
+                worldMan.bookRef.bookPages[worldMan.bookRef.pageAdder] = bookPage;
+                worldMan.bookRef.pageAdder++;
+            }
         }
         else
         {

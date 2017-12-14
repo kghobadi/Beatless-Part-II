@@ -27,7 +27,7 @@ public class Trader : Interactable
 
     public float waitTimer;
 
-    WorldManager worldMan;
+  
 
     AudioSource traderAudio;
 
@@ -35,7 +35,6 @@ public class Trader : Interactable
 
     public Animator animater;
 
-    Bed bedScript;
 
 
     cellManager cellMan;
@@ -51,10 +50,9 @@ public class Trader : Interactable
         base.Start();
         interactable = true;
         animater.SetBool("walking", true);
-
-        bedScript = GameObject.FindGameObjectWithTag("Bed").GetComponent<Bed>();
-
-        worldMan = GameObject.FindGameObjectWithTag("WorldManager").GetComponent<WorldManager>();
+        
+        
+        
 
         invent = GameObject.FindGameObjectWithTag("Inventory").GetComponent<Inventory>();
         cellMan = GameObject.Find("cellManager").GetComponent<cellManager>();
@@ -143,6 +141,15 @@ public class Trader : Interactable
                         {
                             s1Seed = slot1.GetChild(0).gameObject;
                         }
+                        if (!worldMan.firstTimePickups[s1Seed.GetComponent<inventoryMan>().objNumber])
+                        {
+                            pageNotifier.GetComponent<SpriteRenderer>().enabled = true;
+                            if (bookPage != null)
+                            {
+                                worldMan.bookRef.bookPages[worldMan.bookRef.pageAdder] = bookPage;
+                                worldMan.bookRef.pageAdder++;
+                            }
+                        }
                         s1Seed.GetComponent<inventoryMan>().putThisInInvent();
                         cropCurrency.cropCounter -= s1Price;
                         s1Interactable.clickedOn = false;
@@ -169,6 +176,15 @@ public class Trader : Interactable
                         if (slot2.childCount > 0)
                         {
                             s2Seed = slot2.GetChild(0).gameObject;
+                        }
+                        if (!worldMan.firstTimePickups[s2Seed.GetComponent<inventoryMan>().objNumber])
+                        {
+                            pageNotifier.GetComponent<SpriteRenderer>().enabled = true;
+                            if (bookPage != null)
+                            {
+                                worldMan.bookRef.bookPages[worldMan.bookRef.pageAdder] = bookPage;
+                                worldMan.bookRef.pageAdder++;
+                            }
                         }
                         s2Seed.GetComponent<inventoryMan>().putThisInInvent();
                         cropCurrency.cropCounter -= s2Price;
@@ -197,6 +213,15 @@ public class Trader : Interactable
                         if (slot3.childCount > 0)
                         {
                             s3Seed = slot3.GetChild(0).gameObject;
+                        }
+                        if (!worldMan.firstTimePickups[s3Seed.GetComponent<inventoryMan>().objNumber])
+                        {
+                            pageNotifier.GetComponent<SpriteRenderer>().enabled = true;
+                            if (bookPage != null)
+                            {
+                                worldMan.bookRef.bookPages[worldMan.bookRef.pageAdder] = bookPage;
+                                worldMan.bookRef.pageAdder++;
+                            }
                         }
                         s3Seed.GetComponent<inventoryMan>().putThisInInvent();
                         cropCurrency.cropCounter -= s3Price;
