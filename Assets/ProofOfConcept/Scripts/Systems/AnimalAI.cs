@@ -17,7 +17,7 @@ namespace TGS
         public BigStates bigStates;
 
 
-        public enum State
+        public enum State   
         {
             MOVING,
             MOVESELECT,

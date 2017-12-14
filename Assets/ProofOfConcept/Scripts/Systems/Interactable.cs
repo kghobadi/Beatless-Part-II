@@ -32,13 +32,16 @@ public abstract class Interactable : MonoBehaviour
     protected FirstPersonController fpc;
 
     public int objNumber;
-    WorldManager worldMan;
+    protected WorldManager worldMan;
 
     protected GameObject pageNotifier;
-    Book book;
+    protected Book book;
+    protected Bed bedScript;
+
 
     public virtual void Start()
     {
+        bedScript = GameObject.FindGameObjectWithTag("Bed").GetComponent<Bed>();
         worldMan = GameObject.FindGameObjectWithTag("WorldManager").GetComponent<WorldManager>();
         _player = GameObject.FindGameObjectWithTag("Player"); //searches for Player
         cammy = GameObject.FindGameObjectWithTag("MainCamera"); //searches for Camera
