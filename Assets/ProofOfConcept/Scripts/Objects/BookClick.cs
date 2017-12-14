@@ -12,7 +12,7 @@ public class BookClick : Interactable {
     public override void Start()
     {
         base.Start();
-        bookPrefab = GameObject.FindGameObjectWithTag("Book");
+        bookPrefab = worldMan.bookRef.gameObject;
         cameraControl = cammy.GetComponent<camMouseLook>();
         bookPrefab.SetActive(false);
         closeBookButton.SetActive(false);
