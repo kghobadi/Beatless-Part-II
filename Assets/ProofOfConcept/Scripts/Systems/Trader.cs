@@ -122,8 +122,8 @@ public class Trader : Interactable
             animater.SetBool("walking", false);
             animater.SetBool("horn", false);
             animater.SetBool("selling", true);
-            cropCurrency.cropShower.gameObject.SetActive(true);
             cropCurrency.cropShower.enabled = true;
+            cropCurrency.cropDisplayAmount.enabled = true;
             interactable = false;
             if (Vector3.Distance(transform.position, _player.transform.position) < 10)
             {
