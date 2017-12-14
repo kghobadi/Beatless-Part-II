@@ -4,8 +4,8 @@
 		_MainTex ("Albedo (RGB)", 2D) = "white" {}
 		_Glossiness ("Smoothness", Range(0,1)) = 0.5
 		_Metallic ("Metallic", Range(0,1)) = 0.0
+		_Spread ("Light", Range(-10,10)) = 0.0
 		_Light ("Light", Range(-10,10)) = 0.0
-		_Size ("Size", Range(0,10)) = 0.0
 	}
 	SubShader {
 		Tags { "RenderType"="Opaque" }
@@ -22,14 +22,15 @@
 
 		struct Input {
 			float2 uv_MainTex;
+			float3 localPos;
 			float3 worldPos;
 		};
 
 		half _Glossiness;
 		half _Metallic;
 		fixed4 _Color;
+		float _Spread;
 		float _Light;
-		float _Size;
 
 		// Add instancing support for this shader. You need to check 'Enable Instancing' on materials that use the shader.
 		// See https://docs.unity3d.com/Manual/GPUInstancing.html for more information about instancing.
@@ -38,16 +39,18 @@
 			// put more per-instance properties here
 		UNITY_INSTANCING_CBUFFER_END
 
+
 		void surf (Input IN, inout SurfaceOutputStandard o) {
 			// Albedo comes from a color
-			fixed4 c = _Color * ((IN.worldPos.y+8.75)/_Size) + _Light;
+			float3 localPos = IN.worldPos -  mul(unity_ObjectToWorld, float4(0,0,0,1)).xyz;
+			fixed4 c = _Color + (5*localPos.y/_Spread) + _Light;
 			o.Albedo = c.rgb;
 			// Metallic and smoothness come from slider variables
-			o.Metallic = _Metallic;
+			//o.Metallic = _Metallic;
 			o.Smoothness = _Glossiness;
 			o.Alpha = c.a;
 		}
 		ENDCG
 	}
-	FallBack "Diffuse"
+	//FallBack "Diffuse"
 }

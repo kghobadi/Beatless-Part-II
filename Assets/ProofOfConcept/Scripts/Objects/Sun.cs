@@ -26,7 +26,7 @@ public class Sun : MonoBehaviour
     void Update()
     {
         //rotates sun around zero 
-		//flareColor.color = sun.color;
+		flareColor.color = sun.color;
         if (transform.position.y >= -75)
         {
             transform.RotateAround(Vector3.zero, Vector3.forward, rotationSpeed * Time.deltaTime);

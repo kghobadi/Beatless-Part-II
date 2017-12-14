@@ -14,8 +14,8 @@ public class Water : MonoBehaviour
     public float waterDistance;
 
 
-    ParticleSystem waterEffect;
-
+    //ParticleSystem waterEffect;
+	public ParticleSystem waterSpray;
 
     GameObject _player;
 
@@ -53,9 +53,9 @@ public class Water : MonoBehaviour
         bed = GameObject.FindGameObjectWithTag("Bed");
         sleepScript = bed.GetComponent<Bed>();
 
-        waterEffect = GetComponentInChildren<ParticleSystem>();
-        waterEffect.Stop();
-
+        //waterEffect = GetComponentInChildren<ParticleSystem>();
+        //waterEffect.Stop();
+		waterSpray.Stop();
         inventMan = GetComponent<inventoryMan>();
 
         //loads Cursor Sprites
@@ -125,9 +125,11 @@ public class Water : MonoBehaviour
             if (rotateCan)
             {
                 transform.localEulerAngles = Vector3.MoveTowards(transform.localEulerAngles, new Vector3(40, 0, 0), Time.deltaTime * 100);
+				waterSpray.Emit(particleAmount);
                 if (transform.localEulerAngles == new Vector3(40, 0, 0))
                 {
-                    waterEffect.Emit(particleAmount); // water particles
+					
+					//waterEffect.Emit(particleAmount); // water particles
                     cameraSource.PlayOneShot(wateringSound, 1f);
                     if (!currentPlant.hasBeenWateredToday)
                     {
@@ -146,6 +148,7 @@ public class Water : MonoBehaviour
             }
             if (rotateCanBack)
             {
+				waterSpray.Emit(particleAmount);
                 transform.localEulerAngles = Vector3.MoveTowards(transform.localEulerAngles, Vector3.zero, Time.deltaTime * 100);
                 if (transform.localEulerAngles == Vector3.zero)
                 {
