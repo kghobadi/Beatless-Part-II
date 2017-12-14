@@ -66,84 +66,95 @@ public class Water : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit))
+        if (inventMan.underPlayerControl )
         {
-            //Checks if the hit is a ground tile and within Distance for hoeing
-            if (hit.transform.gameObject.tag == "sequencer" && Vector3.Distance(_player.transform.position, hit.point) <= waterDistance)
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit))
             {
-                cursorChange = true;
-                changeBack = false;
-            }
-        }
-        if (changeBack)
-        {
-            cursorChange = false;
-            changeBack = false;
-            symbol.sprite = normalSprite;
-        }
-
-
-        if (inventMan.underPlayerControl && !rotateCan && !rotateCanBack)
-        {
-            //Sends out raycast
-			if (Input.GetMouseButtonDown (0)) {
-				
-                //cameraSource.Play ();
-
-                //Checks if raycast hits
-                if (Physics.Raycast (ray, out hit)) {
-					//Checks if the hit is a ground tile and within Distance for hoeing
-					if (hit.transform.gameObject.tag == "sequencer" && Vector3.Distance (_player.transform.position, hit.point) <= waterDistance) {
-                        //Can add cursor sprite change here
-                        //lerp position forward 60 on x
-                        rotateCan = true;
-                        cursorChange = true;
-						currentPlant = hit.transform.gameObject.GetComponent<NewPlantLife> ();
-						
-					}
-				}
-			} 
-        }
-        if (cursorChange)
-        {
-            symbol.sprite = clickSprite;
-            frameCounter--;
-            if (frameCounter < 0)
-            {
-                changeBack = true;
-                frameCounter = 5;
-            }
-        }
-        if (rotateCan) {
-            transform.localEulerAngles = Vector3.MoveTowards(transform.localEulerAngles, new Vector3(40, 0, 0), Time.deltaTime * 100);
-            if(transform.localEulerAngles == new Vector3(40, 0, 0)) {
-                waterEffect.Emit(particleAmount); // water particles
-                cameraSource.PlayOneShot(wateringSound, 1f);
-                if (!currentPlant.hasBeenWateredToday)
+                //Checks if the hit is a ground tile and within Distance for hoeing
+                if (hit.transform.gameObject.tag == "sequencer" && Vector3.Distance(_player.transform.position, hit.point) <= waterDistance)
                 {
-                    currentPlant.hasBeenWateredToday = true;
-                    currentPlant.hasBeenWatered = true;
-
-                    //to change ground texture to water texture
-                    Cell tree = tgs.CellGetAtPosition(hit.transform.position, true);
-                    int index = currentPlant.cellIndex;
-                    tgs.CellToggleRegionSurface(index, true, wateredTexture);
-
+                    cursorChange = true;
+                    changeBack = false;
                 }
-                rotateCan = false;
-                rotateCanBack = true;
             }
-        }
-        if (rotateCanBack)
-        {
-            transform.localEulerAngles = Vector3.MoveTowards(transform.localEulerAngles, Vector3.zero, Time.deltaTime * 100);
-            if (transform.localEulerAngles == Vector3.zero)
+
+            if (changeBack)
             {
-                rotateCanBack = false;
+                cursorChange = false;
+                changeBack = false;
+                symbol.sprite = normalSprite;
             }
+
+            if (!rotateCan && !rotateCanBack)
+            {
+                //Sends out raycast
+                if (Input.GetMouseButtonDown(0))
+                {
+
+                    //cameraSource.Play ();
+
+                    //Checks if raycast hits
+                    if (Physics.Raycast(ray, out hit))
+                    {
+                        //Checks if the hit is a ground tile and within Distance for hoeing
+                        if (hit.transform.gameObject.tag == "sequencer" && Vector3.Distance(_player.transform.position, hit.point) <= waterDistance)
+                        {
+                            //Can add cursor sprite change here
+                            //lerp position forward 60 on x
+                            rotateCan = true;
+                            cursorChange = true;
+                            currentPlant = hit.transform.gameObject.GetComponent<NewPlantLife>();
+
+                        }
+                    }
+                }
+            }
+            if (cursorChange)
+            {
+                symbol.sprite = clickSprite;
+                frameCounter--;
+                if (frameCounter < 0)
+                {
+                    changeBack = true;
+                    frameCounter = 5;
+                }
+            }
+            if (rotateCan)
+            {
+                transform.localEulerAngles = Vector3.MoveTowards(transform.localEulerAngles, new Vector3(40, 0, 0), Time.deltaTime * 100);
+                if (transform.localEulerAngles == new Vector3(40, 0, 0))
+                {
+                    waterEffect.Emit(particleAmount); // water particles
+                    cameraSource.PlayOneShot(wateringSound, 1f);
+                    if (!currentPlant.hasBeenWateredToday)
+                    {
+                        currentPlant.hasBeenWateredToday = true;
+                        currentPlant.hasBeenWatered = true;
+
+                        //to change ground texture to water texture
+                        Cell tree = tgs.CellGetAtPosition(hit.transform.position, true);
+                        int index = currentPlant.cellIndex;
+                        tgs.CellToggleRegionSurface(index, true, wateredTexture);
+
+                    }
+                    rotateCan = false;
+                    rotateCanBack = true;
+                }
+            }
+            if (rotateCanBack)
+            {
+                transform.localEulerAngles = Vector3.MoveTowards(transform.localEulerAngles, Vector3.zero, Time.deltaTime * 100);
+                if (transform.localEulerAngles == Vector3.zero)
+                {
+                    rotateCanBack = false;
+                }
+            }
+
         }
+       
     }
 }
 
