@@ -196,14 +196,14 @@ public class newSequencePlay : MonoBehaviour
     } */
         if (note > 4)
         {
-            note = note - 4;
+            note = note - 3;
             sequencer.AddNote(farmManager.GetComponent<assignKey>().currentList[note] + (12 * (octave + 3)), newStart, newStart + endScale, velocity);
 
         }
         else if (note > 8)
         {
 
-            note = note - 8;
+            note = note - 7;
             sequencer.AddNote(farmManager.GetComponent<assignKey>().currentList[note] + (12 * (octave + 4)), newStart, newStart + endScale, velocity);
 
         }
@@ -255,24 +255,24 @@ public class newSequencePlay : MonoBehaviour
         newNote = 49;
         break;
     } */
-		if (note > 4)
-		{
-			note = note - 4;
-			sequencer.AddNote(farmManager.GetComponent<assignKey>().currentList[note] + (12 * (octave + 3)), newStart, newStart + endScale, velocity);
+        if (note > 4)
+        {
+            note = note - 3;
+            sequencer.AddNote(farmManager.GetComponent<assignKey>().currentList[note] + (12 * (octave + 3)), newStart, newStart + endScale, velocity);
 
-		}
-		else if (note > 8)
-		{
+        }
+        else if (note > 8)
+        {
 
-			note = note - 8;
-			sequencer.AddNote(farmManager.GetComponent<assignKey>().currentList[note] + (12 * (octave + 4)), newStart, newStart + endScale, velocity);
+            note = note - 7;
+            sequencer.AddNote(farmManager.GetComponent<assignKey>().currentList[note] + (12 * (octave + 4)), newStart, newStart + endScale, velocity);
 
-		}
-		else
-		{
-			sequencer.AddNote(farmManager.GetComponent<assignKey>().currentList[note] + (12 * (octave + 2)), newStart, newStart + endScale, velocity);
-		}        
-		Debug.Log("current note :" + note);
+        }
+        else
+        {
+            sequencer.AddNote(farmManager.GetComponent<assignKey>().currentList[note] + (12 * (octave + 2)), newStart, newStart + endScale, velocity);
+        }
+        Debug.Log("current note :" + note);
         Debug.Log(farmManager.GetComponent<assignKey>().currentList[note]);
         sequencer.StartOnNextCycle();
         //}
@@ -317,23 +317,24 @@ public class newSequencePlay : MonoBehaviour
         newNote = 37;
         break;
     } */
-		if (note > 4)
-		{
-			note = note - 4;
-			sequencer.AddNote(farmManager.GetComponent<assignKey>().currentList[note] + (12 * (octave + 3)), newStart, newStart + endScale, velocity);
+        if (note > 4)
+        {
+            note = note - 3;
+            sequencer.AddNote(farmManager.GetComponent<assignKey>().currentList[note] + (12 * (octave + 3)), newStart, newStart + endScale, velocity);
 
-		}
-		else if (note > 8)
-		{
+        }
+        else if (note > 8)
+        {
 
-			note = note - 8;
-			sequencer.AddNote(farmManager.GetComponent<assignKey>().currentList[note] + (12 * (octave + 4)), newStart, newStart + endScale, velocity);
+            note = note - 7;
+            sequencer.AddNote(farmManager.GetComponent<assignKey>().currentList[note] + (12 * (octave + 4)), newStart, newStart + endScale, velocity);
 
-		}
-		else
-		{
-			sequencer.AddNote(farmManager.GetComponent<assignKey>().currentList[note] + (12 * (octave + 2)), newStart, newStart + endScale, velocity);
-		}        sequencer.StartOnNextCycle();
+        }
+        else
+        {
+            sequencer.AddNote(farmManager.GetComponent<assignKey>().currentList[note] + (12 * (octave + 2)), newStart, newStart + endScale, velocity);
+        }
+        sequencer.StartOnNextCycle();
         //}
 
     }
