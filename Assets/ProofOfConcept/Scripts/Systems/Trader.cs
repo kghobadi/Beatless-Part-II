@@ -60,7 +60,7 @@ public class Trader : Interactable
         s2Interactable = slot2.GetComponent<TraderSlot>();
         s3Interactable = slot3.GetComponent<TraderSlot>();
         s4Interactable = slot4.GetComponent<TraderSlot>();
-        
+
         resetItems();
         table.SetActive(false);
 
@@ -103,7 +103,8 @@ public class Trader : Interactable
         }
         if (isWaiting)
         {
-            animater.speed = 0;
+            animater.SetBool("walking", false);
+            animater.SetBool("waiting", true);
             transform.LookAt(_player.transform);
             interactable = true;
             waitTimer -= Time.deltaTime;
@@ -116,6 +117,9 @@ public class Trader : Interactable
         }
         if (tradingActive)
         {
+            animater.SetBool("waiting", false);
+            animater.SetBool("walking", false);
+            animater.SetBool("selling", true);
             cropCurrency.cropShower.gameObject.SetActive(true);
             cropCurrency.cropShower.enabled = true;
             interactable = false;
@@ -182,10 +186,11 @@ public class Trader : Interactable
                 {
                     if (cropCurrency.cropCounter >= s3Price)
                     {
+                        Debug.Log("buying s3");
                         //add s1Seed to your invent 
                         if (!traderAudio.isPlaying)
                             traderAudio.PlayOneShot(exchangeSound);
-                        if(slot3.childCount > 0)
+                        if (slot3.childCount > 0)
                         {
                             s3Seed = slot3.GetChild(0).gameObject;
                         }
@@ -233,7 +238,9 @@ public class Trader : Interactable
         }
         if (walkingAway)
         {
-            animater.speed = 1;
+            animater.SetBool("walking", true);
+            animater.SetBool("selling", false);
+            animater.SetBool("waiting", false);
             interactable = false;
             table.SetActive(false);
             WalkAway();
