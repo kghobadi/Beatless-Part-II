@@ -33,6 +33,7 @@ public class WorldManager : MonoBehaviour
     public int rainType;
 
     public bool[] firstTimePickups;
+    public Book bookRef;
 
     void Start()
     {
@@ -43,6 +44,7 @@ public class WorldManager : MonoBehaviour
         rainFrequency = Random.Range(3, 6);
 
         rainSystem = GameObject.FindGameObjectWithTag("Rain").GetComponent<Rain>();
+        bookRef = GameObject.FindGameObjectWithTag("Book").GetComponent<Book>();
     }
 
     void Update()

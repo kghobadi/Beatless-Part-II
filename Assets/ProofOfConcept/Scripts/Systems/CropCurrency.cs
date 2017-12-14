@@ -15,7 +15,7 @@ public class CropCurrency : MonoBehaviour {
 	void Start () {
         cropCounter = 0;
         cropShower.enabled = false;
-        cropShower.gameObject.SetActive(false);
+        cropDisplayAmount.enabled = false;
 		
 	}
 	
@@ -29,7 +29,7 @@ public class CropCurrency : MonoBehaviour {
             if (showCropsCounter < 0)
             {
                 cropShower.enabled = false;
-                cropShower.gameObject.SetActive(false);
+                cropDisplayAmount.enabled = false;
                 showCropsCounter = showCropsTotal;
             }
         }
