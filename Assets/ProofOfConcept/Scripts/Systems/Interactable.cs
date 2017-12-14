@@ -35,7 +35,6 @@ public abstract class Interactable : MonoBehaviour
     protected WorldManager worldMan;
 
     protected GameObject pageNotifier;
-    protected Book book;
     protected Bed bedScript;
 
 
@@ -49,7 +48,6 @@ public abstract class Interactable : MonoBehaviour
         identifierObject = GameObject.FindGameObjectWithTag("Identifier");
         paper = identifierObject.transform.GetChild(0).GetComponent<SpriteRenderer>();
         pageNotifier = GameObject.Find("PageNotifier");
-        book = GameObject.FindGameObjectWithTag("Book").GetComponent<Book>();
 
         identifierObject.GetComponent<SpriteRenderer>().enabled = false;
         paper.enabled = false;
@@ -113,8 +111,8 @@ public abstract class Interactable : MonoBehaviour
             pageNotifier.GetComponent<SpriteRenderer>().enabled = true;
             if(bookPage != null)
             {
-                book.bookPages[book.pageAdder] = bookPage;
-                book.pageAdder++;
+                worldMan.bookRef.bookPages[worldMan.bookRef.pageAdder] = bookPage;
+                worldMan.bookRef.pageAdder++;
             }
         }
         else

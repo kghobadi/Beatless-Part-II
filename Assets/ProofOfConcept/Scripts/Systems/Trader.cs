@@ -146,8 +146,8 @@ public class Trader : Interactable
                             pageNotifier.GetComponent<SpriteRenderer>().enabled = true;
                             if (bookPage != null)
                             {
-                                book.bookPages[book.pageAdder] = bookPage;
-                                book.pageAdder++;
+                                worldMan.bookRef.bookPages[worldMan.bookRef.pageAdder] = bookPage;
+                                worldMan.bookRef.pageAdder++;
                             }
                         }
                         s1Seed.GetComponent<inventoryMan>().putThisInInvent();
@@ -182,8 +182,8 @@ public class Trader : Interactable
                             pageNotifier.GetComponent<SpriteRenderer>().enabled = true;
                             if (bookPage != null)
                             {
-                                book.bookPages[book.pageAdder] = bookPage;
-                                book.pageAdder++;
+                                worldMan.bookRef.bookPages[worldMan.bookRef.pageAdder] = bookPage;
+                                worldMan.bookRef.pageAdder++;
                             }
                         }
                         s2Seed.GetComponent<inventoryMan>().putThisInInvent();
@@ -219,8 +219,8 @@ public class Trader : Interactable
                             pageNotifier.GetComponent<SpriteRenderer>().enabled = true;
                             if (bookPage != null)
                             {
-                                book.bookPages[book.pageAdder] = bookPage;
-                                book.pageAdder++;
+                                worldMan.bookRef.bookPages[worldMan.bookRef.pageAdder] = bookPage;
+                                worldMan.bookRef.pageAdder++;
                             }
                         }
                         s3Seed.GetComponent<inventoryMan>().putThisInInvent();
