@@ -3,12 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.Audio;
 
 public class SpaceToStart : MonoBehaviour {
 
     Image thisImage;
     public Image Title;
     Sprite theSprite;
+
+	public AudioSource cameraSource;
+	public AudioMixerSnapshot playing;
+	public AudioMixerSnapshot notPlaying;
 
     bool transition, fading;
 
@@ -35,6 +40,7 @@ public class SpaceToStart : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Space))
         {
             transition = true;
+			notPlaying.TransitionTo (4f);
             thisImage.color = new Color(thisImage.color.r, thisImage.color.g, thisImage.color.b, 1 - (Time.time / 1.5f));
             Title.color = new Color(Title.color.r, Title.color.g, Title.color.b, 1 - (Time.time / 1.5f));
         }
